@@ -2,10 +2,10 @@ $(document).ready(function () {
 
     $("#log").hide();
 
-    $(".collapse").on("click", function(){
+    $(".change").on("click", function(){
         $("#log").hide();
         $("#content").hide();
-        $("#" + this.data(id)).hide();
+        $("#" + $(this).data("id")).show();
     });
 
     $('.infoMessage').tooltipster({
