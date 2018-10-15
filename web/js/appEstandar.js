@@ -1,8 +1,11 @@
 $(document).ready(function () {
 
-   //Esconder menu lateral a presionar click en el menu hamburguesa
-   $('#logCollapse').on('click', () => {
-        $('#log, #content').toggleClass('active');
+    $("#log").hide();
+
+    $(".collapse").on("click", function(){
+        $("#log").hide();
+        $("#content").hide();
+        $("#" + this.data(id)).hide();
     });
 
     $('.infoMessage').tooltipster({

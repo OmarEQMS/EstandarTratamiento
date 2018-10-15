@@ -30,8 +30,14 @@
 
         <!-- SIDEBAR -->
         <div id="log">
-            <div class="card mt-3 mr-5 ml-5">
-                <div class="card-body subtitle text-center">Seguimiento</div>
+            <!-- MENU -->
+            <div class="navbar navbar-head">
+                    <div class="container-fluid">
+                        <button data-id="content" class="btn collapse">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+                        <span class="pull-right d-block title">Seguimiento</span>
+                    </div>
             </div>
 
             <div class="mt-3 mb-5 ml-3 mr-3">
@@ -52,12 +58,12 @@
         <div id="content">
 
             <!-- MENU -->
-            <div id="DivCollapse" class="navbar">
+            <div class="navbar navbar-head">
                 <div class="container-fluid">
-                    <button id="logCollapse" class="btn">
+                    <button data-id="log" class="btn collapse">
                         <i class="fas fa-align-justify"></i>
                     </button>
-                    <span id="estandar" class="pull-right d-block">Estandar de Tratamiento</span>
+                    <span class="pull-right d-block title">Estandar de Tratamiento</span>
                 </div>
             </div>
 

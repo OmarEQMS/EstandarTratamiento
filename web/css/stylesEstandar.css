@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700');
+/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700');
 
 body {
     background: #fafafa;
     font-family: 'Nunito Sans';
-}
+}*/
 .wrapper {
     display: flex;
     width: 100%;
 }
 
 #log {
-    width: 390px;
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -21,28 +21,9 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
 }
-#log.active {
-    margin-left: -400px;
-}
-
-#DivCollapse {
-    padding: 15px 10px;
-    background:#fff !important;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 20px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-#logCollapse{
-    background-color: white;
-    color:#2f3242;
-}
-#logCollapse:hover{
-    color: #ec5865 !important; 
-}
 
 #content {
-    width: calc(100% - 400px);
+    width: 100%;
     padding: 40px;
     min-height: 100vh;
     transition: all 0.3s;
@@ -50,30 +31,28 @@ body {
     top: 0;
     right: 0;
 }
-#content.active {
-    width: 100%;
+
+.navbar-head {
+    padding: 15px 10px;
+    background:#fff !important;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 900px) {
-    #log { margin-left: -400px; }
-    #log.active { margin-left: 0; }
-    #content { width: 100%; }
-    #content.active { width: calc(100% - 400px); }
+.collapse{
+    background-color: white;
+    color:#2f3242;
 }
-
-
+.collapse:hover{
+    color: #ec5865 !important; 
+}
 
 /*CODIGO YO*/
 
-#estandar{    
-    font-size: 20px;
-    color:#39407a;
-    text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
-    font-family: 'Poppins', sans-serif;
-}
-
 .title{    
-    font-size: 24px;
+    font-size: 20px;
     color:#39407a;
     text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
     font-family: 'Poppins', sans-serif;
