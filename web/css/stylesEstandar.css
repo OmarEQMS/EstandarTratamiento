@@ -61,20 +61,19 @@ body {
 }
 
 /*Author: Raul Orihuela*/
-.baseBorde{
+.baseBorder{
     border-style: solid;
     border-color: #ff589e;
-    border-width: 2px;
+    border-width: 3px;
     color:#550093;
 }
 .myBackground{
     background-color: #ffe1ee;
-    color:#6c002d;
-}
-.colorContraste{
+ }
+.contrastColor{
     color:#550093;
 }
-.sinBorde{
+.noBorder{
     border-style: none;
     color:#b958ff;
 }
