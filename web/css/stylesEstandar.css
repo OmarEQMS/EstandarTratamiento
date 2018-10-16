@@ -59,3 +59,23 @@ body {
     text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
     font-family: 'Poppins', sans-serif;  
 }
+
+/*Author: Raul Orihuela*/
+.baseBorde{
+    border-style: solid;
+    border-color: #ff589e;
+    border-width: 2px;
+    color:#550093;
+}
+.myBackground{
+    background-color: #ffe1ee;
+    color:#6c002d;
+}
+.colorContraste{
+    color:#550093;
+}
+.sinBorde{
+    border-style: none;
+    color:#b958ff;
+}
+/*Author: Raul Orihuela*/
