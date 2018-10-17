@@ -97,8 +97,7 @@ public class VisualizacionController extends HttpServlet {
                 out.print(json.toJson(opcion));
                 break;
             }
-            
-        }
+                    
         
         }
     }
