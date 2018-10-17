@@ -16,7 +16,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background: #b8bbc5;
+    background: #e1e8fe;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -61,9 +61,21 @@ body {
 }
 
 /*Author: Raul Orihuela*/
+.whiteBackground{
+    background-color: #ffffff;
+}
+.pinkBackground{
+    background-color: #ffe1ee;
+}
 .baseBorder{
     border-style: solid;
     border-color: #ff589e;
+    border-width: 3px;
+    color:#550093;
+}
+.alternateBorder{
+    border-style: solid;
+    border-color: #819efc;
     border-width: 3px;
     color:#550093;
 }
