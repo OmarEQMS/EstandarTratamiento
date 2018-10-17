@@ -7,7 +7,7 @@ public class Conexion {
     
     public static Connection getConnection(){
         
-        String cadena = "jdbc:mysql://localhost:3306/sapi?user=root&password=";
+        String cadena = "jdbc:mysql://localhost:3306/estandartratamiento?user=root&password=";
         
         Connection connection=null;
         try{
@@ -15,7 +15,6 @@ public class Conexion {
             connection=DriverManager.getConnection(cadena);
         }catch(Exception ex){
             System.out.println(ex.getMessage());
-            //log.i();
         }
         return connection;
         
