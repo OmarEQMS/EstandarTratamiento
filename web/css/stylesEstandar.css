@@ -67,14 +67,24 @@ body {
     border-width: 3px;
     color:#550093;
 }
-.myBackground{
-    background-color: #ffffff;
-}
 .contrastColor{
     color:#550093;
 }
 .noBorder{
     border-style: none;
     color:#b958ff;
+}
+.historialDecisiones{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+/*.historialDecisiones::-webkit-scrollbar{
+    display: none;
+}*/
+.historialDecisionesBoton{
+    display: inline-block;
+    margin: 3px;
+    padding: 0px 4px 0px 0px;
 }
 /*Author: Raul Orihuela*/
