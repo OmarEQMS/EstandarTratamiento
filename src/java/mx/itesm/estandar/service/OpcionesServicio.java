@@ -38,7 +38,7 @@ public class OpcionesServicio implements IOpcionesServicio{
     @Override
     public List<Opciones> getOpciones(int idNodo) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM nodos WHERE(idNodo=?)";
+        String sql = "SELECT * FROM opciones WHERE(idNodo_Padre=?)";
         List<Opciones> opciones = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class OpcionesServicio implements IOpcionesServicio{
             Opciones opcion;
             while (rs.next()) {
                 opcion = new Opciones();
-                opcion.setIdOpcion(rs.getInt("idNodo"));
+                opcion.setIdOpcion(rs.getInt("idOpcion"));
                 opcion.setTexto(rs.getString("texto"));
                 opcion.setColor(rs.getString("color"));
                 opcion.setIdNodo_Padre(rs.getInt("idNodo_Padre"));

@@ -21,7 +21,7 @@ public class Nodos {
     public String getReferencias() {return referencias;}
     public int getIdEstandar() {return idEstandar;}
     
-	public void setIdNodo(int idNodo) {this.idNodo = idNodo;}
+    public void setIdNodo(int idNodo) {this.idNodo = idNodo;}
     public void setTitulo(String titulo) {this.titulo = titulo;}
     public void setTexto(String texto) {this.texto = texto;}
     public void setIdImagen(int idImagen) {this.idImagen = idImagen;}

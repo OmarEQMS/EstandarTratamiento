@@ -36,7 +36,7 @@ public class EstandaresServicio implements IEstandaresServicio{
     @Override
     public List<Estandares> getEstandares() {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM persona";
+        String sql = "SELECT * FROM estandares";
         List<Estandares> estandares = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

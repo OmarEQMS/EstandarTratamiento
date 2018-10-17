@@ -25,11 +25,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
-@WebServlet(name = "Visualizacion", urlPatterns = {"/Visualizacion"})
+@WebServlet(name = "VisualizacionController", urlPatterns = {"/VisualizacionController"})
 public class VisualizacionController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {       
+        response.setContentType("text/html;charset=UTF-8");
         String key = request.getParameter("key");
         
         switch (key){
@@ -97,7 +98,6 @@ public class VisualizacionController extends HttpServlet {
                 out.print(json.toJson(opcion));
                 break;
             }
-                    
         
         }
     }
