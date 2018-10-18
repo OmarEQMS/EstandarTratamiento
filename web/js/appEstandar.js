@@ -31,6 +31,10 @@ $(document).ready(function () {
         }
     });
 
+    $("body").on("click", ".estandar", function(){
+        $("#nombreEstandar").html($(this).html());
+    });
+        
     $("body").on("click", ".estandar, .opcion", function(){
         var idN = $(this).data("id"); 
        $.ajax({
@@ -44,6 +48,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#nodo").html(response.texto);
+                $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));
             },
             error: function (xhr) {
 
@@ -70,7 +75,8 @@ $(document).ready(function () {
             }
         });
         
-        $("#nombreEstandar").html($(this).html());
+        $("#imgNodo").hide();
+        
         $("#log").hide();
         $("#content").show();
         
