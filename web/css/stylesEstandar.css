@@ -16,7 +16,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background: #b8bbc5;
+    background: #e1e8fe;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -58,16 +58,25 @@ body {
     font-family: 'Poppins', sans-serif;  
 }
 
-<<<<<<< HEAD
+
 /*Author: Raul Orihuela*/
+.whiteBackground{
+    background-color: #ffffff;
+}
+.pinkBackground{
+    background-color: #ffe1ee;
+}
 .baseBorder{
     border-style: solid;
     border-color: #ff589e;
     border-width: 3px;
     color:#550093;
 }
-.myBackground{
-    background-color: #ffffff;
+.alternateBorder{
+    border-style: solid;
+    border-color: #819efc;
+    border-width: 3px;
+    color:#550093;
 }
 .contrastColor{
     color:#550093;
@@ -77,8 +86,21 @@ body {
     color:#b958ff;
 }
 /*Author: Raul Orihuela*/
-=======
+
 #imgNodo{
     width: 50%;
 }
->>>>>>> origin/Omar
+.historialDecisiones{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+/*.historialDecisiones::-webkit-scrollbar{
+    display: none;
+}*/
+.historialDecisionesBoton{
+    display: inline-block;
+    margin: 3px;
+    padding: 0px 4px 0px 0px;
+}
+/*Author: Raul Orihuela*/
