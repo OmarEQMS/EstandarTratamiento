@@ -23,15 +23,17 @@
     <script src="js/appEstandar.js"></script>
     <link rel="stylesheet" href="css/stylesEstandar.css">
 
+    //<script src="js/setColors.js"></script>
+
 </head>
 
 <body>
 
     <div class="wrapper">
         <!-- SIDEBAR -->
-        <div id="menu">
+        <div id="menu" class = "algoritmosFondo">
             <!-- MENU -->
-            <div class="navbar barrita">
+            <div class="navbar barrita algoritmosBorde">
                     <div class="container-fluid">
                         <button data-id="content" class="btn change">
                             <i class="fas fa-align-justify"></i>
@@ -46,9 +48,9 @@
         </div>
 
         <!-- CONTENIDO PRINCIPAL  -->
-        <div id="content" class = "pinkBackground">
+        <div id="content" class = "nodoFondo">
             <!-- MENU -->
-            <div class="navbar barrita baseBorder">
+            <div class="navbar barrita nodoBorde">
                 <div class="container-fluid">
                     <button data-id="log" class="btn change">
                         <i class="fas fa-align-justify"></i>
@@ -59,7 +61,7 @@
             </div>
 
             <!--CARUSEL DE OPCIONES-->
-            <div class="navbar baseBorder whiteBackground ml-3 mr-3">
+            <div class="navbar nodoBorde whiteBackground ml-3 mr-3">
                 <div class="historialDecisiones">
                     <div class = "card historialDecisionesBoton">
                         <button class="btn"><i class="fas fa-chevron-left"></i></button>
@@ -69,9 +71,9 @@
             </div>
 
             <!-- PREGUNTAS -->
-            <div class="card title mt-3 baseBorder ml-3 mr-3">
+            <div class="card title mt-3 nodoBorde ml-3 mr-3">
                 <div class="card-body">
-                    <div class="card title mt-3" style="border-color: #ff589e; border-width: 3px;">
+                    <div class="card title mt-3 nodoBorde">
                         <div class="card-body text-center">
                             <div><img id="imgNodo" src=""></div>                            
                             <div id="nodo"></div>

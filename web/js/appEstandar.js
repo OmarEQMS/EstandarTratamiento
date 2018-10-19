@@ -81,5 +81,6 @@ $(document).ready(function () {
         $("#content").show();
         
     });
-
+    setColors(330,"nodoFondo","nodoBorde");
+    setColors(270,"algoritmosFondo","algoritmosBorde");
 });
