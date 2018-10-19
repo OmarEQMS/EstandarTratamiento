@@ -15,7 +15,7 @@ public class NodosServicio implements INodosServicio{
     @Override
     public Nodos getNodo(int idNodo) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM nodos WHERE(idNodo=?)";
+        String sql = "SELECT * FROM Nodos WHERE(idNodo=?)";
         Nodos nodo = new Nodos();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -41,7 +41,7 @@ public class NodosServicio implements INodosServicio{
     @Override
     public List<Nodos> getNodos(int idEstandar) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM nodos WHERE(idEstandar=?)";
+        String sql = "SELECT * FROM Nodos WHERE(idEstandar=?)";
         List<Nodos> nodos = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

@@ -6,7 +6,7 @@
 	 version="3.1">
     
     <welcome-file-list>
-        <welcome-file>estandar.html</welcome-file>
+        <welcome-file>acceso.html</welcome-file>
     </welcome-file-list>
     
     <session-config>

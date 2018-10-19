@@ -14,7 +14,7 @@ public class OpcionesServicio implements IOpcionesServicio{
     @Override
     public Opciones getOpcion(int idOpcion) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM opciones WHERE(idOpcion=?)";
+        String sql = "SELECT * FROM Opciones WHERE(idOpcion=?)";
         Opciones opcion = new Opciones();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class OpcionesServicio implements IOpcionesServicio{
     @Override
     public List<Opciones> getOpciones(int idNodo) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM opciones WHERE(idNodo_Padre=?)";
+        String sql = "SELECT * FROM Opciones WHERE(idNodo_Padre=?)";
         List<Opciones> opciones = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

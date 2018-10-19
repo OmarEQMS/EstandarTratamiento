@@ -7,7 +7,7 @@ public class Conexion {
     
     public static Connection getConnection(){
         
-        String cadena = "jdbc:mysql://omarquinteroms.xyz:3306/estandartratamiento?user=semestrei&password=semestrei2018!";
+        String cadena = "jdbc:mysql://omarquinteroms.xyz:3306/EstandarTratamiento?user=semestrei&password=semestrei2018!";
         
         Connection connection=null;
         try{

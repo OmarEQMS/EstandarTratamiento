@@ -1,0 +1,98 @@
+/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700');*/
+
+body {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height: 100vh;
+  background-color: #ffe1ee;
+}
+
+.formulario {
+  width: 100%;
+  max-width: 450px;
+  padding: 50px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.8);
+  -webkit-box-shadow: 1px 0px 29px -9px rgba(0,0,0,0.17);
+  -moz-box-shadow: 1px 0px 29px -9px rgba(0,0,0,0.17);
+  box-shadow: 1px 0px 29px -9px rgba(0,0,0,0.17);
+}
+
+/*Author: Raul Orihuela*/
+.whiteBackground{
+    background-color: #ffffff;
+}
+.pinkBackground{
+    background-color: #ffe1ee;
+}
+.baseBorder{
+    border-style: solid;
+    border-color: #ff589e;
+    border-width: 3px;
+    color:#550093;
+}
+.alternateBorder{
+    border-style: solid;
+    border-color: #819efc;
+    border-width: 3px;
+    color:#550093;
+}
+.contrastColor{
+    color:#550093;
+}
+.noBorder{
+    border-style: none;
+    color:#b958ff;
+}
+/*Author: Raul Orihuela*/
+
+#imgNodo{
+    width: 50%;
+}
+.historialDecisiones{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+/*.historialDecisiones::-webkit-scrollbar{
+    display: none;
+}*/
+.historialDecisionesBoton{
+    display: inline-block;
+    margin: 3px;
+    padding: 0px 4px 0px 0px;
+}
+/*Author: Raul Orihuela*/
+
+
+.useFontAwesomeFamily::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    font-family: 'Roboto Condensed', "Font Awesome\ 5 Free" !important;
+}
+.useFontAwesomeFamily:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    font-family: 'Roboto Condensed', "Font Awesome\ 5 Free" !important;
+}
+.useFontAwesomeFamily::-moz-placeholder { /* Mozilla Firefox 19+ */
+    font-family: 'Roboto Condensed', "Font Awesome\ 5 Free" !important;
+    font-size: 13px;
+}
+.useFontAwesomeFamily:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-family: 'Roboto Condensed', "Font Awesome\ 5 Free" !important;
+}
+.useFontAwesomeFamily::-ms-input-placeholder { /* Microsoft Edge */
+    font-family: 'Roboto Condensed', "Font Awesome\ 5 Free" !important;
+}
+.useFontAwesomeFamily::placeholder { /* Most modern browsers */
+    font-family: 'Roboto Condensed', "Font Awesome\ 5 Free", "Font Awesome 5 Regular" !important;
+    font-weight: 900;
+}

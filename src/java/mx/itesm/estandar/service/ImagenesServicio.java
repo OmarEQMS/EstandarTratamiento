@@ -14,7 +14,7 @@ public class ImagenesServicio implements IImagenesServicio{
     @Override
     public Imagenes getImagen(int idImagen) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM imagenes WHERE(idImagen=?)";
+        String sql = "SELECT * FROM Imagenes WHERE(idImagen=?)";
         Imagenes imagen = new Imagenes();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

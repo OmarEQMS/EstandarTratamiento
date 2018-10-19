@@ -13,7 +13,7 @@ public class EstandaresServicio implements IEstandaresServicio{
     @Override
     public Estandares getEstandar(int idEstandar) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM estandares WHERE(idEstandar=?)";
+        String sql = "SELECT * FROM Estandares WHERE(idEstandar=?)";
         Estandares estandar = new Estandares();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -24,6 +24,7 @@ public class EstandaresServicio implements IEstandaresServicio{
             estandar.setNombre(rs.getString("nombre"));
             estandar.setDescripcion(rs.getString("descripcion"));
             estandar.setIdNodo(rs.getInt("idNodo"));
+            estandar.setStatus(rs.getInt("status"));
             rs.close();
             ps.close();
             conn.close();
@@ -36,7 +37,7 @@ public class EstandaresServicio implements IEstandaresServicio{
     @Override
     public List<Estandares> getEstandares() {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM estandares";
+        String sql = "SELECT * FROM Estandares WHERE (status=1)";
         List<Estandares> estandares = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -48,6 +49,7 @@ public class EstandaresServicio implements IEstandaresServicio{
                 estandar.setNombre(rs.getString("nombre"));
                 estandar.setDescripcion(rs.getString("descripcion"));
                 estandar.setIdNodo(rs.getInt("idNodo"));
+                estandar.setStatus(rs.getInt("status"));
                 estandares.add(estandar);
             }
             rs.close();
