@@ -26,6 +26,7 @@ public class NodoServicio implements INodoServicio{
             nodo.setTitulo(rs.getString("titulo"));
             nodo.setTexto(rs.getString("texto"));
             nodo.setIdImagen(rs.getInt("idImagen"));
+            nodo.setColor(rs.getInt("color"));
             nodo.setReferencias(rs.getString("referencias"));
             nodo.setIdEstandar(rs.getInt("idEstandar"));
             rs.close();
@@ -53,6 +54,7 @@ public class NodoServicio implements INodoServicio{
                 nodo.setTitulo(rs.getString("titulo"));
                 nodo.setTexto(rs.getString("texto"));
                 nodo.setIdImagen(rs.getInt("idImagen"));
+                nodo.setColor(rs.getInt("color"));
                 nodo.setReferencias(rs.getString("referencias"));
                 nodo.setIdEstandar(rs.getInt("idEstandar"));
                 nodos.add(nodo);
