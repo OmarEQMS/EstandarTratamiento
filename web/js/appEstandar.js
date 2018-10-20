@@ -73,8 +73,9 @@ $(document).ready(function () {
             success: function (response) {
                 $("#opciones").html("");
                 for(var i = 0; i < response.length; i++){
-                    $("#opciones").append("<div class='card subtitle mt-3'><div data-id='" + response[i].idNodo_Sig + "' class='btn card-body opcion' style='border-color: #ff589e; border-width: 3px;'>" + response[i].texto + "</div></div>")
-                }                
+                    $("#opciones").append("<div class='card subtitle mt-3'><div data-id='" + response[i].idNodo_Sig + "' class='btn card-body opcion algoritmosBorde'>" + response[i].texto + "</div></div>")
+                }  
+                setColors(270,"algoritmosFondo","algoritmosBorde");
             },
             error: function (xhr) {
 

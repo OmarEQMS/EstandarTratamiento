@@ -58,35 +58,6 @@ body {
     font-family: 'Poppins', sans-serif;  
 }
 
-
-/*Author: Raul Orihuela*/
-.whiteBackground{
-    background-color: #ffffff;
-}
-.pinkBackground{
-    background-color: #ffe1ee;
-}
-.baseBorder{
-    border-style: solid;
-    border-color: #ff589e;
-    border-width: 3px;
-    color:#550093;
-}
-.alternateBorder{
-    border-style: solid;
-    border-color: #819efc;
-    border-width: 3px;
-    color:#550093;
-}
-.contrastColor{
-    color:#550093;
-}
-.noBorder{
-    border-style: none;
-    color:#b958ff;
-}
-/*Author: Raul Orihuela*/
-
 #imgNodo{
     width: 50%;
 }
@@ -96,12 +67,9 @@ body {
     white-space: nowrap;
     -webkit-overflow-scrolling : auto;
 }
-/*.historialDecisiones::-webkit-scrollbar{
-    display: none;
-}*/
+
 .historialDecisionesBoton{
     display: inline-block;
     margin: 3px;
     padding: 0px 4px 0px 0px;
 }
-/*Author: Raul Orihuela*/
