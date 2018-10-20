@@ -1,7 +1,7 @@
 package mx.itesm.estandar.bean;
 import java.io.InputStream;
 
-public class Imagenes {
+public class Imagen {
     private int idImagen;
     private InputStream imagen;
 

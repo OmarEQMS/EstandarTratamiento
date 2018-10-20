@@ -13,14 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mx.itesm.estandar.bean.Estandares;
-import mx.itesm.estandar.bean.Imagenes;
-import mx.itesm.estandar.bean.Nodos;
-import mx.itesm.estandar.bean.Opciones;
-import mx.itesm.estandar.service.EstandaresServicio;
-import mx.itesm.estandar.service.ImagenesServicio;
-import mx.itesm.estandar.service.NodosServicio;
-import mx.itesm.estandar.service.OpcionesServicio;
+import mx.itesm.estandar.bean.Estandar;
+import mx.itesm.estandar.bean.Imagen;
+import mx.itesm.estandar.bean.Nodo;
+import mx.itesm.estandar.bean.Opcion;
+import mx.itesm.estandar.service.EstandarServicio;
+import mx.itesm.estandar.service.ImagenServicio;
+import mx.itesm.estandar.service.NodoServicio;
+import mx.itesm.estandar.service.OpcionServicio;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
@@ -35,8 +35,8 @@ public class VisualizacionController extends HttpServlet {
         
         switch (key){
             case "GetEstandares":{
-                EstandaresServicio es = new EstandaresServicio();
-                List<Estandares> estandares = es.getEstandares();
+                EstandarServicio es = new EstandarServicio();
+                List<Estandar> estandares = es.getEstandares();
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
@@ -46,8 +46,8 @@ public class VisualizacionController extends HttpServlet {
             
             case "GetEstandar":{
                 int id = Integer.parseInt(request.getParameter("id")); //idEstandar
-                EstandaresServicio es = new EstandaresServicio();
-                Estandares estandar = es.getEstandar(id);
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = es.getEstandar(id);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
@@ -57,8 +57,8 @@ public class VisualizacionController extends HttpServlet {
             
             case "GetNodo":{
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
-                NodosServicio ns = new NodosServicio();
-                Nodos nodos = ns.getNodo(id);
+                NodoServicio ns = new NodoServicio();
+                Nodo nodos = ns.getNodo(id);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
@@ -68,8 +68,8 @@ public class VisualizacionController extends HttpServlet {
             
             case "GetImagen":{
                 int id = Integer.parseInt(request.getParameter("id")); //idImagen    
-                ImagenesServicio is = new ImagenesServicio();
-                Imagenes imagen = is.getImagen(id);
+                ImagenServicio is = new ImagenServicio();
+                Imagen imagen = is.getImagen(id);
                 byte[] bytes = IOUtils.toByteArray(imagen.getImagen());
                 String base64String = Base64.getEncoder().encodeToString(bytes);
                 PrintWriter out = response.getWriter();                
@@ -79,8 +79,8 @@ public class VisualizacionController extends HttpServlet {
             
             case "GetOpcionesPorNodo":{
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
-                OpcionesServicio os = new OpcionesServicio();
-                List<Opciones> opciones = os.getOpciones(id);
+                OpcionServicio os = new OpcionServicio();
+                List<Opcion> opciones = os.getOpciones(id);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
@@ -90,8 +90,8 @@ public class VisualizacionController extends HttpServlet {
             
             case "GetOpcion":{
                 int id = Integer.parseInt(request.getParameter("id")); //idOpcion 
-                OpcionesServicio os = new OpcionesServicio();
-                Opciones opcion = os.getOpcion(id);
+                OpcionServicio os = new OpcionServicio();
+                Opcion opcion = os.getOpcion(id);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();

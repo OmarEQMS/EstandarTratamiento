@@ -1,11 +1,11 @@
 package mx.itesm.estandar.bean;
 
-public class Estandares {
+public class Estandar {
     private int idEstandar;
     private String nombre;
     private String descripcion;
     private int idNodo;
-    private int status;
+    private int estatus;
         
     @Override
     public String toString() {return "Estandares{" + "nombre=" + nombre + '}';}
@@ -14,12 +14,12 @@ public class Estandares {
     public String getNombre() {return nombre;}
     public String getDescripcion() {return descripcion;}
     public int getIdNodo() {return idNodo;}
-    public int getStatus() {return status;}
+    public int getEstatus() {return estatus;}
     
     public void setIdEstandar(int idEstandar) {this.idEstandar = idEstandar;}
     public void setNombre(String nombre) {this.nombre = nombre;}
     public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
     public void setIdNodo(int idNodo) {this.idNodo = idNodo;}
-    public void setStatus(int status) {this.status = status;}
+    public void setEstatus(int status) {this.estatus = estatus;}
     
 }

@@ -5,54 +5,52 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import mx.itesm.estandar.bean.Nodos;
-import mx.itesm.estandar.bean.Opciones;
+import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.util.Conexion;
 
-public class OpcionesServicio implements IOpcionesServicio{
+public class EstandarServicio implements IEstandarServicio{
 
     @Override
-    public Opciones getOpcion(int idOpcion) {
+    public Estandar getEstandar(int idEstandar) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM Opciones WHERE(idOpcion=?)";
-        Opciones opcion = new Opciones();
+        String sql = "SELECT * FROM Estandar WHERE(idEstandar=?)";
+        Estandar estandar = new Estandar();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, idOpcion);
+            ps.setInt(1, idEstandar);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            opcion.setIdOpcion(rs.getInt("idNodo"));
-            opcion.setTexto(rs.getString("texto"));
-            opcion.setColor(rs.getString("color"));
-            opcion.setIdNodo_Padre(rs.getInt("idNodo_Padre"));
-            opcion.setIdNodo_Sig(rs.getInt("idNodo_Sig"));
-            conn.close();
+            estandar.setIdEstandar(rs.getInt("idEstandar"));
+            estandar.setNombre(rs.getString("nombre"));
+            estandar.setDescripcion(rs.getString("descripcion"));
+            estandar.setIdNodo(rs.getInt("idNodo"));
+            estandar.setEstatus(rs.getInt("estatus"));
+            rs.close();
             ps.close();
             conn.close();
         } catch (Exception ex) {
             System.out.println(this.getClass().toString().concat(ex.getMessage()));
         }
-        return opcion;
+        return estandar;
     }
 
     @Override
-    public List<Opciones> getOpciones(int idNodo) {
+    public List<Estandar> getEstandares() {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM Opciones WHERE(idNodo_Padre=?)";
-        List<Opciones> opciones = new ArrayList<>();
+        String sql = "SELECT * FROM Estandar WHERE (estatus=1)";
+        List<Estandar> estandares = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, idNodo);
             ResultSet rs = ps.executeQuery();
-            Opciones opcion;
+            Estandar estandar;
             while (rs.next()) {
-                opcion = new Opciones();
-                opcion.setIdOpcion(rs.getInt("idOpcion"));
-                opcion.setTexto(rs.getString("texto"));
-                opcion.setColor(rs.getString("color"));
-                opcion.setIdNodo_Padre(rs.getInt("idNodo_Padre"));
-                opcion.setIdNodo_Sig(rs.getInt("idNodo_Sig"));
-                opciones.add(opcion);
+                estandar = new Estandar();
+                estandar.setIdEstandar(rs.getInt("idEstandar"));
+                estandar.setNombre(rs.getString("nombre"));
+                estandar.setDescripcion(rs.getString("descripcion"));
+                estandar.setIdNodo(rs.getInt("idNodo"));
+                estandar.setEstatus(rs.getInt("estatus"));
+                estandares.add(estandar);
             }
             rs.close();
             ps.close();
@@ -60,21 +58,21 @@ public class OpcionesServicio implements IOpcionesServicio{
         } catch (Exception ex) {
             System.out.println(this.getClass().toString().concat(ex.getMessage()));
         }
-        return opciones;
+        return estandares;
     }
 
     @Override
-    public int saveOpcion(Opciones opcion) {
+    public int saveEstandar(Estandar estandar) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean deleteOpcion(int idOpcion) {
+    public boolean deleteEstandar(int idEstandar) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean updateOpcion(Opciones opcion) {
+    public boolean updateEstandar(Estandar estandar) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

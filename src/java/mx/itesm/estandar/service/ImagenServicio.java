@@ -5,17 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import mx.itesm.estandar.bean.Imagenes;
-import mx.itesm.estandar.bean.Nodos;
+import mx.itesm.estandar.bean.Imagen;
+import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.util.Conexion;
 
-public class ImagenesServicio implements IImagenesServicio{
+public class ImagenServicio implements IImagenServicio{
 
     @Override
-    public Imagenes getImagen(int idImagen) {
+    public Imagen getImagen(int idImagen) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM Imagenes WHERE(idImagen=?)";
-        Imagenes imagen = new Imagenes();
+        String sql = "SELECT * FROM Imagen WHERE(idImagen=?)";
+        Imagen imagen = new Imagen();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idImagen);
@@ -33,7 +33,7 @@ public class ImagenesServicio implements IImagenesServicio{
     }
 
     @Override
-    public int saveImagen(Imagenes imagen) {
+    public int saveImagen(Imagen imagen) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -43,7 +43,7 @@ public class ImagenesServicio implements IImagenesServicio{
     }
 
     @Override
-    public boolean updateImagen(Imagenes imagen) {
+    public boolean updateImagen(Imagen imagen) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

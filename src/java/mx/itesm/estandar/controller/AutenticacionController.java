@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.itesm.estandar.controller;
 
 import com.google.gson.Gson;
@@ -14,36 +9,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mx.itesm.estandar.bean.Estandares;
-import mx.itesm.estandar.service.EstandaresServicio;
-import mx.itesm.estandar.service.PasswordsServicio;
+import mx.itesm.estandar.bean.Estandar;
+import mx.itesm.estandar.bean.Usuario;
+import mx.itesm.estandar.service.EstandarServicio;
+import mx.itesm.estandar.service.UsuarioServicio;
 
-/**
- *
- * @author quint
- */
 @WebServlet(name = "AutenticacionController", urlPatterns = {"/Estandar"})
 public class AutenticacionController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         String pass = request.getParameter("pass");
         
-        PasswordsServicio ps = new PasswordsServicio();
-        if(ps.verificarVisualizacion(pass)){
+        UsuarioServicio us = new UsuarioServicio();
+        Usuario usuario = new Usuario();
+        usuario.setPassword(pass);
+        usuario = us.autenticar(usuario);
+        
+        if(usuario.getPerfil().equals("visualizacion")){
             request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response); return;
-        }else if(ps.verificarGestion(pass)){
+        }else if(usuario.getPerfil().equals("gestion")){
             request.getRequestDispatcher("acceso.html").forward(request, response); return;
         }else{
             request.getRequestDispatcher("acceso.html").forward(request, response); return;
