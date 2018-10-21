@@ -10,6 +10,16 @@ public class Nodo {
     private String referencias;
     private int idEstandar;
 
+    public Nodo() {
+        this.idNodo = 0;
+        this.titulo = "";
+        this.texto = "";
+        this.idImagen = 0;
+        this.color = 0;
+        this.referencias = "";
+        this.idEstandar = 0;
+    }
+    
     @Override
     public String toString() {return "Nodos{" + "titulo=" + titulo + '}';}  
     

@@ -4,6 +4,11 @@ public class Usuario {
     private String perfil;
     private String password;
 
+    public Usuario() {
+        this.perfil = "";
+        this.password = "";
+    }
+    
     @Override
     public String toString() { return "Password{" + "perfil=" + perfil + '}'; }
 

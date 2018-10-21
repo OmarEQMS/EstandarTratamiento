@@ -7,6 +7,14 @@ public class Opcion {
     private int idNodo_Padre;
     private int idNodo_Sig;
 
+    public Opcion() {
+        this.idOpcion = 0;
+        this.texto = "";
+        this.historial = "";
+        this.idNodo_Padre = 0;
+        this.idNodo_Sig = 0;
+    }
+    
     @Override
     public String toString() {return "Opciones{" + "texto=" + texto + '}';}   
     

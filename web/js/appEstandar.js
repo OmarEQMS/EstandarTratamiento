@@ -73,11 +73,13 @@ $(document).ready(function () {
         CargarNodo(idN);        
     });
     
+    var color = 0;
     function CargarNodo(idN){
         $("#imgNodo").attr("src", "");
         $("#nodo").html("");
-        $("#imgNodo").hide();
-       $.ajax({
+        $("#imgNodo").hide();        
+        
+        $.ajax({
             url: "VisualizacionController",
             method: "POST",
             cache: false,
@@ -91,14 +93,18 @@ $(document).ready(function () {
                 $("#referencias").html(response.referencias);
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#nodo").html(response.texto);
-                $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));                
-                if(response.idImagen!=0){GetNodoImage(response.idImagen);}else{$("#imgNodo").hide();}                
+                $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));   
+                color = parseInt(response.color);
+                if(response.idImagen!=0){GetNodoImage(response.idImagen);}else{$("#imgNodo").hide();} 
+                OpcionesNodo(idN);
             },
             error: function (xhr) {
 
             }
         });
-        
+    }
+    
+    function OpcionesNodo(idN){        
         $("#opciones").html("");
         $(".nodoFondo").css("background-color", "#fff");
         $(".nodoBorde").css("border-width", "0px");
@@ -116,20 +122,19 @@ $(document).ready(function () {
                     for(var i = 0; i < response.length; i++){
                         $("#opciones").append("<div class='card subtitle mt-3'><div data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde'>" + response[i].texto + "</div></div>")
                     }
-                    setColors(330,"nodoFondo","nodoBorde");
+                    setColors(color,"nodoFondo","nodoBorde");                   
                 }else{
                     //$("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verFlujo' class='btn card-body'>Ver Flujo</div></div>")
                     $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verEstandares' class='btn card-body'>Regresar a Estandares</div></div>")
-                    setColors(330,"nodoFondo","nodoBorde");
+                    setColors(color,"nodoFondo","nodoBorde");
                 }
+                $("#menu").hide();
+                $("#content").show();
             },
             error: function (xhr) {
 
             }
         });
-        
-        $("#menu").hide();
-        $("#content").show();
     }
     
     $("body").on("click", ".infoEstandar", function(){

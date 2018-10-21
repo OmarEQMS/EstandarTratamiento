@@ -5,6 +5,11 @@ public class Imagen {
     private int idImagen;
     private InputStream imagen;
 
+    public Imagen() {
+        this.idImagen = 0;
+        //this.imagen = ;
+    }
+
     @Override
     public String toString() {return "Imagenes{" + "idImagen=" + idImagen + '}';}    
     

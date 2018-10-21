@@ -13,6 +13,7 @@ import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.bean.Usuario;
 import mx.itesm.estandar.service.EstandarServicio;
 import mx.itesm.estandar.service.UsuarioServicio;
+import mx.itesm.estandar.service.VisitasServicio;
 
 @WebServlet(name = "AutenticacionController", urlPatterns = {"/Estandar"})
 public class AutenticacionController extends HttpServlet {
@@ -29,6 +30,7 @@ public class AutenticacionController extends HttpServlet {
         usuario = us.autenticar(usuario);
         
         if(usuario.getPerfil().equals("visualizacion")){
+            VisitasServicio vs = new VisitasServicio(); vs.nuevaVisita();
             request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response); return;
         }else if(usuario.getPerfil().equals("gestion")){
             request.getRequestDispatcher("acceso.html").forward(request, response); return;

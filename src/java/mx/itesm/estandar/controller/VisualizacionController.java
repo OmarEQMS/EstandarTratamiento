@@ -87,17 +87,6 @@ public class VisualizacionController extends HttpServlet {
                 out.print(json.toJson(opciones));
                 break;
             }
-            
-            case "GetOpcion":{
-                int id = Integer.parseInt(request.getParameter("id")); //idOpcion 
-                OpcionServicio os = new OpcionServicio();
-                Opcion opcion = os.getOpcion(id);
-                
-                PrintWriter out = response.getWriter();
-                Gson json = new Gson();
-                out.print(json.toJson(opcion));
-                break;
-            }
         
         }
     }

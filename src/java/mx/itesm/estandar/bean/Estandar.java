@@ -6,7 +6,15 @@ public class Estandar {
     private String descripcion;
     private int idNodo;
     private int estatus;
-        
+
+    public Estandar() {
+        this.idEstandar = 0;
+        this.nombre = "";
+        this.descripcion = "";
+        this.idNodo = 0;
+        this.estatus = 0;
+    }
+    
     @Override
     public String toString() {return "Estandares{" + "nombre=" + nombre + '}';}
    
