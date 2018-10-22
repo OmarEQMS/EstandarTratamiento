@@ -1,0 +1,139 @@
+/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700');
+
+body {
+    background: #fafafa;
+    font-family: 'Nunito Sans';
+}*/
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#menu {
+    width: 240px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #2c2f39;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: auto;
+    -webkit-box-shadow: 4px 0px 32px -8px rgba(0,0,0,0.40);
+    -moz-box-shadow: 4px 0px 32px -8px rgba(0,0,0,0.40);
+    box-shadow: 4px 0px 32px -8px rgba(0,0,0,0.40);
+}
+
+#menu.active {
+    margin-left: -250px;
+}
+
+#content {
+    background: #fafafa;
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+
+#barrita {
+    padding: 15px 10px;
+    background:#fff !important;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+#change{
+    background-color: white;
+    color:#2f3242;
+}
+#change:hover{
+    color: #ec5865 !important; 
+}
+
+/*Menu Opciones*/
+
+#components{
+    padding-top: 50px;
+}
+
+#components li{ /*mas espaciados*/
+    padding-left: 10px;
+    padding-top: 5px;
+    transition: all 0.3ms;
+}
+
+#components li:hover{ /*Borde rojito on hover*/
+    border-left: 3px solid #ce4f59;
+    background: #16181c;
+}
+
+#components li a{ /*Estilo de letra*/
+    font-size: 14px !important;
+    color: #dbdbdb;
+    margin-bottom: 4px;
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#components li a:hover, #components li a:focus { /*Para que no lo subraye*/
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#components li a i{ /*Botones margen FA*/
+    margin-right: 10px;
+    color:#dbdbdb;
+    font-size: 12px;
+    border: 0.5px solid rgba(156, 157, 165, 0.6);
+    padding: 8px;
+    border-radius: 4px;
+    width: 15%;
+    text-align: center;
+}
+
+
+@media (max-width: 900px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 250px);
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+/*CODIGO YO*/
+
+.title{    
+    font-size: 20px;
+    color:#39407a;
+    text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
+    font-family: 'Poppins', sans-serif;
+}
+.subtitle{
+    font-size: 17px;
+    text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
+    font-family: 'Poppins', sans-serif;  
+}
+
+
