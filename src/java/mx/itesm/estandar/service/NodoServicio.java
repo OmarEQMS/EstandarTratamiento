@@ -70,17 +70,71 @@ public class NodoServicio implements INodoServicio{
 
     @Override
     public int saveNodo(Nodo nodo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "INSERT INTO Nodo (titulo, texto, idImagen, color, referencias, idEstandar) VALUES (?,?,?,?,?,?)";
+        int id = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);            
+            ps.setString(1, nodo.getTitulo());
+            ps.setString(2, nodo.getTexto());
+            ps.setInt(3, nodo.getIdImagen());
+            ps.setInt(4, nodo.getColor());
+            ps.setString(5, nodo.getReferencias());
+            ps.setInt(6, nodo.getIdEstandar());
+            ps.executeUpdate();    
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return id;
     }
 
     @Override
     public boolean deleteNodo(int idNodo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "DELETE FROM Nodo WHERE (idNodo=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);            
+            ps.setInt(1, idNodo);
+            ps.execute();    
+            ps.close();
+            conn.close();
+            bool = true;
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
     }
 
     @Override
     public boolean updateNodo(Nodo nodo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Nodo SET titulo=?, texto=?, idImagen=?, color=?, referencias=?, idEstandar=?  WHERE (idNodo=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);            
+            ps.setString(1, nodo.getTitulo());
+            ps.setString(2, nodo.getTexto());
+            ps.setInt(3, nodo.getIdImagen());
+            ps.setInt(4, nodo.getColor());
+            ps.setString(5, nodo.getReferencias());
+            ps.setInt(6, nodo.getIdEstandar());
+            ps.setInt(7, nodo.getIdNodo());
+            ps.execute();    
+            ps.close();
+            conn.close();
+            bool = true;
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
     }
     
 }

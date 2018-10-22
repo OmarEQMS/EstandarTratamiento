@@ -4,4 +4,5 @@ import mx.itesm.estandar.bean.Usuario;
 
 public interface IVisitasServicio {
     public void nuevaVisita();
+    public int getVisitas();
 }

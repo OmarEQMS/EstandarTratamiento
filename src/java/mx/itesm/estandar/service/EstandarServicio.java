@@ -3,10 +3,12 @@ package mx.itesm.estandar.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.util.Conexion;
+import static mx.itesm.estandar.util.Conexion.getConnection;
 
 public class EstandarServicio implements IEstandarServicio{
 
@@ -63,17 +65,67 @@ public class EstandarServicio implements IEstandarServicio{
 
     @Override
     public int saveEstandar(Estandar estandar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "INSERT INTO Estandar (nombre, descripcion, idNodo, estatus) VALUES (?,?,?,?)";
+        int id = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, estandar.getNombre());
+            ps.setString(2, estandar.getDescripcion());
+            ps.setInt(3, estandar.getIdNodo());
+            ps.setInt(4, estandar.getEstatus());
+            ps.executeUpdate();    
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return id;    
     }
 
     @Override
     public boolean deleteEstandar(int idEstandar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "DELETE FROM Estandar WHERE (idEstandar=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idEstandar);
+            ps.execute();            
+            ps.close();
+            conn.close();
+            bool = true;
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool; 
     }
 
     @Override
     public boolean updateEstandar(Estandar estandar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Estandar SET nombre=?, descripcion=?, idNodo=?, estatus=? WHERE (idEstandar=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, estandar.getNombre());
+            ps.setString(2, estandar.getDescripcion());
+            ps.setInt(3, estandar.getIdNodo());
+            ps.setInt(4, estandar.getEstatus());
+            ps.setInt(5, estandar.getIdEstandar());
+            ps.execute();            
+            ps.close();
+            conn.close();
+            bool = true;
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;    
     }
     
 }

@@ -34,17 +34,59 @@ public class ImagenServicio implements IImagenServicio{
 
     @Override
     public int saveImagen(Imagen imagen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "INSERT INTO Imagen (imagen) VALUES (?)";
+        int id = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setBinaryStream(1, imagen.getImagen());
+            ps.executeUpdate();    
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return id;
     }
 
     @Override
     public boolean deleteImagen(int idImagen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "DELETE FROM Imagen WHERE (idImagen=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idImagen);
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
     }
 
     @Override
     public boolean updateImagen(Imagen imagen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Imagen SET imagen=? WHERE (idImagen=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setBinaryStream(1, imagen.getImagen());
+            ps.setInt(2, imagen.getIdImagen());
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
     }
     
 }

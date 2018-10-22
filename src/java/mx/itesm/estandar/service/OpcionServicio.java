@@ -21,7 +21,7 @@ public class OpcionServicio implements IOpcionServicio{
             ps.setInt(1, idOpcion);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            opcion.setIdOpcion(rs.getInt("idNodo"));
+            opcion.setIdOpcion(rs.getInt("idOpcion"));
             opcion.setTexto(rs.getString("texto"));
             opcion.setHistorial(rs.getString("historial"));
             opcion.setIdNodo_Padre(rs.getInt("idNodo_Padre"));
@@ -65,17 +65,66 @@ public class OpcionServicio implements IOpcionServicio{
 
     @Override
     public int saveOpcion(Opcion opcion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "INSERT INTO Opcion (texto, historial, idNodo_Padre, idNodo_Sig) VALUES (?,?,?,?)";
+        int id = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, opcion.getTexto());
+            ps.setString(2, opcion.getHistorial());
+            ps.setInt(3, opcion.getIdNodo_Padre());
+            ps.setInt(4, opcion.getIdNodo_Sig());
+            ps.executeUpdate();    
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return id;
     }
 
     @Override
     public boolean deleteOpcion(int idOpcion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "DELETE FROM Opcion WHERE (idOpcion=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idOpcion);
+            ps.execute();
+            ps.close();
+            conn.close();
+            bool = true;
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
     }
 
     @Override
     public boolean updateOpcion(Opcion opcion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Opcion SET texto=?, historial=?, idNodo_Padre=?, idNodo_Sig=? WHERE (idOpcion=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, opcion.getTexto());
+            ps.setString(2, opcion.getHistorial());
+            ps.setInt(3, opcion.getIdNodo_Padre());
+            ps.setInt(4, opcion.getIdNodo_Sig());
+            ps.setInt(5, opcion.getIdOpcion());
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
     }
     
 }
