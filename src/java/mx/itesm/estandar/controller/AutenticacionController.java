@@ -33,7 +33,7 @@ public class AutenticacionController extends HttpServlet {
             VisitasServicio vs = new VisitasServicio(); vs.nuevaVisita();
             request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response); return;
         }else if(usuario.getPerfil().equals("gestion")){
-            request.getRequestDispatcher("acceso.html").forward(request, response); return;
+            request.getRequestDispatcher("WEB-INF/gestion.html").forward(request, response); return;
         }else{
             request.getRequestDispatcher("acceso.html").forward(request, response); return;
         }
