@@ -29,4 +29,21 @@ public class UsuarioServicio implements IUsuarioServicio{
         return usuario;
     }
     
+    public boolean cambiar(Usuario usuario) {
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Usuario SET password=SHA2(?,224) WHERE (perfil=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, usuario.getPassword());
+            ps.setString(2, usuario.getPerfil());
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
+    }
+    
 }

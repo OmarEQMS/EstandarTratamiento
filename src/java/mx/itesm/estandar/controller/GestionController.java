@@ -22,13 +22,59 @@ public class GestionController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        String key = request.getParameter("key");
         
-        ImagenServicio is = new ImagenServicio();
-        Imagen imagen = is.getImagen(2);
-        is.deleteImagen(2);
-        
-        out.println("H");
+        switch (key){
+            //Eliminar
+            case "EliminarEstandar":{      
+                //EliminarNodos y Opciones
+                break;
+            }
+            case "EliminarNodo":{   
+                //Elminiar Opciones
+                break;
+            }
+            case "EliminarOpcion":{
+                
+                break;
+            }
+            
+            //Update
+            case "UpdateEstandar":{   
+                //Nombre, Descripcion, Color, Estatus
+                break;
+            }
+            case "UpdateNodo":{
+                //Titulo, Texto, Referencias
+                break;
+            }
+            case "UpdateOpcion":{
+                //Texto, Historial
+                break;
+            }
+            
+            //References
+            case "ReferenciarEstandar":{
+                //ID Estandar, ID Nodo
+                break;
+            }
+            case "ReferenciarOpcion":{
+                //ID Opcion, ID Nodo
+                break;
+            }
+            
+            //Imagen
+            case "SubirImagen":{
+                //Eliminar la Actual y subir la Nueva
+                break;
+            }
+            
+            //Password
+            case "CambiarPassword":{
+                //type param
+                break;
+            }
+        }
         
     }
 

@@ -6,4 +6,5 @@ import mx.itesm.estandar.bean.Usuario;
 
 public interface IUsuarioServicio {
     public Usuario autenticar(Usuario password);
+    public boolean cambiar(Usuario usuario);
 }

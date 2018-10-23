@@ -79,6 +79,17 @@ public class VisualizacionController extends HttpServlet {
                 break;
             }
             
+            case "GetNodosPorEstandar":{
+                int id = Integer.parseInt(request.getParameter("id")); //idEstandar
+                NodoServicio ns = new NodoServicio();
+                List<Nodo> nodos = ns.getNodos(id);
+                
+                PrintWriter out = response.getWriter();
+                Gson json = new Gson();
+                out.print(json.toJson(nodos));
+                break;
+            }
+            
             case "GetImagen":{
                 int id = Integer.parseInt(request.getParameter("id")); //idImagen    
                 ImagenServicio is = new ImagenServicio();
