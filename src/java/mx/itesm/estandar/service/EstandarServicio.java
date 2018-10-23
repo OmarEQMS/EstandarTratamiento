@@ -65,6 +65,25 @@ public class EstandarServicio implements IEstandarServicio{
         }
         return estandares;
     }
+    
+    @Override
+    public boolean updateEstandaresPorRaiz(int idNodo_Raiz_Past, int idNodo_Raiz) {
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Estandar SET idNodo=? WHERE (idNodo=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idNodo_Raiz);
+            ps.setInt(2, idNodo_Raiz_Past);
+            ps.execute();            
+            ps.close();
+            conn.close();
+            bool = true;
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;  
+    }
 
     @Override
     public int saveEstandar(Estandar estandar) {

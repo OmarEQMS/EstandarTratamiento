@@ -62,6 +62,24 @@ public class OpcionServicio implements IOpcionServicio{
         }
         return opciones;
     }
+    
+    @Override
+    public boolean updateOpcionesPorSig(int idNodoSigPast, int idNodoSig) {
+        Connection conn = Conexion.getConnection();
+        String sql = "UPDATE Opcion SET idNodo_Sig=? WHERE (idNodo_Sig=?)";
+        boolean bool = false;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idNodoSig);
+            ps.setInt(2, idNodoSigPast);
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(this.getClass().toString().concat(ex.getMessage()));
+        }
+        return bool;
+    }
 
     @Override
     public int saveOpcion(Opcion opcion) {

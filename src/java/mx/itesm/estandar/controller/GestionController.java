@@ -1,7 +1,9 @@
 package mx.itesm.estandar.controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,59 +25,96 @@ public class GestionController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String key = request.getParameter("key");
-        
-        switch (key){
+
+        switch (key) {
             //Eliminar
-            case "EliminarEstandar":{      
-                //EliminarNodos y Opciones
+            case "EliminarEstandar": {
+                //EliminarNodos (Imagenes) y Opciones
+                int id = Integer.parseInt(request.getParameter("id")); //IdEstandar
+                EliminarEstandar(id);
                 break;
             }
-            case "EliminarNodo":{   
-                //Elminiar Opciones
+            case "EliminarNodo": {
+                //Elminiar Opciones e Imagen
+                //Busco opciones o estandares con ese Nodo_Sig y lo pongo en 0
+                int id = Integer.parseInt(request.getParameter("id")); //IdNodo
+                EliminarNodo(id);
                 break;
             }
-            case "EliminarOpcion":{
-                
+            case "EliminarOpcion": {
+                int id = Integer.parseInt(request.getParameter("id")); //IdOpcion
+                EliminarOpcion(id);
                 break;
             }
-            
+
             //Update
-            case "UpdateEstandar":{   
+            case "UpdateEstandar": {
                 //Nombre, Descripcion, Color, Estatus
                 break;
             }
-            case "UpdateNodo":{
+            case "UpdateNodo": {
                 //Titulo, Texto, Referencias
                 break;
             }
-            case "UpdateOpcion":{
+            case "UpdateOpcion": {
                 //Texto, Historial
                 break;
             }
             
+            //Update
+            case "NewEstandar": {
+                //Nombre, Descripcion, Color, Estatus
+                break;
+            }
+            case "NewNodo": {
+                //Titulo, Texto, Referencias (IdEstandar)
+                break;
+            }
+            case "NewOpcion": {
+                //Texto, Historial (idNodo_Padre)
+                break;
+            }
+
             //References
-            case "ReferenciarEstandar":{
-                //ID Estandar, ID Nodo
+            case "ReferenciarEstandar": {
+                //ID Estandar, ID Nodo                
+                int id = Integer.parseInt(request.getParameter("id")); //IdEstandar
+                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = es.getEstandar(id);
+                //Busco opciones que referencien al idNodo Anterior y lo cambio
+                OpcionServicio os = new OpcionServicio();
+                os.updateOpcionesPorSig(estandar.getIdNodo(), idNodo);
+                //
+                estandar.setIdNodo(idNodo);
+                es.updateEstandar(estandar);
+                
                 break;
             }
-            case "ReferenciarOpcion":{
+            case "ReferenciarOpcion": {
                 //ID Opcion, ID Nodo
+                int id = Integer.parseInt(request.getParameter("id")); //IdOpcion
+                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
+                OpcionServicio os = new OpcionServicio();
+                Opcion opcion = os.getOpcion(id);
+                opcion.setIdNodo_Sig(idNodo);
+                os.updateOpcion(opcion);
                 break;
             }
-            
+
             //Imagen
-            case "SubirImagen":{
+            case "SubirImagen": {
                 //Eliminar la Actual y subir la Nueva
                 break;
             }
-            
+
             //Password
-            case "CambiarPassword":{
+            case "CambiarPassword": {
                 //type param
                 break;
             }
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -116,5 +155,40 @@ public class GestionController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
+    void EliminarEstandar(int id) {
+        NodoServicio ns = new NodoServicio();
+        List<Nodo> nodos = ns.getNodos(id);
+        for (int i = 0; i < nodos.size(); i++) {
+            EliminarNodo(nodos.get(i).getIdNodo());
+        }
+        EstandarServicio es = new EstandarServicio();
+        es.deleteEstandar(id);
+    }
+
+    void EliminarNodo(int id) {
+        EstandarServicio es = new EstandarServicio();
+        NodoServicio ns = new NodoServicio();
+        ImagenServicio is = new ImagenServicio();
+        OpcionServicio os = new OpcionServicio();
+    
+        Nodo nodo = ns.getNodo(id);
+        is.deleteImagen(nodo.getIdImagen());
+        //Busco opciones o estandares con ese Nodo_Sig y lo pongo en 0
+        os.updateOpcionesPorSig(id, 0);
+        es.updateEstandaresPorRaiz(id, 0);
+        //
+        List<Opcion> opciones = os.getOpciones(id);
+        for (int i = 0; i < opciones.size(); i++) {
+            EliminarOpcion(opciones.get(i).getIdOpcion());
+        }
+        //
+        ns.deleteNodo(id);
+    }
+    void EliminarOpcion(int id){
+        OpcionServicio os = new OpcionServicio();
+        os.deleteOpcion(id);
+    }
 
 }
