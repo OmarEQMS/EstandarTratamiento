@@ -4,6 +4,7 @@ public class Estandar {
     private int idEstandar;
     private String nombre;
     private String descripcion;
+    private int color;
     private int idNodo;
     private int estatus;
 
@@ -11,6 +12,7 @@ public class Estandar {
         this.idEstandar = 0;
         this.nombre = "";
         this.descripcion = "";
+        this.color = 0;
         this.idNodo = 0;
         this.estatus = 0;
     }
@@ -21,12 +23,14 @@ public class Estandar {
     public int getIdEstandar() {return idEstandar;}
     public String getNombre() {return nombre;}
     public String getDescripcion() {return descripcion;}
+    public int getColor() {return color;}
     public int getIdNodo() {return idNodo;}
     public int getEstatus() {return estatus;}
     
     public void setIdEstandar(int idEstandar) {this.idEstandar = idEstandar;}
     public void setNombre(String nombre) {this.nombre = nombre;}
     public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
+    public void setColor(int color) {this.color = color;}
     public void setIdNodo(int idNodo) {this.idNodo = idNodo;}
     public void setEstatus(int status) {this.estatus = estatus;}
     

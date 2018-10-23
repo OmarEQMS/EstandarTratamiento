@@ -25,6 +25,7 @@ public class EstandarServicio implements IEstandarServicio{
             estandar.setIdEstandar(rs.getInt("idEstandar"));
             estandar.setNombre(rs.getString("nombre"));
             estandar.setDescripcion(rs.getString("descripcion"));
+            estandar.setColor(rs.getInt("color"));
             estandar.setIdNodo(rs.getInt("idNodo"));
             estandar.setEstatus(rs.getInt("estatus"));
             rs.close();
@@ -37,12 +38,13 @@ public class EstandarServicio implements IEstandarServicio{
     }
 
     @Override
-    public List<Estandar> getEstandares() {
+    public List<Estandar> getEstandares(int estatus) {
         Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM Estandar WHERE (estatus=1)";
+        String sql = "SELECT * FROM Estandar WHERE (estatus=?)";
         List<Estandar> estandares = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, estatus);
             ResultSet rs = ps.executeQuery();
             Estandar estandar;
             while (rs.next()) {
@@ -50,6 +52,7 @@ public class EstandarServicio implements IEstandarServicio{
                 estandar.setIdEstandar(rs.getInt("idEstandar"));
                 estandar.setNombre(rs.getString("nombre"));
                 estandar.setDescripcion(rs.getString("descripcion"));
+                estandar.setColor(rs.getInt("color"));
                 estandar.setIdNodo(rs.getInt("idNodo"));
                 estandar.setEstatus(rs.getInt("estatus"));
                 estandares.add(estandar);
@@ -66,14 +69,15 @@ public class EstandarServicio implements IEstandarServicio{
     @Override
     public int saveEstandar(Estandar estandar) {
         Connection conn = Conexion.getConnection();
-        String sql = "INSERT INTO Estandar (nombre, descripcion, idNodo, estatus) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Estandar (nombre, descripcion, color, idNodo, estatus) VALUES (?,?,?,?,?)";
         int id = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, estandar.getNombre());
             ps.setString(2, estandar.getDescripcion());
-            ps.setInt(3, estandar.getIdNodo());
-            ps.setInt(4, estandar.getEstatus());
+            ps.setInt(3, estandar.getColor());
+            ps.setInt(4, estandar.getIdNodo());
+            ps.setInt(5, estandar.getEstatus());
             ps.executeUpdate();    
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -109,15 +113,16 @@ public class EstandarServicio implements IEstandarServicio{
     @Override
     public boolean updateEstandar(Estandar estandar) {
         Connection conn = Conexion.getConnection();
-        String sql = "UPDATE Estandar SET nombre=?, descripcion=?, idNodo=?, estatus=? WHERE (idEstandar=?)";
+        String sql = "UPDATE Estandar SET nombre=?, descripcion=?, color=?, idNodo=?, estatus=? WHERE (idEstandar=?)";
         boolean bool = false;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, estandar.getNombre());
             ps.setString(2, estandar.getDescripcion());
-            ps.setInt(3, estandar.getIdNodo());
-            ps.setInt(4, estandar.getEstatus());
-            ps.setInt(5, estandar.getIdEstandar());
+            ps.setInt(3, estandar.getColor());
+            ps.setInt(4, estandar.getIdNodo());
+            ps.setInt(5, estandar.getEstatus());
+            ps.setInt(6, estandar.getIdEstandar());
             ps.execute();            
             ps.close();
             conn.close();

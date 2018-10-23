@@ -26,7 +26,6 @@ public class NodoServicio implements INodoServicio{
             nodo.setTitulo(rs.getString("titulo"));
             nodo.setTexto(rs.getString("texto"));
             nodo.setIdImagen(rs.getInt("idImagen"));
-            nodo.setColor(rs.getInt("color"));
             nodo.setReferencias(rs.getString("referencias"));
             nodo.setIdEstandar(rs.getInt("idEstandar"));
             rs.close();
@@ -54,7 +53,6 @@ public class NodoServicio implements INodoServicio{
                 nodo.setTitulo(rs.getString("titulo"));
                 nodo.setTexto(rs.getString("texto"));
                 nodo.setIdImagen(rs.getInt("idImagen"));
-                nodo.setColor(rs.getInt("color"));
                 nodo.setReferencias(rs.getString("referencias"));
                 nodo.setIdEstandar(rs.getInt("idEstandar"));
                 nodos.add(nodo);
@@ -71,16 +69,15 @@ public class NodoServicio implements INodoServicio{
     @Override
     public int saveNodo(Nodo nodo) {
         Connection conn = Conexion.getConnection();
-        String sql = "INSERT INTO Nodo (titulo, texto, idImagen, color, referencias, idEstandar) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Nodo (titulo, texto, idImagen, referencias, idEstandar) VALUES (?,?,?,?,?)";
         int id = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);            
             ps.setString(1, nodo.getTitulo());
             ps.setString(2, nodo.getTexto());
             ps.setInt(3, nodo.getIdImagen());
-            ps.setInt(4, nodo.getColor());
-            ps.setString(5, nodo.getReferencias());
-            ps.setInt(6, nodo.getIdEstandar());
+            ps.setString(4, nodo.getReferencias());
+            ps.setInt(5, nodo.getIdEstandar());
             ps.executeUpdate();    
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -116,17 +113,16 @@ public class NodoServicio implements INodoServicio{
     @Override
     public boolean updateNodo(Nodo nodo) {
         Connection conn = Conexion.getConnection();
-        String sql = "UPDATE Nodo SET titulo=?, texto=?, idImagen=?, color=?, referencias=?, idEstandar=?  WHERE (idNodo=?)";
+        String sql = "UPDATE Nodo SET titulo=?, texto=?, idImagen=?, referencias=?, idEstandar=?  WHERE (idNodo=?)";
         boolean bool = false;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);            
             ps.setString(1, nodo.getTitulo());
             ps.setString(2, nodo.getTexto());
             ps.setInt(3, nodo.getIdImagen());
-            ps.setInt(4, nodo.getColor());
-            ps.setString(5, nodo.getReferencias());
-            ps.setInt(6, nodo.getIdEstandar());
-            ps.setInt(7, nodo.getIdNodo());
+            ps.setString(4, nodo.getReferencias());
+            ps.setInt(5, nodo.getIdEstandar());
+            ps.setInt(6, nodo.getIdNodo());
             ps.execute();    
             ps.close();
             conn.close();

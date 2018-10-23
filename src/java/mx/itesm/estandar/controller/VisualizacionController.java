@@ -35,8 +35,9 @@ public class VisualizacionController extends HttpServlet {
         
         switch (key){
             case "GetEstandares":{
+                int estatus = Integer.parseInt(request.getParameter("estatus"));                
                 EstandarServicio es = new EstandarServicio();
-                List<Estandar> estandares = es.getEstandares();
+                List<Estandar> estandares = es.getEstandares(estatus);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
@@ -55,14 +56,26 @@ public class VisualizacionController extends HttpServlet {
                 break;
             }
             
+            case "GetColor":{
+                int id = Integer.parseInt(request.getParameter("id")); //idNodo
+                NodoServicio ns = new NodoServicio();
+                Nodo nodo = ns.getNodo(id);
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = es.getEstandar(nodo.getIdEstandar());
+                
+                PrintWriter out = response.getWriter();
+                out.println(estandar.getColor());
+                break;
+            }
+            
             case "GetNodo":{
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 NodoServicio ns = new NodoServicio();
-                Nodo nodos = ns.getNodo(id);
+                Nodo nodo = ns.getNodo(id);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
-                out.print(json.toJson(nodos));
+                out.print(json.toJson(nodo));
                 break;
             }
             
