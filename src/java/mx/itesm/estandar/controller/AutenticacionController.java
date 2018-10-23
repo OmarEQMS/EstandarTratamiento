@@ -23,6 +23,9 @@ public class AutenticacionController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String pass = request.getParameter("pass");
+        if(pass==null){
+            request.getRequestDispatcher("acceso.html").forward(request, response); return;
+        }
         
         UsuarioServicio us = new UsuarioServicio();
         Usuario usuario = new Usuario();
