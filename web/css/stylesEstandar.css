@@ -29,6 +29,15 @@ body {
     right: 0;
 }
 
+#divHistorial {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .barrita {
     padding: 15px 10px;
     background:#fff !important;

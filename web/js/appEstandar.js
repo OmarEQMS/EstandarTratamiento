@@ -1,11 +1,32 @@
 $(document).ready(function () {
     //Inicio
     var historial = [];
+    var cargando = 0;
     $("#content").hide();
+    $("#divHistorial").hide();
+    $("#menu").show();
     $("#imgNodo").hide();
-    GetHistorial();
     CargarEstandares();
-    CargarHistorial(0);
+    GetHistorial();
+    if(historial.length!=0){
+        CargarHistorial(0);
+    }
+    var tablaHistorial = $('#tablaHistorial').DataTable({
+        responsive: false,
+        searching: false,
+        "paging": false,
+        "ordering": false,
+        dom: 'lBfrtip',
+        buttons: [{extend: 'excel',text: 'Exportar a Excel',className: 'btn-outline-success mr-3 btnExcel mt-3'},
+                  {extend: 'pdf',text: 'Exportar a PDF',className: 'btn-outline-info mr-3 btnPDF mt-3 '}
+        ],
+        "language": {
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sLoadingRecords": "Cargando...",
+            "sInfo": "",
+            "sInfoEmpty": ""
+        }
+    });
 
     //Cargar Estandares    
     function CargarEstandares() {
@@ -58,11 +79,37 @@ $(document).ready(function () {
             }
         });
     }
+    
+    //Cargar Historial
+    function CargarHistorialTabla(index) {
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetOpcion",
+                id: historial[index]
+            },
+            success: function (response) {
+                if (response.historial != "") {
+                    tablaHistorial.row.add([response.historial]).draw( false );
+                }
+                if (index != historial.length - 1) {
+                    CargarHistorialTabla(index+1);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
 
     //Cambio de Pantalla
     $(".change").on("click", function () {
         $("#menu").hide();
         $("#content").hide();
+        $("#divHistorial").hide();
         $("#" + $(this).data("id")).show();
     });
 
@@ -70,11 +117,16 @@ $(document).ready(function () {
     $("body").on("click", "#verEstandares", function () {
         $("#menu").show();
         $("#content").hide();
+        $("#divHistorial").hide();
     });
 
     //Imprimir el Flujo
     $("body").on("click", "#verFlujo", function () {
-
+        $("#menu").hide();
+        $("#content").hide();
+        $("#divHistorial").show();
+        tablaHistorial.clear().draw();
+        CargarHistorialTabla(0);
     });
 
     //Click en Boton Historial
@@ -91,8 +143,8 @@ $(document).ready(function () {
                 bool = false;
             }
         });
-        SaveHistorial();
         CargarNodo(idN);
+        SaveHistorial();
     });
 
     //Clic en un Estandar
@@ -111,23 +163,32 @@ $(document).ready(function () {
                     DeleteHistorial();
                     $(".historialDecisiones").html("");
                 }
-                SaveHistorial();
+                $("#menu").hide();
+                $("#divHistorial").hide();
+                $("#content").show();
                 CargarNodo(idN);
+                SaveHistorial();
             });
         } else {
+            $("#menu").hide();
+            $("#divHistorial").hide();
+            $("#content").show();
             CargarNodo(idN);
         }
     });
 
     //Clic en una Opcion
     $("body").on("click", ".opcion", function () {
+        if(cargando==1) return;
+        cargando = 1;
+        
         if ($(this).data("log") != "") {
             $(".historialDecisiones").html("<div data-id='" + $(this).data("idpadre") + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + $(this).data("log") + "&nbsp;</div>" + $(".historialDecisiones").html());
         }
         historial.push($(this).data("idopcion").toString());
-        SaveHistorial();
         var idN = $(this).data("id");
         CargarNodo(idN);
+        SaveHistorial();
     });
 
     //Cargar Nodo
@@ -209,9 +270,8 @@ $(document).ready(function () {
                     $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verFlujo' class='btn card-body'>Ver Flujo</div></div>")
                     $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verEstandares' class='btn card-body'>Regresar a Estandares</div></div>")
                     setColors(color, "nodoFondo", "nodoBorde");
-                }
-                $("#menu").hide();
-                $("#content").show();
+                }     
+                cargando=0;
             },
             error: function (xhr) {
 
