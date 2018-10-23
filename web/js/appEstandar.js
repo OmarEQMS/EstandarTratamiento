@@ -1,13 +1,14 @@
-$(document).ready(function () {    
+$(document).ready(function () {
     //Inicio
     var historial = [];
-    $("#content").hide();    
+    $("#content").hide();
     $("#imgNodo").hide();
+    GetHistorial();
     CargarEstandares();
-    CargarHistorial();
-   
+    CargarHistorial(0);
+
     //Cargar Estandares    
-    function CargarEstandares(){
+    function CargarEstandares() {
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -19,11 +20,11 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#estandares").html("");
-                for(var i = 0; i < response.length; i++){
+                for (var i = 0; i < response.length; i++) {
                     $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' class='estandar col-10'><span>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
                 }
-                setColors(270,"algoritmosFondo","algoritmosBorde");
-                setColors(270,"nodoFondo","nodoBorde");  
+                setColors(270, "algoritmosFondo", "algoritmosBorde");
+                setColors(270, "nodoFondo", "nodoBorde");
             },
             error: function (xhr) {
 
@@ -32,105 +33,109 @@ $(document).ready(function () {
     }
 
     //Cargar Historial
-    function CargarHistorial(){
-        GetHistorial();
-        for(var i = 0; i < historial.length; i++){
-            $.ajax({
-                url: "VisualizacionController",
-                method: "POST",
-                cache: false,
-                dataType: "JSON",
-                data: {
-                    key: "GetOpcion",
-                    id: historial[i]
-                },
-                success: function (response) {                
-                    if(response.historial!=""){
-                        $(".historialDecisiones").html("<div data-id='" + response.idNodo_Padre + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + response.historial + "&nbsp;</div>" + $(".historialDecisiones").html());
-                    }
-                },
-                error: function (xhr) {
-
+    function CargarHistorial(index) {
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetOpcion",
+                id: historial[index]
+            },
+            success: function (response) {
+                if (response.historial != "") {
+                    $(".historialDecisiones").html("<div data-id='" + response.idNodo_Padre + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + response.historial + "&nbsp;</div>" + $(".historialDecisiones").html());
                 }
-            });
-        }
+                if (index == historial.length - 1) {
+                    CargarNodo(response.idNodo_Sig);
+                }else{
+                    CargarHistorial(index+1);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
     }
-    
-    
+
     //Cambio de Pantalla
     $(".change").on("click", function () {
         $("#menu").hide();
         $("#content").hide();
         $("#" + $(this).data("id")).show();
-        SaveHistorial();
     });
 
     //Regresar a Estandares
-    $("body").on("click", "#verEstandares", function(){        
+    $("body").on("click", "#verEstandares", function () {
         $("#menu").show();
         $("#content").hide();
-        SaveHistorial();
-    }); 
-    
+    });
+
     //Imprimir el Flujo
-    $("body").on("click", "#verFlujo", function(){
-        SaveHistorial();
-    }); 
-    
+    $("body").on("click", "#verFlujo", function () {
+
+    });
+
     //Click en Boton Historial
-    $("body").on("click", ".historialDecisionesBoton", function(){
+    $("body").on("click", ".historialDecisionesBoton", function () {
         var idN = $(this).data("id");
         var actual = this
         var bool = true;
         $('.historialDecisiones').children().each(function () {
-            if(bool==true){this.remove(); historial.pop();}
-            if(actual==this){bool = false;}
+            if (bool == true) {
+                this.remove();
+                historial.pop();
+            }
+            if (actual == this) {
+                bool = false;
+            }
         });
-        
-        CargarNodo(idN); 
-    });    
-    
+        SaveHistorial();
+        CargarNodo(idN);
+    });
+
     //Clic en un Estandar
-    $("body").on("click", ".estandar", function(){
+    $("body").on("click", ".estandar", function () {
         $("#nombreEstandar").html($(this).html());
-        
-        if(historial.length!=0){
+        var idN = $(this).data("id");
+
+        if (historial.length != 0) {
             swal("¿Quieres guardar tu Historial?", {
-            buttons: {
-              cancel: "No",
-              accept: "Si"
-            },
-            }).then((value) => {
-                if(value=="cancel"){
+                buttons: {
+                    decline: "No",
+                    accept: "Si"
+                },
+            }).then(function (value) {
+                if (value == "decline") {
                     DeleteHistorial();
                     $(".historialDecisiones").html("");
                 }
                 SaveHistorial();
-                var idN = $(this).data("id");        
-                CargarNodo(idN);  
+                CargarNodo(idN);
             });
-        }else{
-            var idN = $(this).data("id");        
-            CargarNodo(idN); 
+        } else {
+            CargarNodo(idN);
         }
     });
-    
+
     //Clic en una Opcion
-    $("body").on("click", ".opcion", function(){
-        if($(this).data("log")!=""){
+    $("body").on("click", ".opcion", function () {
+        if ($(this).data("log") != "") {
             $(".historialDecisiones").html("<div data-id='" + $(this).data("idpadre") + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + $(this).data("log") + "&nbsp;</div>" + $(".historialDecisiones").html());
-        }        
+        }
         historial.push($(this).data("idopcion").toString());
-        var idN = $(this).data("id");        
-        CargarNodo(idN);   
+        SaveHistorial();
+        var idN = $(this).data("id");
+        CargarNodo(idN);
     });
-    
+
     //Cargar Nodo
-    function CargarNodo(idN){
+    function CargarNodo(idN) {
         $("#imgNodo").attr("src", "");
         $("#nodo").html("");
-        $("#imgNodo").hide();        
-        
+        $("#imgNodo").hide();
+
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -140,23 +145,27 @@ $(document).ready(function () {
                 key: "GetNodo",
                 id: idN
             },
-            success: function (response) {    
+            success: function (response) {
                 $("#exampleModalLabel").html("Referencias");
                 $("#referencias").html(response.referencias);
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#nodo").html(response.texto);
-                $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));   
+                $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));
                 CargarColor(idN);
-                if(response.idImagen!=0){GetNodoImage(response.idImagen);}else{$("#imgNodo").hide();} 
+                if (response.idImagen != 0) {
+                    GetNodoImage(response.idImagen);
+                } else {
+                    $("#imgNodo").hide();
+                }
             },
             error: function (xhr) {
 
             }
         });
     }
-    
+
     //Cargar Color
-    function CargarColor(idN){
+    function CargarColor(idN) {
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -166,7 +175,7 @@ $(document).ready(function () {
                 key: "GetColor",
                 id: idN
             },
-            success: function (response) {    
+            success: function (response) {
                 var color = response;
                 OpcionesNodo(idN, color);
             },
@@ -175,9 +184,9 @@ $(document).ready(function () {
             }
         });
     }
-    
+
     //Cargar Opciones del Nodo
-    function OpcionesNodo(idN, color){        
+    function OpcionesNodo(idN, color) {
         $("#opciones").html("");
         $(".nodoFondo").css("background-color", "#fff");
         $(".nodoBorde").css("border-width", "0px");
@@ -190,16 +199,16 @@ $(document).ready(function () {
                 key: "GetOpcionesPorNodo",
                 id: idN
             },
-            success: function (response) {                
-                if(response.length>0){
-                    for(var i = 0; i < response.length; i++){
+            success: function (response) {
+                if (response.length > 0) {
+                    for (var i = 0; i < response.length; i++) {
                         $("#opciones").append("<div class='card subtitle mt-3'><div data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde'>" + response[i].texto + "</div></div>")
                     }
-                    setColors(color,"nodoFondo","nodoBorde");                   
-                }else{
+                    setColors(color, "nodoFondo", "nodoBorde");
+                } else {
                     $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verFlujo' class='btn card-body'>Ver Flujo</div></div>")
                     $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verEstandares' class='btn card-body'>Regresar a Estandares</div></div>")
-                    setColors(color,"nodoFondo","nodoBorde");
+                    setColors(color, "nodoFondo", "nodoBorde");
                 }
                 $("#menu").hide();
                 $("#content").show();
@@ -209,9 +218,9 @@ $(document).ready(function () {
             }
         });
     }
-        
+
     //Obtener Imagen
-    function GetNodoImage(idIMG){
+    function GetNodoImage(idIMG) {
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -222,19 +231,23 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#imgNodo").attr("src", "data:image/png;base64," + response);
-                if(response!=""){$("#imgNodo").show();}else{$("#imgNodo").hide();}
+                if (response != "") {
+                    $("#imgNodo").show();
+                } else {
+                    $("#imgNodo").hide();
+                }
             },
             error: function (xhr) {
 
             }
         });
     }
-    
-    
+
+
     //Cargar Descripcion
-    $("body").on("click", ".infoEstandar", function(){
-        var idE = $(this).data("id"); 
-        
+    $("body").on("click", ".infoEstandar", function () {
+        var idE = $(this).data("id");
+
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -244,10 +257,10 @@ $(document).ready(function () {
                 key: "GetEstandar",
                 id: idE
             },
-            success: function (response) {  
+            success: function (response) {
                 $("#exampleModalLabel").html("Descripcion");
                 $("#referencias").html(response.descripcion);
-                $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>")); 
+                $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#modalReferencias").modal('toggle');
             },
             error: function (xhr) {
@@ -255,37 +268,36 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     //Mostrar Referencias
-    $("#mostrarReferencias").on("click", function(){
+    $("#mostrarReferencias").on("click", function () {
         $("#modalReferencias").modal('toggle');
     });
-    
-    
-    
+
+
+
     //COOKIES
-    function SaveHistorial(){
+    function SaveHistorial() {
         var json_str = JSON.stringify(historial);
         createCookie('EstandarTratamiento', json_str);
     }
-    function GetHistorial(){
+    function GetHistorial() {
         var json_str = getCookie('EstandarTratamiento');
-        if(json_str!=""){
+        if (json_str != "") {
             historial = JSON.parse(json_str);
         }
     }
-    function DeleteHistorial(){        
+    function DeleteHistorial() {
         historial = [];
-    }    
-    
-    var createCookie = function(name, value, days) {       
+    }
+
+    var createCookie = function (name, value, days) {
         var expires;
         if (days) {
             var date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toGMTString();
-        }
-        else {
+        } else {
             expires = "";
         }
         document.cookie = name + "=" + value + expires + "; path=/";
