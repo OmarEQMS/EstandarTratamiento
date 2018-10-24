@@ -17,8 +17,8 @@ $(document).ready(function () {
         "paging": false,
         "ordering": false,
         dom: 'lBfrtip',
-        buttons: [{extend: 'excel',text: 'Exportar a Excel',className: 'btn-outline-success mr-3 btnExcel mt-3'},
-                  {extend: 'pdf',text: 'Exportar a PDF',className: 'btn-outline-info mr-3 btnPDF mt-3 '}
+        buttons: [{extend: 'pdf',text: 'Exportar a PDF',className: 'btn-outline-info mr-3 btnPDF mt-3 '},
+                  {extend: 'excel',text: 'Exportar a Excel',className: 'btn-outline-success mr-3 btnExcel mt-3'}
         ],
         "language": {
             "sEmptyTable": "Ningún dato disponible en esta tabla",

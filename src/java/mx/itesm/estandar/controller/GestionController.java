@@ -2,22 +2,29 @@ package mx.itesm.estandar.controller;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.bean.Imagen;
 import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.bean.Opcion;
+import mx.itesm.estandar.bean.Usuario;
 import mx.itesm.estandar.service.EstandarServicio;
 import mx.itesm.estandar.service.ImagenServicio;
 import mx.itesm.estandar.service.NodoServicio;
 import mx.itesm.estandar.service.OpcionServicio;
+import mx.itesm.estandar.service.UsuarioServicio;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
 @WebServlet(name = "GestionController", urlPatterns = {"/GestionController"})
 public class GestionController extends HttpServlet {
 
@@ -64,6 +71,19 @@ public class GestionController extends HttpServlet {
             //Update
             case "NewEstandar": {
                 //Nombre, Descripcion, Color, Estatus
+                String nombre = request.getParameter("nombre");
+                String descripcion = request.getParameter("descripcion"); 
+                int color = Integer.parseInt(request.getParameter("color"));
+                int estatus = Integer.parseInt(request.getParameter("estatus"));
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = new Estandar();
+                estandar.setNombre(nombre);
+                estandar.setDescripcion(descripcion);
+                estandar.setColor(color);
+                estandar.setEstatus(estatus);
+                int id = es.saveEstandar(estandar);
+                PrintWriter out = response.getWriter();
+                out.print(id);
                 break;
             }
             case "NewNodo": {
@@ -105,12 +125,39 @@ public class GestionController extends HttpServlet {
             //Imagen
             case "SubirImagen": {
                 //Eliminar la Actual y subir la Nueva
+                if(ServletFileUpload.isMultipartContent(request)){ //Para verificar que sea contenido multi parte archivo
+                    int id = Integer.parseInt(request.getParameter("id")); //IdNodo
+                    NodoServicio ns = new NodoServicio();
+                    Nodo nodo = ns.getNodo(id);
+                    //Eliminar la pasada
+                    ImagenServicio is = new ImagenServicio();
+                    is.deleteImagen(nodo.getIdImagen());   
+                    //Obtener la nueva
+                    Part part = request.getPart("imaggen");
+                    InputStream contenido = part.getInputStream();
+                    //Guardarla
+                    Imagen imagen = new Imagen();
+                    imagen.setImagen(contenido);
+                    int imgID = is.saveImagen(imagen);
+                    //Actualizar nodo
+                    nodo.setIdImagen(imgID);
+                    ns.updateNodo(nodo);
+                }
                 break;
             }
 
             //Password
             case "CambiarPassword": {
                 //type param
+                String perfil = request.getParameter("perfil");
+                String pass = request.getParameter("pass");
+                Usuario usuario = new Usuario();
+                usuario.setPerfil(perfil);
+                usuario.setPassword(pass);
+                
+                UsuarioServicio us = new UsuarioServicio();
+                us.cambiar(usuario);
+                
                 break;
             }
         }
