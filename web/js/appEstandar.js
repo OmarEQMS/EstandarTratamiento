@@ -208,13 +208,13 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#exampleModalLabel").html("Referencias");
-                $("#referencias").html(response.referencias);
+                $("#referencias").html(response[0].referencias);
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
-                $("#nodo").html(response.texto);
+                $("#nodo").html(response[0].texto);
                 $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));
-                CargarColor(idN);
+                OpcionesNodo(idN, response[1].color);
                 if (response.idImagen != 0) {
-                    GetNodoImage(response.idImagen);
+                    GetNodoImage(response[0].idImagen);
                 } else {
                     $("#imgNodo").hide();
                 }
@@ -224,28 +224,7 @@ $(document).ready(function () {
             }
         });
     }
-
-    //Cargar Color
-    function CargarColor(idN) {
-        $.ajax({
-            url: "VisualizacionController",
-            method: "POST",
-            cache: false,
-            dataType: "JSON",
-            data: {
-                key: "GetColor",
-                id: idN
-            },
-            success: function (response) {
-                var color = response;
-                OpcionesNodo(idN, color);
-            },
-            error: function (xhr) {
-
-            }
-        });
-    }
-
+    
     //Cargar Opciones del Nodo
     function OpcionesNodo(idN, color) {
         $("#opciones").html("");
@@ -278,7 +257,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    
     //Obtener Imagen
     function GetNodoImage(idIMG) {
         $.ajax({

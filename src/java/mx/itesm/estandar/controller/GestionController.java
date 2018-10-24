@@ -57,41 +57,98 @@ public class GestionController extends HttpServlet {
             //Update
             case "UpdateEstandar": {
                 //Nombre, Descripcion, Color, Estatus
-                break;
-            }
-            case "UpdateNodo": {
-                //Titulo, Texto, Referencias
-                break;
-            }
-            case "UpdateOpcion": {
-                //Texto, Historial
-                break;
-            }
-            
-            //Update
-            case "NewEstandar": {
-                //Nombre, Descripcion, Color, Estatus
+                int id = Integer.parseInt(request.getParameter("id"));
                 String nombre = request.getParameter("nombre");
                 String descripcion = request.getParameter("descripcion"); 
                 int color = Integer.parseInt(request.getParameter("color"));
                 int estatus = Integer.parseInt(request.getParameter("estatus"));
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = new Estandar();
+                estandar.setIdEstandar(id);
                 estandar.setNombre(nombre);
                 estandar.setDescripcion(descripcion);
                 estandar.setColor(color);
                 estandar.setEstatus(estatus);
+                es.updateEstandar(estandar);
+                break;
+            }
+            case "UpdateNodo": {
+                //Titulo, Texto, Referencias
+                int id = Integer.parseInt(request.getParameter("id"));
+                String titulo = request.getParameter("titulo");
+                String texto = request.getParameter("texto"); 
+                String referencias = request.getParameter("referencias"); 
+                int idEstandar = Integer.parseInt(request.getParameter("idEstandar"));
+                NodoServicio ns = new NodoServicio();
+                Nodo nodo = new Nodo();
+                nodo.setIdNodo(id);
+                nodo.setTitulo(titulo);
+                nodo.setTexto(texto);
+                nodo.setReferencias(referencias);
+                nodo.setIdEstandar(idEstandar);
+                ns.updateNodo(nodo);
+                break;
+            }
+            case "UpdateOpcion": {
+                //Texto, Historial, idNodo_Sig
+                int id = Integer.parseInt(request.getParameter("id")); //IdOpcion
+                String texto = request.getParameter("texto");
+                String historial = request.getParameter("historial");
+                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
+                OpcionServicio os = new OpcionServicio();
+                Opcion opcion = os.getOpcion(id);
+                opcion.setTexto(texto);
+                opcion.setHistorial(historial);
+                opcion.setIdNodo_Sig(idNodo);
+                os.updateOpcion(opcion);
+                break;
+            }
+            
+            //Update
+            case "NewEstandar": {
+                //Nombre
+                String nombre = request.getParameter("nombre");
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = new Estandar();
+                estandar.setNombre(nombre);
+                estandar.setDescripcion("");
+                estandar.setColor(330);
+                estandar.setEstatus(0);
                 int id = es.saveEstandar(estandar);
                 PrintWriter out = response.getWriter();
                 out.print(id);
                 break;
             }
             case "NewNodo": {
-                //Titulo, Texto, Referencias (IdEstandar)
+                //Titulo (IdEstandar)
+                String titulo = request.getParameter("titulo");
+                int idEstandar = Integer.parseInt(request.getParameter("idEstandar"));
+                NodoServicio ns = new NodoServicio();
+                Nodo nodo = new Nodo();
+                nodo.setTitulo(titulo);
+                nodo.setTexto("");
+                nodo.setReferencias("");
+                nodo.setIdEstandar(idEstandar);
+                int id = ns.saveNodo(nodo);
+                PrintWriter out = response.getWriter();
+                out.print(id);
                 break;
             }
             case "NewOpcion": {
-                //Texto, Historial (idNodo_Padre)
+                //Texto, Historial, idNodo_Sig (idNodo_Padre)
+                String texto = request.getParameter("texto");
+                String historial = request.getParameter("historial");
+                int idNodoPadre = Integer.parseInt(request.getParameter("idNodoPadre"));
+                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
+                OpcionServicio os = new OpcionServicio();
+                Opcion opcion = new Opcion();
+                opcion.setTexto(texto);
+                opcion.setHistorial(historial);
+                opcion.setIdNodo_Padre(idNodoPadre);
+                opcion.setIdNodo_Sig(idNodo);
+                int id = os.saveOpcion(opcion);
+                PrintWriter out = response.getWriter();
+                out.print(id);
                 break;
             }
 
@@ -109,16 +166,6 @@ public class GestionController extends HttpServlet {
                 estandar.setIdNodo(idNodo);
                 es.updateEstandar(estandar);
                 
-                break;
-            }
-            case "ReferenciarOpcion": {
-                //ID Opcion, ID Nodo
-                int id = Integer.parseInt(request.getParameter("id")); //IdOpcion
-                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
-                OpcionServicio os = new OpcionServicio();
-                Opcion opcion = os.getOpcion(id);
-                opcion.setIdNodo_Sig(idNodo);
-                os.updateOpcion(opcion);
                 break;
             }
 

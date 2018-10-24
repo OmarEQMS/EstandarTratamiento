@@ -72,10 +72,12 @@ public class VisualizacionController extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 NodoServicio ns = new NodoServicio();
                 Nodo nodo = ns.getNodo(id);
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = es.getEstandar(nodo.getIdEstandar());
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
-                out.print(json.toJson(nodo));
+                out.print("[" + json.toJson(nodo) + ", {\"color\":" + estandar.getColor() + "}]");
                 break;
             }
             
@@ -83,10 +85,23 @@ public class VisualizacionController extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id")); //idEstandar
                 NodoServicio ns = new NodoServicio();
                 List<Nodo> nodos = ns.getNodos(id);
-                
-                PrintWriter out = response.getWriter();
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = es.getEstandar(id);
+                OpcionServicio os = new OpcionServicio();
+                    
                 Gson json = new Gson();
-                out.print(json.toJson(nodos));
+                String returnJSON = json.toJson(nodos);
+                PrintWriter out = response.getWriter();
+                int index = 0; int tipo;
+                for(int i = 0; i < nodos.size(); i++){
+                    index = returnJSON.indexOf("}", index);
+                    if(nodos.get(i).getIdNodo()==estandar.getIdNodo()) tipo=0;
+                    else if(os.getNodoEnOpciones(nodos.get(i).getIdNodo())) tipo=1;
+                    else tipo=2;
+                    returnJSON = returnJSON.substring(0,index) + ",\"tipo\"=" + tipo + returnJSON.substring(index, returnJSON.length());
+                    index+=10;
+                }
+                out.print(returnJSON);
                 break;
             }
             
