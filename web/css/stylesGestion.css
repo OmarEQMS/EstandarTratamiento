@@ -80,7 +80,7 @@ body {
 
 #components li a{ /*Estilo de letra*/
     font-size: 14px !important;
-    color: #dbdbdb;
+    color: #550093;
     margin-bottom: 4px;
     padding: 10px;
     font-size: 1.1em;
@@ -94,7 +94,7 @@ body {
 
 #components li a i{ /*Botones margen FA*/
     margin-right: 10px;
-    color:#dbdbdb;
+    color: #550093;
     font-size: 12px;
     border: 0.5px solid rgba(156, 157, 165, 0.6);
     padding: 8px;
@@ -126,3 +126,10 @@ body {
 }
 
 
+.noBorder{
+    border-style: none;
+    color:#b958ff;
+}
+.editar-imagen{
+    display: none;
+}
