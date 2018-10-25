@@ -17,9 +17,7 @@ $(document).ready(function () {
         "paging": false,
         "ordering": false,
         dom: 'lBfrtip',
-        buttons: [{extend: 'pdf',text: 'Exportar a PDF',className: 'btn-outline-info mr-3 btnPDF mt-3 '},
-                  {extend: 'excel',text: 'Exportar a Excel',className: 'btn-outline-success mr-3 btnExcel mt-3'}
-        ],
+        buttons: [{extend: 'pdf',text: 'Exportar a PDF',className: 'btn-outline-info mr-3 btnPDF mt-3'}],
         "language": {
             "sEmptyTable": "Ningún dato disponible en esta tabla",
             "sLoadingRecords": "Cargando...",
@@ -213,7 +211,7 @@ $(document).ready(function () {
                 $("#nodo").html(response[0].texto);
                 $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));
                 OpcionesNodo(idN, response[1].color);
-                if (response.idImagen != 0) {
+                if (response[0].idImagen > 0) {
                     GetNodoImage(response[0].idImagen);
                 } else {
                     $("#imgNodo").hide();
