@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+    
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Estandar</title>
@@ -58,7 +60,9 @@
                 <div id="contentEstandares">
 
                     <div class="jumbotron jumbotron-fluid mb-3 p-2 myBorder">
-                        <div class="container"><h1 class="text-center m-0">Mis Estándares</h1></div>
+                        <div class="row container">
+                            <div class="col-12 text-center"><h1 class="text-center m-0">Mis Estándares</h1></div>
+                        </div>
                     </div>
 
                     <div class="card myBorder">
@@ -91,85 +95,85 @@
                 <div id="contentEstandar">
 
                     <div class="jumbotron jumbotron-fluid p-2 mb-3 myBorder">
-                        <div class="container"><h2 id="nombreEstandar" class="text-center m-0"></h2></div>
+                        <div class="row container">
+                            <div class="col-2"><button id="backEstandares" class="btn"><i class="fas fa-chevron-circle-left"></i></button></div>
+                            <div class="col-10 text-center"><h2 id="nombreEstandar" class="text-center m-0"></h2></div>
+                        </div>
                     </div>
 
                     <div class="card myBorder">
                         <div class="card-body">
 
                             <!-- INFORMACION NUEVO -->
-                            <div class="accordion mt-1" id="accordionExample">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link" style="width: 100%;" data-toggle="collapse" data-target="#settingsAlgoritmo" aria-expanded="false" aria-controls="collapseOne"><i class="fas fa-wrench"></i>Información del algoritmo</button>
-                                        </h5>
-                                    </div>
-
-                                    <div id="settingsAlgoritmo" class="collapse noBorder" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="input-group mt-1">
-                                                <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
-                                                <input type="text" id="tituloEstandar" class="form-control" placeholder="Su titulo aqui" value="">
+                            <div class="card p-0  mt-1">
+                                <div class="card-body p-0">
+                                    
+                                    <div class="accordion" id="accordionAlgoritmo">
+                                        <div class="card">
+                                            <div class="card-header" id="headingAlgoritmo">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" style="width: 100%;" data-toggle="collapse" data-target="#settingsAlgoritmo" aria-expanded="false" aria-controls="settingsAlgoritmo"><i class="fas fa-wrench"></i>Información del algoritmo</button>
+                                                </h5>
                                             </div>
 
-                                            <div class="input-group mt-3">
-                                                <div class="input-group-prepend"><span class="input-group-text">Descripción</span></div>
-                                                <textarea id="descripcionEstandar" class="form-control" placeholder="Su descripcion aqui"></textarea>
-                                            </div>
-
-                                            <div class="card mt-3 mb-5">
-                                                <div class="card-body p-2">
-                                                    <div class="row">
-                                                        <div id="textColorEstandar" class="col-12">Color del estándar Tono: 0</div>
+                                            <div id="settingsAlgoritmo" class="collapse noBorder" aria-labelledby="headingAlgoritmo" data-parent="#accordionAlgoritmo">
+                                                <div class="card-body">
+                                                    <div class="input-group mt-1">
+                                                        <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
+                                                        <input type="text" id="tituloEstandar" class="form-control" placeholder="Su titulo aqui" value="">
                                                     </div>
-                                                    <div class="row justify-content-center mt-2">
-                                                        <div class="col-8 text-center">
-                                                            <input type="range"  id="colorSelector"  style="width: 100%;" min = "0" max = "360" aria-label="colorAlgoritmo">
+
+                                                    <div class="input-group mt-3">
+                                                        <div class="input-group-prepend"><span class="input-group-text">Descripción</span></div>
+                                                        <textarea id="descripcionEstandar" class="form-control" placeholder="Su descripcion aqui"></textarea>
+                                                    </div>
+
+                                                    <div class="card mt-3">
+                                                        <div class="card-body p-2">
+                                                            <div class="row">
+                                                                <div id="textColorEstandar" class="col-12">Color del estándar Tono: 0</div>
+                                                            </div>
+                                                            <div class="row justify-content-center mt-2">
+                                                                <div class="col-8 text-center">
+                                                                    <input type="range"  id="colorSelector"  style="width: 100%;" min = "0" max = "360" aria-label="colorAlgoritmo">
+                                                                </div>
+                                                                <div class="col-2 text-center"><div class = "card sampleColorBackground">Color Fondo</div></div>
+                                                                <div class="col-2 text-center"><div class = "card sampleColorBorder">Color Borde</div></div>
+                                                            </div>                                                    
                                                         </div>
-                                                        <div class="col-2 text-center"><div class = "card sampleColorBackground">Color Fondo</div></div>
-                                                        <div class="col-2 text-center"><div class = "card sampleColorBorder">Color Borde</div></div>
-                                                    </div>                                                    
-                                                </div>
+                                                    </div>
+
+                                                    <div class="input-group mt-3">
+                                                        <div class="input-group-prepend"><span class="input-group-text">Estatus</span></div>
+                                                        <input id="estatusEstandar" type="checkbox" class="form-control">
+                                                    </div>
+
+                                                    <div class="row justify-content-end mt-4 mb-1">
+                                                        <div class="col-6">
+                                                            <button class="btn btn-secondary" id = "GuardarCambiosArbol" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar Cambios</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>                                        
                                             </div>
 
-                                            <div class="input-group mt-3">
-                                                <div class="input-group-prepend"><span class="input-group-text">Estatus</span></div>
-                                                <input id="estatusEstandar" type="checkbox" class="form-control">
-                                            </div>
-
-                                        </div>                                        
+                                        </div>                                
                                     </div>
 
-                                </div>                                
+                                </div>
                             </div>
 
                             <!-- Nuevo Nodo -->
                             <div class="row justify-content-center mt-3 mb-3">
                                 <div class="col-6 text-center">
-                                    <button class="btn btn-primary" id = "nuevoNodo" style="width: 100%;"><i class="fas fa-plus-circle"></i>Nuevo Nodo</button>
+                                    <button class="btn btn-primary" id = "nuevoNodo" style="width: 100%;"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo Nodo</button>
                                 </div>
                             </div>
 
                             <!--TABLA DE NODOS-->
                             <table class="display responsive no-wrap table table-striped text-center" id="tablaNodos" width="100%">
                                 <thead><tr><th scope="col">Tipo</th><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
-                                <tbody><!--EJEMPLO--> 
-                                    <tr>
-                                        <td><button class="btn toggleButton"><i class="fas fa-star nodoEstrella"></i></button></td>
-                                        <td>Etapa</td>
-                                        <td><button class="btn btn-info"><i class="fas fa-edit"></i></button><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn toggleButton"><i class="fas fa-shoe-prints"></i></button></td>
-                                        <td>Cirugía</td>
-                                        <td><button class="btn btn-info"><i class="fas fa-edit"></i></button><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                    </tr>                                
-                                    <tr>
-                                        <td><button class="btn toggleButton"><i class="fas fa-unlink"></i></button></td>
-                                        <td>Nodo X</td>
-                                        <td><button class="btn btn-info"><i class="fas fa-edit"></i></button><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                    </tr>
+                                <tbody>
                                 </tbody>
                             </table>
                         </div>
@@ -180,7 +184,10 @@
                 <div id="contentNodo">
                     <!--TITULO-->
                     <div class="jumbotron jumbotron-fluid p-2 mt-2 mb-3 myBorder">
-                        <div class="container"><h2 class="text-center m-0">Etapa</h2></div>
+                        <div class="row container">
+                            <div class="col-2"><button id="backEstandar" class="btn"><i class="fas fa-chevron-circle-left"></i></button></div>
+                            <div class="col-10 text-center"><h2 class="text-center m-0">Etapa</h2></div>
+                        </div>
                     </div>
 
                     <div class="card myBorder">
@@ -256,9 +263,7 @@
                     <div class="card myBorder">
                         <div class="card-body">
                             <div class="row justify-content-center mb-4">
-                                <div class="col-12 text-center">
-                                    <span class="title">Visitas en el Sitio: 128</span>
-                                </div>
+                                <div class="col-12 text-center"><span class="title">Visitas en el Sitio: 128</span></div>
                             </div>
 
                             <div class="input-group mt-2 mb-3">
@@ -331,85 +336,84 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!--MODAL OPCIONES-->
-    <div id="modalNewOption" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewOption" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalNewOptionLabel">Nueva Opción</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="tituloOpcion">
-                                Título
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Su título aqui">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="textoOpcion">
-                                Texto
-                            </span>
-                        </div>
-                        <textarea class="form-control" placeholder="Su texto aqui"></textarea>
+        <!--MODAL OPCIONES-->
+        <div id="modalNewOption" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewOption" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNewOptionLabel">Nueva Opción</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
                     </div>
 
-                    <div class="row justify-content-center mt-2 mb-2">
-                        <div class="col-12 text-center"><div style="font-size: large;">Nodo Siguiente</div></div>
-                    </div>
-
-                    <table class="display responsive no-wrap table table-striped text-center mt-3" id="tablaNodosNuevaOpcion" width="100%">
-                        <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
-                        <tbody>
-                            <!--ejemplo--> 
-                            <tr>
-                                <td><span><i class="fas fa-star"></i> Etapa</span></td>
-                                <td><button class="btn btn-success nodosOpcion"><i class="fas fa-check-circle opcionSeleccionada"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-shoe-prints"></i> Cirugía</td>
-                                <td><button class="btn nodosOpcion"><i class="far fa-check-circle"></i></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-
-                    <div class="accordion mt-3" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#raicesOpciones" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-link"></i>Vincular con otro estandar</button></h5>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="tituloOpcion">
+                                    Título
+                                </span>
                             </div>
+                            <input type="text" class="form-control" placeholder="Su título aqui">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="textoOpcion">
+                                    Texto
+                                </span>
+                            </div>
+                            <textarea class="form-control" placeholder="Su texto aqui"></textarea>
+                        </div>
 
-                            <div id="raicesOpciones" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    <table class="display responsive no-wrap table table-striped text-center" id="tablaNodosRaizNuevaOpcion" width="100%">
-                                        <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
-                                        <tbody><!--ejemplo--> 
-                                            <tr>
-                                                <td><span><i class="fas fa-star"></i> Soy Foraneo 1</span></td>
-                                                <td><button class="btn nodosOpcion"><i class="far fa-check-circle"></i></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="row justify-content-center mt-2 mb-2">
+                            <div class="col-12 text-center"><div style="font-size: large;">Nodo Siguiente</div></div>
+                        </div>
+
+                        <table class="display responsive no-wrap table table-striped text-center mt-3" id="tablaNodosNuevaOpcion" width="100%">
+                            <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
+                            <tbody>
+                                <!--ejemplo--> 
+                                <tr>
+                                    <td><span><i class="fas fa-star"></i> Etapa</span></td>
+                                    <td><button class="btn btn-success nodosOpcion"><i class="fas fa-check-circle opcionSeleccionada"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-shoe-prints"></i> Cirugía</td>
+                                    <td><button class="btn nodosOpcion"><i class="far fa-check-circle"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="accordion mt-3" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#raicesOpciones" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-link"></i>Vincular con otro estandar</button></h5>
+                                </div>
+
+                                <div id="raicesOpciones" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <table class="display responsive no-wrap table table-striped text-center" id="tablaNodosRaizNuevaOpcion" width="100%">
+                                            <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
+                                            <tbody><!--ejemplo--> 
+                                                <tr>
+                                                    <td><span><i class="fas fa-star"></i> Soy Foraneo 1</span></td>
+                                                    <td><button class="btn nodosOpcion"><i class="far fa-check-circle"></i></button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        <button id="btn-nodoSiguiente" type="button" class="btn btn-primary">Registrar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            <button id="btn-nodoSiguiente" type="button" class="btn btn-primary">Registrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</body>
+    </body>
 </html>

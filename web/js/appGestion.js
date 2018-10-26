@@ -23,6 +23,14 @@ $(document).ready(function () {
     $("#Gestion").on("click", function () {
         cambiar("contentGestion");
     });
+    
+    $("#backEstandares").on("click", function () {
+        cambiar("contentEstandares");
+    });
+    
+    $("#backEstandar").on("click", function () {
+        cambiar("contentEstandar");
+    });
 
     $("#misAlgoritmos").on("click", function () {
         cambiar("contentEstandares");
@@ -37,7 +45,6 @@ $(document).ready(function () {
                 estatus: 0
             },
             success: function (response) {
-                $("#estandares").html("");
                 for (var i = 0; i < response.length; i++) {
                     tablaEstandares.row.add([response[i].nombre, "<button data-id='" + response[i].idEstandar + "' class='btn btn-info editarEstandar'><i class='fas fa-edit'></i></button><button data-id='" + response[i].idEstandar + "' class='btn btn-danger eliminarEstandar'><i class='fas fa-trash-alt'></i></button></td>"]).draw(false);
                 }
@@ -48,9 +55,12 @@ $(document).ready(function () {
         });
     });
 
+    $('#nuevoArbol').on('click', () => {
+        $('#modalNuevoArbol').modal('toggle')
+    });
 
     $("#btn-nuevoArbol").on("click", function () {
-
+        alert("Nuevo Arbol");
     });
 
     $("body").on("click", ".editarEstandar", function () {
@@ -71,15 +81,47 @@ $(document).ready(function () {
                 $("#colorSelector").val(response.color);
                 var val = $('#colorSelector').val();
                 $('#textColorEstandar').html("Color del estándar: Tono " + val);
-                setColors(val, "sampleColorBackground", "sampleColorBorder"); 
-                $('#estatusEstandar').prop('checked', true);
-                cambiar("contentEstandar");
+                setColors(val, "sampleColorBackground", "sampleColorBorder");
+                $('#estatusEstandar').prop('checked', (response.estatus == 1));
             },
             error: function (xhr) {
 
             }
         });
 
+        tablaNodos.clear().draw();
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetNodosPorEstandar",
+                id: idE
+            },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var tipo;
+                    if (response[i].raiz == 1) {
+                        if (response[i].tipo == 1) tipo = "fas fa-star nodoEstrella";
+                        else tipo = "fas fa-star nodoRoto nodoEstrella";
+                    } else {
+                        if (response[i].tipo == 1) tipo = "fas fa-shoe-prints";
+                        else tipo = "fas fa-unlink nodoRoto";
+                    }
+                    tablaNodos.row.add([
+                        "<button class='btn nodoTipo' data-id='" + response[i].idNodo + "'><i class='" + tipo + "'></i></button></td>",
+                        response[i].titulo,
+                        "<td><button class='btn btn-info editarNodo' data-id='" + response[i].idNodo + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarNodo' data-id='" + response[i].idNodo + "'><i class='fas fa-trash-alt'></i></button></td>"
+                    ]).draw(false);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+
+        cambiar("contentEstandar");
     });
 
     $("body").on("click", ".eliminarEstandar", function () {
@@ -112,7 +154,55 @@ $(document).ready(function () {
         });
 
     });
+    
+    $("#GuardarCambiosArbol").on("click", function () {
+        alert("Guardar Cambios Arbol");
+    });
 
+    $('#nuevoNodo').on('click', () => {
+        $('#modalNewNode').modal('toggle')
+    });
+
+    $('#btn-nuevoNodo').on('click', () => {
+        alert("RegistrarNuevo Nodo");
+    });
+    
+    $("body").on("click", ".editarNodo", function () {
+
+        cambiar("contentNodo");
+    });
+
+    $("body").on("click", ".eliminarNodo", function () {
+        var idN = $(this).data("id");
+        swal({
+            title: "¿Estas Seguro?",
+            text: "Se eliminaran el Nodo y sus opciones",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "GestionController",
+                    method: "POST",
+                    cache: false,
+                    dataType: "JSON",
+                    data: {
+                        key: "EliminarNodo",
+                        id: idN
+                    },
+                    success: function (response) {
+                        swal("Nodo Eliminado", {icon: "success"});
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+        
+    });
+    
     //Raul
 
     $('#colorSelector').on('input', function () {
@@ -125,13 +215,8 @@ $(document).ready(function () {
         $('#modalNewOption').modal('toggle')
     });
 
-    $('#nuevoNodo').on('click', () => {
-        $('#modalNewNode').modal('toggle')
-    });
 
-    $('#nuevoArbol').on('click', () => {
-        $('#modalNuevoArbol').modal('toggle')
-    });
+    //RAUL
 
     $("#file-input").on('change', function () {
         if (this.files && this.files[0]) {
@@ -146,39 +231,37 @@ $(document).ready(function () {
     encontrarEstrellaInit();
     function encontrarEstrella(iconButton) {
         $(iconButton).on('click', function () {
-
             swal({
                 title: "Estás a punto de cambiar el nodo raiz:",
                 text: "El nodo raiz previo será desvinculado",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-            })
-                    .then((eliminar) => {
-                        if (eliminar) {
+            }).then((eliminar) => {
+                if (eliminar) {
 
-                            var x = document.getElementsByClassName('nodoEstrella');
-                            var i;
-                            for (i = 0; i < x.length; i++) {
-                                $(x[i]).removeClass('fa-star');
-                                $(x[i]).addClass('fa-unlink');
-                                $(x[i]).removeClass('nodoEstrella');
-                            }
-                            if ($(iconButton).children().hasClass('fa-unlink'))
-                                $(iconButton).children().removeClass('fa-unlink');
-                            if ($(iconButton).children().hasClass('fa-shoe-prints'))
-                                $(iconButton).children().removeClass('fa-shoe-prints');
-                            $(iconButton).children().addClass('nodoEstrella');
-                            $(iconButton).children().addClass('fa-star');
+                    var x = document.getElementsByClassName('nodoEstrella');
+                    var i;
+                    for (i = 0; i < x.length; i++) {
+                        $(x[i]).removeClass('fa-star');
+                        $(x[i]).addClass('fa-unlink');
+                        $(x[i]).removeClass('nodoEstrella');
+                    }
+                    if ($(iconButton).children().hasClass('fa-unlink'))
+                        $(iconButton).children().removeClass('fa-unlink');
+                    if ($(iconButton).children().hasClass('fa-shoe-prints'))
+                        $(iconButton).children().removeClass('fa-shoe-prints');
+                    $(iconButton).children().addClass('nodoEstrella');
+                    $(iconButton).children().addClass('fa-star');
 
-                        } else {
+                } else {
 
-                        }
-                    });
+                }
+            });
         });
     }
     function encontrarEstrellaInit() {
-        var x = document.getElementsByClassName("toggleButton");
+        var x = document.getElementsByClassName("nodoTipo");
         var i;
         for (i = 0; i < x.length; i++) {
             encontrarEstrella(x[i]);

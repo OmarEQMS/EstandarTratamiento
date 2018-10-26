@@ -32,6 +32,6 @@ public class Estandar {
     public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
     public void setColor(int color) {this.color = color;}
     public void setIdNodo(int idNodo) {this.idNodo = idNodo;}
-    public void setEstatus(int status) {this.estatus = estatus;}
+    public void setEstatus(int estatus) {this.estatus = estatus;}
     
 }
