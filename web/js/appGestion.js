@@ -63,7 +63,7 @@ $(document).ready(function () {
         alert("Nuevo Arbol");
     });
 
-    $("body").on("click", ".editarEstandar", function () {
+    $("body").on("click", ".editarEstandar, .GoToNodo", function () {
         var idE = $(this).data("id");
         $.ajax({
             url: "VisualizacionController",
@@ -131,7 +131,7 @@ $(document).ready(function () {
             text: "Se eliminaran todos los nodo",
             icon: "warning",
             buttons: true,
-            dangerMode: true,
+            dangerMode: true
         }).then((willDelete) => {
             if (willDelete) {
                 $.ajax({
@@ -168,7 +168,51 @@ $(document).ready(function () {
     });
     
     $("body").on("click", ".editarNodo", function () {
+        var idN = $(this).data("id");
+        tablaOpciones.clear().draw();
 
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetNodo",
+                id: idN
+            },
+            success: function (response) {
+                $("#tituloNodo").val(response[0].titulo);
+                $("#nombreNodo").html(response[0].titulo);
+                $("#textoNodo").html(response[0].texto); 
+                $("#anotacionNodo").html(response[0].referencias);
+            },
+            error: function (xhr) {
+
+            }
+        });
+        
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetOpcionesPorNodo",
+                id: idN
+            },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    tablaOpciones.row.add([
+                        response[i].texto,
+                        "<button class='btn btn-primary GoToNodo' data-id='" + response[i].idNodo_Sig + "'><i class='fas fa-arrow-right'></i></button><button class='btn btn-info editarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-trash-alt'></i></button>"
+                    ]).draw(false);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });   
+        
         cambiar("contentNodo");
     });
 
@@ -203,6 +247,45 @@ $(document).ready(function () {
         
     });
     
+    
+    $("body").on("click", ".eliminarOpcion", function () {
+        var idO = $(this).data("id");
+        
+        swal({
+            title: "¿Estas Seguro?",
+            text: "Se eliminaran la Opcion",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "GestionController",
+                    method: "POST",
+                    cache: false,
+                    dataType: "JSON",
+                    data: {
+                        key: "EliminarOpcion",
+                        id: idO
+                    },
+                    success: function (response) {
+                        swal("Opcion Eliminado", {icon: "success"});
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+        });
+        
+    });
+    
+    $("body").on("click", ".editarOpcion", function () {
+        $("#modalNewOptionLabel").html("Modificar Opcion");  
+        $('#modalNewOption').modal('toggle')
+    });
+    
+    
     //Raul
 
     $('#colorSelector').on('input', function () {
@@ -212,7 +295,8 @@ $(document).ready(function () {
     });
 
     $('#newOption').on('click', () => {
-        $('#modalNewOption').modal('toggle')
+        $("#modalNewOptionLabel").html("Nueva Opcion");
+        $('#modalNewOption').modal('toggle');
     });
 
 
@@ -287,6 +371,7 @@ $(document).ready(function () {
 
         });
     }
+    
     function selectNodoOpcionInit() {
         var x = document.getElementsByClassName("nodosOpcion");
         var i;
@@ -294,6 +379,24 @@ $(document).ready(function () {
             selectNodoOpcion(x[i]);
         }
     }
+    
+    
+    function mostrarContrasena(myButton,myField){
+        myButton.on('mousedown', function () {
+            var x = document.getElementById(myField);
+            x.type = "text";
+        });
+        myButton.on('mouseup', function () {
+            var x = document.getElementById(myField);
+            x.type = "password";
+        });
+    }
+    mostrarContrasena($('#mostrarContrasenaPrevia'),'contrasenaPrevia');
+    mostrarContrasena($('#mostrarNuevaContrasena'),'nuevaContrasena');
+    mostrarContrasena($('#mostrarVerificarContrasena'),'verificarContrasena');
+    mostrarContrasena($('#mostrarContrasenaPreviaAdmin'),'contrasenaPreviaAdmin');
+    mostrarContrasena($('#mostrarNuevaContrasenaAdmin'),'nuevaContrasenaAdmin');
+    mostrarContrasena($('#mostrarVerificarContrasenaAdmin'),'verificarContrasenaAdmin');
 
 
     function tablaInit(tableName) {
