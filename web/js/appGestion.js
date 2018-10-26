@@ -1,83 +1,43 @@
 $(document).ready(function () {
 
+    $("#contentEstandares").hide();
+    $("#contentEstandar").hide();
+    $("#contentNodo").hide();    
+    setColors(280,"myBackground","myBorder");
+    setColors(180,"sampleColorBackground","sampleColorBorder");
+    
     $('#change').on('click', () => {
         $('#menu, #content').toggleClass('active');
     });
 
-    setColors(280,"myBackground","myBorder");
-    setColors(180,"sampleColorBackground","sampleColorBorder");
 
-	$('#colorSelector').on('input', function () {
-		var val = $('#colorSelector').val();
-		$('#sampleColorText').html("Color del estándar: Tono " + val);
-		setColors(val,"sampleColorBackground","sampleColorBorder");
-	});
+    $('#colorSelector').on('input', function () {
+        var val = $('#colorSelector').val();
+	$('#sampleColorText').html("Color del estándar: Tono " + val);
+	setColors(val,"sampleColorBackground","sampleColorBorder");
+    });
 
-	$('#newOption').on('click', () => {
+    $('#newOption').on('click', () => {
         $('#modalNewOption').modal('toggle')
     });
+    
     $('#nuevoNodo').on('click', () => {
         $('#modalNewNode').modal('toggle')
     });
+    
     $('#nuevoArbol').on('click', () => {
         $('#modalNuevoArbol').modal('toggle')
     });
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#ImagenPerfil').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
     $("#file-input").on('change', function () {
-        readURL(this);
-    });
-
-    function tablaInit(tabla){
-	$('#tablaEstandares').DataTable({
-        responsive: true,
-        searching: true,
-        dom: 'lBfrtip',
-        "language": {
-            "sProcessing": "Procesando...",
-            "sLengthMenu": "",
-            "sZeroRecords": "No se encontraron resultados",
-            "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando registros del START al END de un total de TOTAL",
-            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
-            "sInfoFiltered": "(filtrado de un total de MAX registros)",
-            "sInfoPostFix": "",
-            "sSearch": "Buscar:",
-            "sUrl": "",
-            "sInfoThousands": ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            }
-
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {$('#ImagenNodo').attr('src', e.target.result);}
+            reader.readAsDataURL(this.files[0]);
         }
     });
-	}
-
-    //tablaInit($('#tablaEstandares'));
-    //tablaInit($('#tablaNuevaOpcion'));
-    //tablaInit($('#tablaNodos'));
-    //tablaInit($('#tablaOpciones'));
-    //tablaInit($('#tablaRaicesOpciones'));
-
+  
+    encontrarEstrellaInit();
     function encontrarEstrella(iconButton){
         $(iconButton).on('click', function () {
 
@@ -109,7 +69,6 @@ $(document).ready(function () {
             });
         });
     }
-
     function encontrarEstrellaInit(){
         var x = document.getElementsByClassName("toggleButton");
         var i;
@@ -117,8 +76,7 @@ $(document).ready(function () {
             encontrarEstrella(x[i]);
         }
     }
-    encontrarEstrellaInit();
-
+    selectNodoOpcionInit();
     function selectNodoOpcion(iconButton){
         $(iconButton).on('click', function () {
             var x = document.getElementsByClassName('opcionSeleccionada');
@@ -136,7 +94,6 @@ $(document).ready(function () {
 
         });
     }
-
     function selectNodoOpcionInit(){
         var x = document.getElementsByClassName("nodosOpcion");
         var i;
@@ -144,37 +101,40 @@ $(document).ready(function () {
             selectNodoOpcion(x[i]);
         }
     }
-    selectNodoOpcionInit();
     
-    $('#tablaEstandares').DataTable({
+
+    function tablaInit(tableName){
+	var tabla = $(tableName).DataTable({
         responsive: true,
         searching: true,
-        dom: 'lBfrtip',
         "language": {
             "sProcessing": "Procesando...",
-            "sLengthMenu": "",
+            "sLengthMenu": "Mostrar _MENU_ registros",
             "sZeroRecords": "No se encontraron resultados",
             "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando registros del START al END de un total de TOTAL",
-            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
-            "sInfoFiltered": "(filtrado de un total de MAX registros)",
+            //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+            "sInfo": "",
+            "sInfoEmpty": "",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
             "sInfoPostFix": "",
             "sSearch": "Buscar:",
             "sUrl": "",
             "sInfoThousands": ",",
             "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
+            "oPaginate": {"sFirst": "Primero","sLast": "Último","sNext": "Siguiente","sPrevious": "Anterior"},
             "oAria": {
                 "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
+        }});
+        return tabla;
+    }
 
-        }
-    });
+    var tablaEstandares = tablaInit('#tablaEstandares');
+    var tablaNodos = tablaInit('#tablaNodos');
+    var tablaOpciones = tablaInit('#tablaOpciones');
+    var tablaNodosNuevaOpcion = tablaInit('#tablaNodosNuevaOpcion');
+    var tablaNodosRaizNuevaOpcion = tablaInit('#tablaNodosRaizNuevaOpcion');
     
 });

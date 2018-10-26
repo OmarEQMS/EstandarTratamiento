@@ -53,6 +53,7 @@ body {
     margin-bottom: 20px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 #change{
     background-color: white;
     color:#2f3242;
@@ -132,4 +133,9 @@ body {
 }
 .editar-imagen{
     display: none;
+}
+
+#ImagenNodo{
+    max-height: 30vh;
+    max-width: 80%;
 }
