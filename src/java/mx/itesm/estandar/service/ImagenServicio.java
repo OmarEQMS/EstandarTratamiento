@@ -33,7 +33,7 @@ public class ImagenServicio implements IImagenServicio{
     }
 
     @Override
-    public int saveImagen(Imagen imagen) {
+    public int createImagen(Imagen imagen) {
         Connection conn = Conexion.getConnection();
         String sql = "INSERT INTO Imagen (imagen) VALUES (?)";
         int id = 0;

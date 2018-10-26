@@ -6,7 +6,7 @@ import mx.itesm.estandar.bean.Nodo;
 
 public interface IImagenServicio {
     public Imagen getImagen(int idImagen);
-    public int saveImagen(Imagen imagen);
+    public int createImagen(Imagen imagen);
     public boolean deleteImagen(int idImagen);
     public boolean updateImagen(Imagen imagen);
 }

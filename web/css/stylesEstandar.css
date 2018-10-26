@@ -67,8 +67,10 @@ body {
 }
 
 #imgNodo{
-    width: 50%;
+    max-height: 30vh;
+    max-width: 90%;
 }
+
 .historialDecisiones{
     overflow-x: scroll;
     overflow-y: hidden;

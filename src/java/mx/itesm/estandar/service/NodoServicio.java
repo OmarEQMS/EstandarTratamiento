@@ -67,7 +67,7 @@ public class NodoServicio implements INodoServicio{
     }
 
     @Override
-    public int saveNodo(Nodo nodo) {
+    public int createNodo(Nodo nodo) {
         Connection conn = Conexion.getConnection();
         String sql = "INSERT INTO Nodo (titulo, texto, idImagen, referencias, idEstandar) VALUES (?,?,?,?,?)";
         int id = 0;

@@ -114,7 +114,7 @@ public class GestionController extends HttpServlet {
                 estandar.setDescripcion("");
                 estandar.setColor(330);
                 estandar.setEstatus(0);
-                int id = es.saveEstandar(estandar);
+                int id = es.createEstandar(estandar);
                 PrintWriter out = response.getWriter();
                 out.print(id);
                 break;
@@ -129,7 +129,7 @@ public class GestionController extends HttpServlet {
                 nodo.setTexto("");
                 nodo.setReferencias("");
                 nodo.setIdEstandar(idEstandar);
-                int id = ns.saveNodo(nodo);
+                int id = ns.createNodo(nodo);
                 PrintWriter out = response.getWriter();
                 out.print(id);
                 break;
@@ -146,7 +146,7 @@ public class GestionController extends HttpServlet {
                 opcion.setHistorial(historial);
                 opcion.setIdNodo_Padre(idNodoPadre);
                 opcion.setIdNodo_Sig(idNodo);
-                int id = os.saveOpcion(opcion);
+                int id = os.createOpcion(opcion);
                 PrintWriter out = response.getWriter();
                 out.print(id);
                 break;
@@ -185,7 +185,7 @@ public class GestionController extends HttpServlet {
                     //Guardarla
                     Imagen imagen = new Imagen();
                     imagen.setImagen(contenido);
-                    int imgID = is.saveImagen(imagen);
+                    int imgID = is.createImagen(imagen);
                     //Actualizar nodo
                     nodo.setIdImagen(imgID);
                     ns.updateNodo(nodo);
@@ -203,7 +203,7 @@ public class GestionController extends HttpServlet {
                 usuario.setPassword(pass);
                 
                 UsuarioServicio us = new UsuarioServicio();
-                us.cambiar(usuario);
+                us.updateContrasena(usuario);
                 
                 break;
             }

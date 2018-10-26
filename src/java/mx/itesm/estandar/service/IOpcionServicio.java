@@ -8,7 +8,7 @@ public interface IOpcionServicio {
     public List<Opcion> getOpciones(int idNodo);
     public boolean getNodoEnOpciones(int idNodo);
     public boolean updateOpcionesPorSig(int idNodoSigPast, int idNodoSig);
-    public int saveOpcion(Opcion opcion);
+    public int createOpcion(Opcion opcion);
     public boolean deleteOpcion(int idOpcion);
     public boolean updateOpcion(Opcion opcion);
 }

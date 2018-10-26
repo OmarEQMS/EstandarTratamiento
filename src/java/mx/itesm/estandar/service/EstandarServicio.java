@@ -86,7 +86,7 @@ public class EstandarServicio implements IEstandarServicio{
     }
 
     @Override
-    public int saveEstandar(Estandar estandar) {
+    public int createEstandar(Estandar estandar) {
         Connection conn = Conexion.getConnection();
         String sql = "INSERT INTO Estandar (nombre, descripcion, color, idNodo, estatus) VALUES (?,?,?,?,?)";
         int id = 0;

@@ -29,7 +29,7 @@ public class UsuarioServicio implements IUsuarioServicio{
         return usuario;
     }
     
-    public boolean cambiar(Usuario usuario) {
+    public boolean updateContrasena(Usuario usuario) {
         Connection conn = Conexion.getConnection();
         String sql = "UPDATE Usuario SET password=SHA2(?,224) WHERE (perfil=?)";
         boolean bool = false;

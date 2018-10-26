@@ -104,7 +104,7 @@ public class OpcionServicio implements IOpcionServicio{
     }
 
     @Override
-    public int saveOpcion(Opcion opcion) {
+    public int createOpcion(Opcion opcion) {
         Connection conn = Conexion.getConnection();
         String sql = "INSERT INTO Opcion (texto, historial, idNodo_Padre, idNodo_Sig) VALUES (?,?,?,?)";
         int id = 0;
