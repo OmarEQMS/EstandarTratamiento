@@ -39,12 +39,12 @@ public class EstandarServicio implements IEstandarServicio{
 
     @Override
     public List<Estandar> getEstandares(int estatus) {
-        Connection conn = Conexion.getConnection();
-        String sql = "SELECT * FROM Estandar WHERE (estatus=?)";
+        Connection conn = Conexion.getConnection();    
+        String sql = "SELECT * FROM Estandar";
+        if(estatus==1){sql = sql + " WHERE (estatus=1)";}
         List<Estandar> estandares = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, estatus);
             ResultSet rs = ps.executeQuery();
             Estandar estandar;
             while (rs.next()) {
