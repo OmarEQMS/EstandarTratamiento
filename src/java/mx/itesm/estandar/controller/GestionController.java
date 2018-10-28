@@ -22,6 +22,7 @@ import mx.itesm.estandar.service.ImagenServicio;
 import mx.itesm.estandar.service.NodoServicio;
 import mx.itesm.estandar.service.OpcionServicio;
 import mx.itesm.estandar.service.UsuarioServicio;
+import mx.itesm.estandar.service.VisitasServicio;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
@@ -59,7 +60,7 @@ public class GestionController extends HttpServlet {
                 //Nombre, Descripcion, Color, Estatus
                 int id = Integer.parseInt(request.getParameter("id"));
                 String nombre = request.getParameter("nombre");
-                String descripcion = request.getParameter("descripcion"); 
+                String descripcion = request.getParameter("descripcion");
                 int color = Integer.parseInt(request.getParameter("color"));
                 int estatus = Integer.parseInt(request.getParameter("estatus"));
                 EstandarServicio es = new EstandarServicio();
@@ -76,8 +77,8 @@ public class GestionController extends HttpServlet {
                 //Titulo, Texto, Referencias
                 int id = Integer.parseInt(request.getParameter("id"));
                 String titulo = request.getParameter("titulo");
-                String texto = request.getParameter("texto"); 
-                String referencias = request.getParameter("referencias"); 
+                String texto = request.getParameter("texto");
+                String referencias = request.getParameter("referencias");
                 int idEstandar = Integer.parseInt(request.getParameter("idEstandar"));
                 NodoServicio ns = new NodoServicio();
                 Nodo nodo = new Nodo();
@@ -103,7 +104,7 @@ public class GestionController extends HttpServlet {
                 os.updateOpcion(opcion);
                 break;
             }
-            
+
             //Update
             case "NewEstandar": {
                 //Nombre
@@ -165,20 +166,20 @@ public class GestionController extends HttpServlet {
                 //
                 estandar.setIdNodo(idNodo);
                 es.updateEstandar(estandar);
-                
+
                 break;
             }
 
             //Imagen
             case "SubirImagen": {
                 //Eliminar la Actual y subir la Nueva
-                if(ServletFileUpload.isMultipartContent(request)){ //Para verificar que sea contenido multi parte archivo
+                if (ServletFileUpload.isMultipartContent(request)) { //Para verificar que sea contenido multi parte archivo
                     int id = Integer.parseInt(request.getParameter("id")); //IdNodo
                     NodoServicio ns = new NodoServicio();
                     Nodo nodo = ns.getNodo(id);
                     //Eliminar la pasada
                     ImagenServicio is = new ImagenServicio();
-                    is.deleteImagen(nodo.getIdImagen());   
+                    is.deleteImagen(nodo.getIdImagen());
                     //Obtener la nueva
                     Part part = request.getPart("imaggen");
                     InputStream contenido = part.getInputStream();
@@ -197,14 +198,31 @@ public class GestionController extends HttpServlet {
             case "CambiarPassword": {
                 //type param
                 String perfil = request.getParameter("perfil");
+                String past = request.getParameter("pastPass");
                 String pass = request.getParameter("pass");
-                Usuario usuario = new Usuario();
-                usuario.setPerfil(perfil);
-                usuario.setPassword(pass);
                 
                 UsuarioServicio us = new UsuarioServicio();
-                us.updateContrasena(usuario);
-                
+                Usuario usuario = new Usuario();
+                usuario.setPassword(past);
+                usuario = us.autenticar(usuario);
+                if (usuario.getPerfil().equals(perfil)) {
+                    usuario.setPassword(pass);
+                    us.updateContrasena(usuario);                    
+                    PrintWriter out = response.getWriter();
+                    out.print("success");
+                }else{
+                    PrintWriter out = response.getWriter();
+                    out.print("error");
+                }
+                break;
+            }
+            
+            //Visitas
+            case "GetVisitas": {                
+                VisitasServicio vs = new VisitasServicio();
+                int visitas = vs.getVisitas();
+                PrintWriter out = response.getWriter();
+                out.print(visitas);                
                 break;
             }
         }
@@ -250,7 +268,6 @@ public class GestionController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
     void EliminarEstandar(int id) {
         NodoServicio ns = new NodoServicio();
         List<Nodo> nodos = ns.getNodos(id);
@@ -266,7 +283,7 @@ public class GestionController extends HttpServlet {
         NodoServicio ns = new NodoServicio();
         ImagenServicio is = new ImagenServicio();
         OpcionServicio os = new OpcionServicio();
-    
+
         Nodo nodo = ns.getNodo(id);
         is.deleteImagen(nodo.getIdImagen());
         //Busco opciones o estandares con ese Nodo_Sig y lo pongo en 0
@@ -280,7 +297,8 @@ public class GestionController extends HttpServlet {
         //
         ns.deleteNodo(id);
     }
-    void EliminarOpcion(int id){
+
+    void EliminarOpcion(int id) {
         OpcionServicio os = new OpcionServicio();
         os.deleteOpcion(id);
     }

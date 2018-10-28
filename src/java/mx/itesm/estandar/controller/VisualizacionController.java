@@ -115,7 +115,33 @@ public class VisualizacionController extends HttpServlet {
                 List<Nodo> nodos = ns.getNodos(idE);
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(idE);
-                    
+                
+                Gson json = new Gson();
+                String returnJSON = json.toJson(nodos);
+                PrintWriter out = response.getWriter();
+                int index = 0; int tipo; int raiz;
+                for(int i = 0; i < nodos.size(); i++){
+                    index = returnJSON.indexOf("}", index); tipo=0; raiz=0;
+                    if(nodos.get(i).getIdNodo()==estandar.getIdNodo()) raiz=1;
+                    if(os.getNodoEnOpciones(nodos.get(i).getIdNodo())) tipo=1;
+                    returnJSON = returnJSON.substring(0,index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
+                    index+=19;
+                }
+                out.print(returnJSON);
+                break;
+            }
+            
+            case "GetNodosPorNodo":{
+                int id = Integer.parseInt(request.getParameter("id")); //idOpcion
+                NodoServicio ns = new NodoServicio();
+                Nodo nodo = ns.getNodo(id);   
+                int idE = nodo.getIdEstandar();
+                
+                List<Nodo> nodos = ns.getNodos(idE);
+                EstandarServicio es = new EstandarServicio();
+                Estandar estandar = es.getEstandar(idE);
+                OpcionServicio os = new OpcionServicio();
+                
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
                 PrintWriter out = response.getWriter();

@@ -39,8 +39,9 @@
                     <li class="myBorder m-2"><a href="#" id="misAlgoritmos"><i class="fas fa-stethoscope"></i>Mis Algoritmos</a></li>
                     <li class="myBorder m-2">
                         <a href="#" id="Gestion"><i class="fab fa-black-tie"></i>Gestión</a>
-                        <a><i class="far fa-eye"></i>Visitas: 128</a>
+                        <a id="misVisitasMenu"><i class="far fa-eye"></i>Visitas: </a>
                     </li>
+                    <li class="myBorder m-2"><a href="../" id="Salir"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
                 </ul>
             </div>
 
@@ -77,11 +78,7 @@
                             <!--TABLA DE ESTANDARES-->
                             <table class="display responsive no-wrap table table-striped text-center" id="tablaEstandares" width="100%">
                                 <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
-                                <tbody> <!--EJEMPLO-->                                    
-                                    <tr>
-                                        <td>Estándar 3</td>
-                                        <td><button class="btn btn-info"><i class="fas fa-edit"></i></button><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                    </tr>
+                                <tbody>                                    
                                 </tbody>
                             </table>
 
@@ -150,7 +147,7 @@
 
                                                     <div class="row justify-content-end mt-4 mb-1">
                                                         <div class="col-6">
-                                                            <button class="btn btn-secondary" id = "GuardarCambiosArbol" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar Cambios</button>
+                                                            <button class="btn btn-secondary" id="GuardarCambiosArbol" data-id="0" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar Cambios</button>
                                                         </div>
                                                     </div>
 
@@ -227,7 +224,7 @@
                             </table>
 
                             <div class="row justify-content-center mt-3">
-                                <div class="col-6 text-center"><button class="btn btn-primary" id = "newOption"><i class="fas fa-plus-circle"></i>&nbsp; Nueva Opcion</button></div>
+                                <div class="col-6 text-center"><button class="btn btn-primary" id="newOption" data-id="0"><i class="fas fa-plus-circle"></i>&nbsp; Nueva Opcion</button></div>
                             </div>
 
                             <hr style="background-color: black;" width="80%">
@@ -239,7 +236,7 @@
 
                             <div class="row justify-content-center">
                                 <div class="col-6 text-center">
-                                    <button class="btn btn-primary" id = "saveOption"><i class="fas fa-save"></i>&nbsp; Guardar Todo</button>
+                                    <button class="btn btn-primary" id="saveNodo"><i class="fas fa-save"></i>&nbsp; Guardar Todo</button>
                                 </div>
                             </div>
 
@@ -259,7 +256,7 @@
                             <div class="card">
                                 <div class="card-header"><h5 class="mb-0">Visitas</h5></div>
                                 <div class="card-body">
-                                    <div id = "misVisitas">Visitas: 256</div>
+                                    <div id = "misVisitas">Visitas: </div>
                                 </div>
                             </div>
 
@@ -281,6 +278,11 @@
                                         <input type="password" class="form-control" id="verificarContrasena">
                                         <button class = "btn" type="button" id="mostrarVerificarContrasena"><i class="far fa-eye"></i></button>
                                     </div>
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-12 text-center">
+                                            <button class="btn btn-primary" id="changePasswordVisualizacion"><i class="fas fa-plus-circle"></i>&nbsp; Cambiar Contraseña</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -301,6 +303,11 @@
                                         <div class="input-group-prepend"><span class="input-group-text">Verificar nueva contraseña</span></div>
                                         <input type="password" class="form-control" id="verificarContrasenaAdmin">
                                         <button class = "btn" type="button" id="mostrarVerificarContrasenaAdmin"><i class="far fa-eye"></i></button>
+                                    </div>
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-12 text-center">
+                                            <button class="btn btn-primary" id = "changePasswordGestion"><i class="fas fa-plus-circle"></i>&nbsp; Cambiar Contraseña</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -349,10 +356,8 @@
 
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Título</span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Su texto aqui">
+                            <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
+                            <input id="tituloNuevoNodo" type="text" class="form-control" placeholder="Su texto aqui">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -368,7 +373,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalNewOptionLabel">Nueva Opción</h5>
+                        <h5 class="modal-title" id="modalNewOptionLabel"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
                     </div>
 
@@ -417,7 +422,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                            <button id="btn-nodoSiguiente" type="button" class="btn btn-primary">Registrar</button>
+                            <button id="btn-saveOpcion" data-id="0" type="button" class="btn btn-primary">Registrar</button>
                         </div>
                     </div>
                 </div>

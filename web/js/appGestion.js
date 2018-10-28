@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    GetVisitas();
     $("#contentEstandares").hide();
     $("#contentEstandar").hide();
     $("#contentNodo").hide();
@@ -17,7 +17,92 @@ $(document).ready(function () {
         $("#" + nombre).show();
     }
 
+    $("#changePasswordGestion").on("click", function () {
+        if ($("#nuevaContrasenaAdmin").val()!=$("#verificarContrasenaAdmin").val()) {
+            swal("Contraseñas diferentes", {icon: "error"});
+            return;
+        }
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "CambiarPassword",
+                perfil: "visualizacion",
+                pastPass: $("#contrasenaPreviaAdmin").val(),
+                pass: $("#nuevaContrasenaAdmin").val()
+            },
+            success: function (response) {
+                if (response = "success") {
+                    swal("Contraseña Cambiada Exitosamente", {icon: "success"});
+                } else {
+                    swal("Hubo un error", {icon: "error"});
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+        
+        $("#contrasenaPreviaAdmin").val("");
+        $("#nuevaContrasenaAdmin").val("");
+        $("#verificarContrasenaAdmin").val("");
+    });
+
+    $("#changePasswordVisualizacion").on("click", function () {
+        if ($("#nuevaContrasena").val()!=$("#verificarContrasena").val()) {
+            swal("Contraseñas diferentes", {icon: "error"});
+            return;
+        }
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "CambiarPassword",
+                perfil: "visualizacion",
+                pastPass: $("#contrasenaPrevia").val(),
+                pass: $("#nuevaContrasena").val()
+            },
+            success: function (response) {
+                if (response = "success") {
+                    swal("Contraseña Cambiada Exitosamente", {icon: "success"});
+                } else {
+                    swal("Hubo un error", {icon: "error"});
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+        
+        $("#contrasenaPrevia").val("");
+        $("#nuevaContrasena").val("");
+        $("#verificarContrasena").val("");
+    });
+    
+    function GetVisitas(){
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "GetVisitas"
+            },
+            success: function (response) {                
+                $("#misVisitas").html("Visitas: " + response);
+                $("#misVisitasMenu").html("<i class='far fa-eye'></i>Visitas: " + response);                
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
+
     $("#Gestion").on("click", function () {
+        GetVisitas();
         cambiar("contentGestion");
     });
     $("#backEstandares").on("click", function () {
@@ -48,12 +133,16 @@ $(document).ready(function () {
             }
         });
     });
-    $('#nuevoArbol').on('click', () => {
+
+    $('#nuevoArbol').on('click', function() {
+        $("#tituloArbol").val("");
         $('#modalNuevoArbol').modal('toggle')
     });
+
     $("#btn-nuevoArbol").on("click", function () {
         alert("Nuevo Arbol");
     });
+
     $("body").on("click", ".editarEstandar", function () {
         var idE = $(this).data("id");
         $.ajax({
@@ -90,6 +179,8 @@ $(document).ready(function () {
                 id: idE
             },
             success: function (response) {
+                $("#GuardarCambiosArbol").data("id", idE);
+                
                 for (var i = 0; i < response.length; i++) {
                     var tipo;
                     if (response[i].raiz == 1) {
@@ -116,6 +207,7 @@ $(document).ready(function () {
         });
         cambiar("contentEstandar");
     });
+
     $("body").on("click", ".eliminarEstandar", function () {
         var idE = $(this).data("id");
         swal({
@@ -146,14 +238,19 @@ $(document).ready(function () {
         });
     });
     $("#GuardarCambiosArbol").on("click", function () {
+        alert($(this).data("id"));
         alert("Guardar Cambios Arbol");
     });
-    $('#nuevoNodo').on('click', () => {
-        $('#modalNewNode').modal('toggle')
+
+    $('#nuevoNodo').on('click', function() {
+        $("#tituloNuevoNodo").val("");
+        $('#modalNewNode').modal('toggle');
     });
-    $('#btn-nuevoNodo').on('click', () => {
+
+    $('#btn-nuevoNodo').on('click', function() {
         alert("RegistrarNuevo Nodo");
     });
+
     $("body").on("click", ".editarNodo, .GoToNodo", function () {
         var idN = $(this).data("id");
         tablaOpciones.clear().draw();
@@ -167,6 +264,8 @@ $(document).ready(function () {
                 id: idN
             },
             success: function (response) {
+                $("#saveNodo").data("id", response[0].idNodo);
+                $("#newOption").data("id", response[0].idNodo);
                 $("#tituloNodo").val(response[0].titulo);
                 $("#nombreNodo").html(response[0].titulo);
                 $("#textoNodo").html(response[0].texto);
@@ -199,6 +298,12 @@ $(document).ready(function () {
         });
         cambiar("contentNodo");
     });
+
+    $("#saveNodo").on("click", function () {
+        alert($(this).data("id"));
+        alert("Guardar Nodo");
+    });
+
     $("body").on("click", ".eliminarNodo", function () {
         var idN = $(this).data("id");
         swal({
@@ -228,6 +333,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $("body").on("click", ".eliminarOpcion", function () {
         var idO = $(this).data("id");
         swal({
@@ -257,12 +363,16 @@ $(document).ready(function () {
             }
         });
     });
+
     $("body").on("click", ".editarOpcion", function () {
+        $("#tituloOpcion").val("");
+        $("#textoHistorial").val("");
         $("#modalNewOptionLabel").html("Modificar Opcion");
-        $("#btn-nodoSiguiente").html("Guardar");
+        $("#btn-saveOpcion").html("Guardar");
         var idO = $(this).data("id");
         var idNS = $(this).data("sig");
-        
+        $("#btn-saveOpcion").data("id", idO);
+
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -293,14 +403,26 @@ $(document).ready(function () {
             },
             success: function (response) {
                 for (var i = 0; i < response.length; i++) {
-                    var icono; var icono2; var color;
-                    if (response[i].tipo == 1){icono2 = "fas fa-shoe-prints";}
-                    else{icono2 = "fas fa-unlink";}
-                    if (response[i].raiz == 1){icono2 = "fas fa-star";}
-                    
-                    if(idNS==response[i].idNodo){icono="fas fa-check-circle opcionSeleccionada"; color="btn-success "}
-                    else{icono="far fa-check-circle"; color="";}
-                    
+                    var icono;
+                    var icono2;
+                    var color;
+                    if (response[i].tipo == 1) {
+                        icono2 = "fas fa-shoe-prints";
+                    } else {
+                        icono2 = "fas fa-unlink";
+                    }
+                    if (response[i].raiz == 1) {
+                        icono2 = "fas fa-star";
+                    }
+
+                    if (idNS == response[i].idNodo) {
+                        icono = "fas fa-check-circle opcionSeleccionada";
+                        color = "btn-success "
+                    } else {
+                        icono = "far fa-check-circle";
+                        color = "";
+                    }
+
                     tablaNodosNuevaOpcion.row.add([
                         "<i class='" + icono2 + "'></i>&nbsp;" + response[i].titulo,
                         "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
@@ -311,8 +433,61 @@ $(document).ready(function () {
 
             }
         });
+
         $('#modalNewOption').modal('toggle');
     });
+
+    $('#newOption').on('click', function () {
+        $("#tituloOpcion").val("");
+        $("#textoHistorial").val("");
+        $("#modalNewOptionLabel").html("Nueva Opcion");
+        $("#btn-saveOpcion").html("Registrar");
+        idN = $(this).data("id");
+        $("#btn-saveOpcion").data("id", 0);
+
+        tablaNodosNuevaOpcion.clear().draw();
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetNodosPorNodo",
+                id: idN
+            },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var icono;
+                    var icono2;
+                    var color;
+                    if (response[i].tipo == 1) {
+                        icono2 = "fas fa-shoe-prints";
+                    } else {
+                        icono2 = "fas fa-unlink";
+                    }
+                    if (response[i].raiz == 1) {
+                        icono2 = "fas fa-star";
+                    }
+
+                    tablaNodosNuevaOpcion.row.add([
+                        "<i class='" + icono2 + "'></i>&nbsp;" + response[i].titulo,
+                        "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
+                    ]).draw(false);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+
+        $('#modalNewOption').modal('toggle');
+    });
+
+    $("#btn-saveOpcion").on("click", function () {
+        alert("Nueva Opcion");
+        alert($(this).data("id"));
+    });
+
     //Raul
 
     $('#colorSelector').on('input', function () {
@@ -320,14 +495,7 @@ $(document).ready(function () {
         $('#textColorEstandar').html("Color del estándar: Tono " + val);
         setColors(val, "sampleColorBackground", "sampleColorBorder");
     });
-    $('#newOption').on('click', () => {
-        $("#modalNewOptionLabel").html("Nueva Opcion");
-        $("#btn-nodoSiguiente").html("Registrar");
-        $('#modalNewOption').modal('toggle');
-    });
-    $("#btn-nodoSiguiente").on("click", function () {
-        alert("Nueva Opcion");
-    });
+
     //RAUL
 
     $("#file-input").on('change', function () {
