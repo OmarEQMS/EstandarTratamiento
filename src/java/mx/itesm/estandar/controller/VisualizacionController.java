@@ -77,7 +77,7 @@ public class VisualizacionController extends HttpServlet {
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
-                out.print("[" + json.toJson(nodo) + ", {\"color\":" + estandar.getColor() + "}]");
+                out.print("[" + json.toJson(nodo) + ", {\"color\":" + estandar.getColor() + ", \"nombreEstandar\":\"" + estandar.getNombre()+ "\"}]");
                 break;
             }
             

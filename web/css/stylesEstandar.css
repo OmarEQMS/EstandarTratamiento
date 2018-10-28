@@ -90,3 +90,26 @@ body {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
+/*BTN Morados*/
+
+.btn-morado{
+    background: #fff !important;
+    color: #4b32a1 !important;
+    border: 1px solid #4b32a1 !important;
+}
+
+.btn-morado:hover{
+    background: #4b32a1 !important;
+    color: white !important;
+    border: 1px solid white !important;
+}
+
+.btn-morado-solid{
+    background: #4b32a1;
+    color: #fff !important;
+}
+
+.btn-morado-solid:hover{
+    background: #362372;
+}

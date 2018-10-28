@@ -66,7 +66,7 @@ $(document).ready(function () {
                 if (response.historial != "") {
                     $(".historialDecisiones").html("<div data-id='" + response.idNodo_Padre + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + response.historial + "&nbsp;</div>" + $(".historialDecisiones").html());
                 }
-                if (index == historial.length - 1) {
+                if (index == historial.length - 1) {                   
                     CargarNodo(response.idNodo_Sig);
                 }else{
                     CargarHistorial(index+1);
@@ -119,7 +119,7 @@ $(document).ready(function () {
     });
 
     //Imprimir el Flujo
-    $("body").on("click", "#verFlujo", function () {
+    $("body").on("click", "#verFlujo, #btnVerFlujo", function () {
         $("#menu").hide();
         $("#content").hide();
         $("#divHistorial").show();
@@ -205,8 +205,13 @@ $(document).ready(function () {
                 id: idN
             },
             success: function (response) {
+                $("#nombreEstandar").html(response[1].nombreEstandar);                
                 $("#exampleModalLabel").html("Referencias");
-                $("#referencias").html(response[0].referencias);
+                if(response[0].referencias!=""){
+                    $("#referencias").html(response[0].referencias);
+                }else{
+                    $("#referencias").html("Sin Referencias");
+                }
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#nodo").html(response[0].texto);
                 $("#nodo").html($("#nodo").html().replace(/[\012]/g, "<br>"));
@@ -244,8 +249,8 @@ $(document).ready(function () {
                     }
                     setColors(color, "nodoFondo", "nodoBorde");
                 } else {
-                    $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verFlujo' class='btn card-body'>Ver Flujo</div></div>")
-                    $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #000;'><div id='verEstandares' class='btn card-body'>Regresar a Estandares</div></div>")
+                    $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #4b32a1;'><div id='verFlujo' class='btn card-body'><i class='fas fa-code-branch'></i>&nbsp; Ver Flujo</div></div>")
+                    $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #4b32a1;'><div id='verEstandares' class='btn card-body'><i class='fas fa-home'></i>&nbsp; Regresar a Algoritmos</div></div>")
                     setColors(color, "nodoFondo", "nodoBorde");
                 }     
                 cargando=0;
@@ -294,9 +299,13 @@ $(document).ready(function () {
                 key: "GetEstandar",
                 id: idE
             },
-            success: function (response) {
+            success: function (response) {                
                 $("#exampleModalLabel").html("Descripcion");
-                $("#referencias").html(response.descripcion);
+                if(response.descripcion!=""){
+                    $("#referencias").html(response.descripcion);
+                }else{
+                    $("#referencias").html("Sin Descripcion");
+                }
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#modalReferencias").modal('toggle');
             },
