@@ -132,7 +132,7 @@
                                                             </div>
                                                             <div class="row justify-content-center mt-2">
                                                                 <div class="col-8 text-center">
-                                                                    <input type="range"  id="colorSelector"  style="width: 100%;" min = "0" max = "360" aria-label="colorAlgoritmo">
+                                                                    <input type="range"  id="colorSelector"  style="width: 100%;" min="0" max="360" aria-label="colorAlgoritmo">
                                                                 </div>
                                                                 <div class="col-2 text-center"><div class = "card sampleColorBackground">Color Fondo</div></div>
                                                                 <div class="col-2 text-center"><div class = "card sampleColorBorder">Color Borde</div></div>
@@ -163,7 +163,7 @@
                             <!-- Nuevo Nodo -->
                             <div class="row justify-content-center mt-3 mb-3">
                                 <div class="col-6 text-center">
-                                    <button class="btn btn-primary" id = "nuevoNodo" style="width: 100%;"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo Nodo</button>
+                                    <button class="btn btn-primary" id="nuevoNodo" style="width: 100%;"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo Nodo</button>
                                 </div>
                             </div>
 
@@ -362,7 +362,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        <button id="btn-nuevoNodo" class="btn btn-primary">Registrar</button>
+                        <button id="btn-nuevoNodo" data-id='0' class="btn btn-primary">Registrar</button>
                     </div>
                 </div>
             </div>
@@ -408,11 +408,7 @@
                                     <div class="card-body">
                                         <table class="display responsive no-wrap table table-striped text-center" id="tablaNodosRaizNuevaOpcion" width="100%">
                                             <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
-                                            <tbody><!--ejemplo--> 
-                                                <tr>
-                                                    <td><span><i class="fas fa-star"></i> Soy Foraneo 1</span></td>
-                                                    <td><button class="btn nodosOpcion"><i class="far fa-check-circle"></i></button></td>
-                                                </tr>
+                                            <tbody>                                                
                                             </tbody>
                                         </table>
                                     </div>

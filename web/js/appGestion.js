@@ -140,11 +140,34 @@ $(document).ready(function () {
     });
 
     $("#btn-nuevoArbol").on("click", function () {
-        alert("Nuevo Arbol");
+        var nombre = $("#tituloArbol").val();
+        $('#modalNuevoArbol').modal('toggle')
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "NewEstandar",
+                nombre: nombre
+            },
+            success: function (response) {
+                swal("Estandar Agregado", {icon: "success"});
+                tablaEstandares.row.add([nombre, "<button data-id='" + response + "' class='btn btn-info editarEstandar'><i class='fas fa-edit'></i></button><button data-id='" + response + "' class='btn btn-danger eliminarEstandar'><i class='fas fa-trash-alt'></i></button></td>"]).draw(false);
+                EditarEstandar(response);
+            },
+            error: function (xhr) {
+
+            }
+        });
     });
 
     $("body").on("click", ".editarEstandar", function () {
         var idE = $(this).data("id");
+        EditarEstandar(idE);
+    });
+
+    function EditarEstandar(idE) {
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -159,6 +182,7 @@ $(document).ready(function () {
                 $("#tituloEstandar").val(response.nombre);
                 $("#descripcionEstandar").val(response.descripcion);
                 $("#colorSelector").val(response.color);
+                $("#btn-nuevoNodo").data("id", response.idEstandar);
                 var val = $('#colorSelector').val();
                 $('#textColorEstandar').html("Color del estándar: Tono " + val);
                 setColors(val, "sampleColorBackground", "sampleColorBorder");
@@ -206,10 +230,12 @@ $(document).ready(function () {
             }
         });
         cambiar("contentEstandar");
-    });
+    }
 
     $("body").on("click", ".eliminarEstandar", function () {
         var idE = $(this).data("id");
+        var fila = $(this).parents('tr');
+
         swal({
             title: "¿Estas Seguro?",
             text: "Se eliminaran todos los nodo",
@@ -222,12 +248,12 @@ $(document).ready(function () {
                     url: "GestionController",
                     method: "POST",
                     cache: false,
-                    dataType: "JSON",
                     data: {
                         key: "EliminarEstandar",
                         id: idE
                     },
                     success: function (response) {
+                        tablaEstandares.row(fila).remove().draw();
                         swal("Estandar Eliminado", {icon: "success"});
                     },
                     error: function (xhr) {
@@ -239,7 +265,32 @@ $(document).ready(function () {
     });
 
     $("#GuardarCambiosArbol").on("click", function () {
-        alert($(this).data("id"));
+        var idE = $(this).data("id");
+        var nombre = $("#tituloEstandar").val();
+        var descripcion = $("#descripcionEstandar").val();
+        var color = $("#colorSelector").val();
+        var estatus = ($('#estatusEstandar').prop('checked') == true) ? 1 : 0;
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "UpdateEstandar",
+                id: idE,
+                nombre: nombre,
+                descripcion: descripcion,
+                color: color,
+                estatus: estatus
+            },
+            success: function (response) {
+                swal("Estandar Actualizado", {icon: "success"});
+            },
+            error: function (xhr) {
+
+            }
+        });
+
         alert("Guardar Cambios Arbol");
     });
 
@@ -249,11 +300,40 @@ $(document).ready(function () {
     });
 
     $('#btn-nuevoNodo').on('click', function () {
-        alert("RegistrarNuevo Nodo");
+        var idE = $(this).data("id");
+        var tituloNodo = $("#tituloNuevoNodo").val();
+        $('#modalNewNode').modal('toggle');
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "NewNodo",
+                titulo: tituloNodo,
+                idEstandar: idE
+            },
+            success: function (response) {
+                swal("Nodo Agregado", {icon: "success"});
+                tablaNodos.row.add([
+                    "<button class='btn nodoTipo' data-id='" + response + "'><i class='fas fa-unlink nodoRoto'></i></button></td>",
+                    tituloNodo,
+                    "<td><button class='btn btn-info editarNodo' data-id='" + response + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarNodo' data-id='" + response + "'><i class='fas fa-trash-alt'></i></button></td>"
+                ]).draw(false);
+                EditarNodo(response);
+            },
+            error: function (xhr) {
+
+            }
+        });
     });
 
     $("body").on("click", ".editarNodo, .GoToNodo", function () {
         var idN = $(this).data("id");
+        EditarNodo(idN);
+    });
+
+    function EditarNodo(idN) {
         tablaOpciones.clear().draw();
         $.ajax({
             url: "VisualizacionController",
@@ -288,8 +368,10 @@ $(document).ready(function () {
             success: function (response) {
                 for (var i = 0; i < response.length; i++) {
                     var nodoSig = "<button class='btn btn-primary GoToNodo' data-id='" + response[i].idNodo_Sig + "'><i class='fas fa-arrow-right'></i></button>";
-                    if(response[i].idNodo_Sig==0){nodoSig="";}
-                    
+                    if (response[i].idNodo_Sig == 0) {
+                        nodoSig = "";
+                    }
+
                     tablaOpciones.row.add([
                         response[i].texto,
                         nodoSig + "<button class='btn btn-info editarOpcion' data-id='" + response[i].idOpcion + "' data-sig='" + response[i].idNodo_Sig + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-trash-alt'></i></button>"
@@ -301,7 +383,7 @@ $(document).ready(function () {
             }
         });
         cambiar("contentNodo");
-    });
+    }
 
     $("#saveNodo").on("click", function () {
         alert($(this).data("id"));
@@ -310,6 +392,8 @@ $(document).ready(function () {
 
     $("body").on("click", ".eliminarNodo", function () {
         var idN = $(this).data("id");
+        var fila = $(this).parents('tr');
+
         swal({
             title: "¿Estas Seguro?",
             text: "Se eliminaran el Nodo y sus opciones",
@@ -322,12 +406,12 @@ $(document).ready(function () {
                     url: "GestionController",
                     method: "POST",
                     cache: false,
-                    dataType: "JSON",
                     data: {
                         key: "EliminarNodo",
                         id: idN
                     },
                     success: function (response) {
+                        tablaNodos.row(fila).remove().draw();
                         swal("Nodo Eliminado", {icon: "success"});
                     },
                     error: function (xhr) {
@@ -340,6 +424,8 @@ $(document).ready(function () {
 
     $("body").on("click", ".eliminarOpcion", function () {
         var idO = $(this).data("id");
+        var fila = $(this).parents('tr');
+
         swal({
             title: "¿Estas Seguro?",
             text: "Se eliminaran la Opcion",
@@ -352,12 +438,12 @@ $(document).ready(function () {
                     url: "GestionController",
                     method: "POST",
                     cache: false,
-                    dataType: "JSON",
                     data: {
                         key: "EliminarOpcion",
                         id: idO
                     },
                     success: function (response) {
+                        tablaOpciones.row(fila).remove().draw();
                         swal("Opcion Eliminado", {icon: "success"});
                     },
                     error: function (xhr) {
@@ -395,6 +481,8 @@ $(document).ready(function () {
             }
         });
 
+        var OpcionSeleccionada = 0;
+
         tablaNodosNuevaOpcion.clear().draw();
         $.ajax({
             url: "VisualizacionController",
@@ -420,6 +508,7 @@ $(document).ready(function () {
                     }
 
                     if (idNS == response[i].idNodo) {
+                        OpcionSeleccionada = 1;
                         icono = "fas fa-check-circle opcionSeleccionada";
                         color = "btn-success "
                     } else {
@@ -429,6 +518,38 @@ $(document).ready(function () {
 
                     tablaNodosNuevaOpcion.row.add([
                         "<i class='" + icono2 + "'></i>&nbsp;" + response[i].titulo,
+                        "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
+                    ]).draw(false);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+
+        tablaNodosRaizNuevaOpcion.clear().draw();
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetNodosRaiz"
+            },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var icono;
+                    var color;
+                    if ((idNS == response[i].idNodo) && (OpcionSeleccionada == 0)) {
+                        icono = "fas fa-check-circle opcionSeleccionada";
+                        color = "btn-success "
+                    } else {
+                        icono = "far fa-check-circle";
+                        color = "";
+                    }
+
+                    tablaNodosRaizNuevaOpcion.row.add([
+                        "<i class='fas fa-star'></i>&nbsp;" + response[i].titulo,
                         "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
                     ]).draw(false);
                 }
@@ -461,9 +582,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 for (var i = 0; i < response.length; i++) {
-                    var icono;
                     var icono2;
-                    var color;
                     if (response[i].tipo == 1) {
                         icono2 = "fas fa-shoe-prints";
                     } else {
@@ -475,7 +594,29 @@ $(document).ready(function () {
 
                     tablaNodosNuevaOpcion.row.add([
                         "<i class='" + icono2 + "'></i>&nbsp;" + response[i].titulo,
-                        "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
+                        "<button class='btn nodosOpcion'><i class='far fa-check-circle'></i></button>"
+                    ]).draw(false);
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+
+        tablaNodosRaizNuevaOpcion.clear().draw();
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            dataType: "JSON",
+            data: {
+                key: "GetNodosRaiz"
+            },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    tablaNodosRaizNuevaOpcion.row.add([
+                        "<i class='fas fa-star'></i>&nbsp;" + response[i].titulo,
+                        "<button class='btn nodosOpcion'><i class='far fa-check-circle'></i></button>"
                     ]).draw(false);
                 }
             },
@@ -524,7 +665,7 @@ $(document).ready(function () {
             dangerMode: true,
         }).then((cambiar) => {
             if (cambiar) {
-                
+
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -536,7 +677,7 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response = "success") {
                             swal("Nodo Raiz cambiado Exitosamente", {icon: "success"});
-                            
+
                             var estrellas = document.getElementsByClassName('nodoEstrella');
                             for (var i = 0; i < estrellas.length; i++) {
                                 $(estrellas[i]).removeClass('fa-star');

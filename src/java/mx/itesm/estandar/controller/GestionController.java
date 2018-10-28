@@ -40,6 +40,8 @@ public class GestionController extends HttpServlet {
                 //EliminarNodos (Imagenes) y Opciones
                 int id = Integer.parseInt(request.getParameter("id")); //IdEstandar
                 EliminarEstandar(id);
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
             case "EliminarNodo": {
@@ -47,11 +49,15 @@ public class GestionController extends HttpServlet {
                 //Busco opciones o estandares con ese Nodo_Sig y lo pongo en 0
                 int id = Integer.parseInt(request.getParameter("id")); //IdNodo
                 EliminarNodo(id);
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
             case "EliminarOpcion": {
                 int id = Integer.parseInt(request.getParameter("id")); //IdOpcion
                 EliminarOpcion(id);
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
 
@@ -71,6 +77,9 @@ public class GestionController extends HttpServlet {
                 estandar.setColor(color);
                 estandar.setEstatus(estatus);
                 es.updateEstandar(estandar);
+                
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
             case "UpdateNodo": {
@@ -88,6 +97,9 @@ public class GestionController extends HttpServlet {
                 nodo.setReferencias(referencias);
                 nodo.setIdEstandar(idEstandar);
                 ns.updateNodo(nodo);
+                
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
             case "UpdateOpcion": {
@@ -102,6 +114,9 @@ public class GestionController extends HttpServlet {
                 opcion.setHistorial(historial);
                 opcion.setIdNodo_Sig(idNodo);
                 os.updateOpcion(opcion);
+                
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
 
@@ -128,6 +143,7 @@ public class GestionController extends HttpServlet {
                 Nodo nodo = new Nodo();
                 nodo.setTitulo(titulo);
                 nodo.setTexto("");
+                nodo.setIdImagen(0);
                 nodo.setReferencias("");
                 nodo.setIdEstandar(idEstandar);
                 int id = ns.createNodo(nodo);

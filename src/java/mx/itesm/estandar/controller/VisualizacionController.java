@@ -132,7 +132,7 @@ public class VisualizacionController extends HttpServlet {
             }
             
             case "GetNodosPorNodo":{
-                int id = Integer.parseInt(request.getParameter("id")); //idOpcion
+                int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 NodoServicio ns = new NodoServicio();
                 Nodo nodo = ns.getNodo(id);   
                 int idE = nodo.getIdEstandar();
@@ -153,6 +153,22 @@ public class VisualizacionController extends HttpServlet {
                     returnJSON = returnJSON.substring(0,index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
                     index+=19;
                 }
+                out.print(returnJSON);
+                break;
+            }
+            
+            case "GetNodosRaiz":{
+                EstandarServicio es = new EstandarServicio();
+                List<Estandar> estandares = es.getEstandares(0);
+                List<Nodo> nodos = new ArrayList<>();;
+                NodoServicio ns = new NodoServicio();
+                
+                for(int i = 0; i < estandares.size(); i++){
+                    nodos.add(ns.getNodo(estandares.get(i).getIdNodo()));                   
+                }                
+                Gson json = new Gson();
+                String returnJSON = json.toJson(nodos);
+                PrintWriter out = response.getWriter();
                 out.print(returnJSON);
                 break;
             }
