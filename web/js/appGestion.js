@@ -18,7 +18,7 @@ $(document).ready(function () {
     }
 
     $("#changePasswordGestion").on("click", function () {
-        if ($("#nuevaContrasenaAdmin").val()!=$("#verificarContrasenaAdmin").val()) {
+        if ($("#nuevaContrasenaAdmin").val() != $("#verificarContrasenaAdmin").val()) {
             swal("Contraseñas diferentes", {icon: "error"});
             return;
         }
@@ -44,14 +44,14 @@ $(document).ready(function () {
 
             }
         });
-        
+
         $("#contrasenaPreviaAdmin").val("");
         $("#nuevaContrasenaAdmin").val("");
         $("#verificarContrasenaAdmin").val("");
     });
 
     $("#changePasswordVisualizacion").on("click", function () {
-        if ($("#nuevaContrasena").val()!=$("#verificarContrasena").val()) {
+        if ($("#nuevaContrasena").val() != $("#verificarContrasena").val()) {
             swal("Contraseñas diferentes", {icon: "error"});
             return;
         }
@@ -77,13 +77,13 @@ $(document).ready(function () {
 
             }
         });
-        
+
         $("#contrasenaPrevia").val("");
         $("#nuevaContrasena").val("");
         $("#verificarContrasena").val("");
     });
-    
-    function GetVisitas(){
+
+    function GetVisitas() {
         $.ajax({
             url: "GestionController",
             method: "POST",
@@ -91,9 +91,9 @@ $(document).ready(function () {
             data: {
                 key: "GetVisitas"
             },
-            success: function (response) {                
+            success: function (response) {
                 $("#misVisitas").html("Visitas: " + response);
-                $("#misVisitasMenu").html("<i class='far fa-eye'></i>Visitas: " + response);                
+                $("#misVisitasMenu").html("<i class='far fa-eye'></i>Visitas: " + response);
             },
             error: function (xhr) {
 
@@ -134,7 +134,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#nuevoArbol').on('click', function() {
+    $('#nuevoArbol').on('click', function () {
         $("#tituloArbol").val("");
         $('#modalNuevoArbol').modal('toggle')
     });
@@ -180,7 +180,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#GuardarCambiosArbol").data("id", idE);
-                
+
                 for (var i = 0; i < response.length; i++) {
                     var tipo;
                     if (response[i].raiz == 1) {
@@ -237,17 +237,18 @@ $(document).ready(function () {
             }
         });
     });
+
     $("#GuardarCambiosArbol").on("click", function () {
         alert($(this).data("id"));
         alert("Guardar Cambios Arbol");
     });
 
-    $('#nuevoNodo').on('click', function() {
+    $('#nuevoNodo').on('click', function () {
         $("#tituloNuevoNodo").val("");
         $('#modalNewNode').modal('toggle');
     });
 
-    $('#btn-nuevoNodo').on('click', function() {
+    $('#btn-nuevoNodo').on('click', function () {
         alert("RegistrarNuevo Nodo");
     });
 
@@ -286,9 +287,12 @@ $(document).ready(function () {
             },
             success: function (response) {
                 for (var i = 0; i < response.length; i++) {
+                    var nodoSig = "<button class='btn btn-primary GoToNodo' data-id='" + response[i].idNodo_Sig + "'><i class='fas fa-arrow-right'></i></button>";
+                    if(response[i].idNodo_Sig==0){nodoSig="";}
+                    
                     tablaOpciones.row.add([
                         response[i].texto,
-                        "<button class='btn btn-primary GoToNodo' data-id='" + response[i].idNodo_Sig + "'><i class='fas fa-arrow-right'></i></button><button class='btn btn-info editarOpcion' data-id='" + response[i].idOpcion + "' data-sig='" + response[i].idNodo_Sig + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-trash-alt'></i></button>"
+                        nodoSig + "<button class='btn btn-info editarOpcion' data-id='" + response[i].idOpcion + "' data-sig='" + response[i].idNodo_Sig + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-trash-alt'></i></button>"
                     ]).draw(false);
                 }
             },
@@ -507,7 +511,11 @@ $(document).ready(function () {
             reader.readAsDataURL(this.files[0]);
         }
     });
+
     $("body").on('click', ".nodoTipo", function () {
+        var idN = $(this).data("id");
+        var este = this;
+
         swal({
             title: "Estás a punto de cambiar el nodo raiz:",
             text: "El nodo raiz previo será desvinculado",
@@ -516,41 +524,70 @@ $(document).ready(function () {
             dangerMode: true,
         }).then((cambiar) => {
             if (cambiar) {
-                var x = document.getElementsByClassName('nodoEstrella');
-                for (var i = 0; i < x.length; i++) {
-                    $(x[i]).removeClass('fa-star');
-                    if ($(this).children().hasClass('nodoRoto'))
-                        $(x[i]).addClass('fa-unlink');
-                    else
-                        $(this).children().removeClass('fa-shoe-prints');
-                    $(x[i]).removeClass('nodoEstrella');
-                }
-                if ($(this).children().hasClass('fa-unlink'))
-                    $(this).children().removeClass('fa-unlink');
-                if ($(this).children().hasClass('fa-shoe-prints'))
-                    $(this).children().removeClass('fa-shoe-prints');
-                $(this).children().addClass('nodoEstrella');
-                $(this).children().addClass('fa-star');
-            } else {
+                
+                $.ajax({
+                    url: "GestionController",
+                    method: "POST",
+                    cache: false,
+                    data: {
+                        key: "ReferenciarEstandar",
+                        id: idN
+                    },
+                    success: function (response) {
+                        if (response = "success") {
+                            swal("Nodo Raiz cambiado Exitosamente", {icon: "success"});
+                            
+                            var estrellas = document.getElementsByClassName('nodoEstrella');
+                            for (var i = 0; i < estrellas.length; i++) {
+                                $(estrellas[i]).removeClass('fa-star');
+                                if ($(estrellas[i]).hasClass('nodoRoto')) {
+                                    $(estrellas[i]).addClass('fa-unlink');
+                                } else {
+                                    $(estrellas[i]).addClass('fa-shoe-prints');
+                                }
+                                $(estrellas[i]).removeClass('nodoEstrella');
+                            }
+                            if ($(este).children().hasClass('fa-unlink')) {
+                                $(este).children().removeClass('fa-unlink');
+                            }
+                            if ($(este).children().hasClass('fa-shoe-prints')) {
+                                $(este).children().removeClass('fa-shoe-prints');
+                            }
+                            $(este).children().addClass('nodoEstrella');
+                            $(este).children().addClass('fa-star');
 
+                        } else {
+                            swal("Hubo un error", {icon: "error"});
+                            return;
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
             }
         });
     });
+
     $("body").on('click', ".nodosOpcion", function () {
-        var x = document.getElementsByClassName('opcionSeleccionada');
-        for (var i = 0; i < x.length; i++) {
-            $(x[i]).removeClass('fas');
-            $(x[i]).addClass('far');
-            if ($(x[i]).parent().hasClass('btn-success'))
-                $(x[i]).parent().removeClass('btn-success');
-            $(x[i]).removeClass('opcionSeleccionada');
+        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
+        for (var i = 0; i < seleccionada.length; i++) {
+            $(seleccionada[i]).removeClass('fas');
+            $(seleccionada[i]).addClass('far');
+            if ($(seleccionada[i]).parent().hasClass('btn-success')) {
+                $(seleccionada[i]).parent().removeClass('btn-success');
+            }
+            $(seleccionada[i]).removeClass('opcionSeleccionada');
         }
-        if ($(this).children().hasClass('far'))
+        if ($(this).children().hasClass('far')) {
             $(this).children().removeClass('far');
+        }
         $(this).children().addClass('opcionSeleccionada');
         $(this).children().addClass('fas');
         $(this).addClass('btn-success');
     });
+
+
     function mostrarContrasena(myButton, myField) {
         myButton.on('mousedown', function () {
             var x = document.getElementById(myField);

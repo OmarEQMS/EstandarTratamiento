@@ -156,17 +156,21 @@ public class GestionController extends HttpServlet {
             //References
             case "ReferenciarEstandar": {
                 //ID Estandar, ID Nodo                
-                int id = Integer.parseInt(request.getParameter("id")); //IdEstandar
-                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
+                int id = Integer.parseInt(request.getParameter("id")); //IdNodo
+                NodoServicio ns = new NodoServicio();
+                int idEstandar = ns.getNodo(id).getIdEstandar();
+
                 EstandarServicio es = new EstandarServicio();
-                Estandar estandar = es.getEstandar(id);
+                Estandar estandar = es.getEstandar(idEstandar);
                 //Busco opciones que referencien al idNodo Anterior y lo cambio
                 OpcionServicio os = new OpcionServicio();
-                os.updateOpcionesPorSig(estandar.getIdNodo(), idNodo);
+                os.updateOpcionesPorSig(estandar.getIdNodo(), id);
                 //
-                estandar.setIdNodo(idNodo);
+                estandar.setIdNodo(id);
                 es.updateEstandar(estandar);
-
+                
+                PrintWriter out = response.getWriter();
+                out.print("success");
                 break;
             }
 
@@ -200,29 +204,29 @@ public class GestionController extends HttpServlet {
                 String perfil = request.getParameter("perfil");
                 String past = request.getParameter("pastPass");
                 String pass = request.getParameter("pass");
-                
+
                 UsuarioServicio us = new UsuarioServicio();
                 Usuario usuario = new Usuario();
                 usuario.setPassword(past);
                 usuario = us.autenticar(usuario);
                 if (usuario.getPerfil().equals(perfil)) {
                     usuario.setPassword(pass);
-                    us.updateContrasena(usuario);                    
+                    us.updateContrasena(usuario);
                     PrintWriter out = response.getWriter();
                     out.print("success");
-                }else{
+                } else {
                     PrintWriter out = response.getWriter();
                     out.print("error");
                 }
                 break;
             }
-            
+
             //Visitas
-            case "GetVisitas": {                
+            case "GetVisitas": {
                 VisitasServicio vs = new VisitasServicio();
                 int visitas = vs.getVisitas();
                 PrintWriter out = response.getWriter();
-                out.print(visitas);                
+                out.print(visitas);
                 break;
             }
         }
