@@ -154,15 +154,13 @@ public class GestionController extends HttpServlet {
             case "NewOpcion": {
                 //Texto, Historial, idNodo_Sig (idNodo_Padre)
                 String texto = request.getParameter("texto");
-                String historial = request.getParameter("historial");
                 int idNodoPadre = Integer.parseInt(request.getParameter("idNodoPadre"));
-                int idNodo = Integer.parseInt(request.getParameter("idNodo")); //IdNodoNew
                 OpcionServicio os = new OpcionServicio();
                 Opcion opcion = new Opcion();
                 opcion.setTexto(texto);
-                opcion.setHistorial(historial);
+                opcion.setHistorial("");
                 opcion.setIdNodo_Padre(idNodoPadre);
-                opcion.setIdNodo_Sig(idNodo);
+                opcion.setIdNodo_Sig(0);
                 int id = os.createOpcion(opcion);
                 PrintWriter out = response.getWriter();
                 out.print(id);
@@ -212,7 +210,7 @@ public class GestionController extends HttpServlet {
                     return;
                 }                
                 //Eliminar la Actual y subir la Nueva
-                if (ServletFileUpload.isMultipartContent(request)) { //Para verificar que sea contenido multi parte archivo
+                if (("modificar".equals(accion)) && (ServletFileUpload.isMultipartContent(request))) { //Para verificar que sea contenido multi parte archivo
                     int id = Integer.parseInt(request.getParameter("id")); //IdNodo
                     NodoServicio ns = new NodoServicio();
                     ImagenServicio is = new ImagenServicio();

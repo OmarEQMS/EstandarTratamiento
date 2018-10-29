@@ -41,6 +41,7 @@
                         <a href="#" id="Gestion"><i class="fab fa-black-tie"></i>Gestión</a>
                         <a id="misVisitasMenu"><i class="far fa-eye"></i>Visitas: </a>
                     </li>
+                    <li class="myBorder m-2"><a href="manual.pdf" target="_blank"><i class="fas fa-book-open"></i>Manual</a></li>
                     <li class="myBorder m-2"><a href="./" id="Salir"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
                 </ul>
             </div>
@@ -321,11 +322,11 @@
         </div>
 
         <!--MODAL ARBOLES-->
-        <div id="modalNuevoArbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ariamodalNewOption" aria-hidden="true">
+        <div id="modalNuevoArbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNuevoArbol" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalNewNodeLabel">Nuevo Árbol</h5>
+                        <h5 class="modal-title">Nuevo Árbol</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
                     </div>
 
@@ -345,12 +346,12 @@
         </div>
 
         <!--MODAL NODOS-->
-        <div id="modalNewNode" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewOption" aria-hidden="true">
+        <div id="modalNewNode" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewNode" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalNewNodeLabel">Nuevo nodo</h5>
+                        <h5 class="modal-title">Nuevo nodo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
                     </div>
 
@@ -367,19 +368,43 @@
                 </div>
             </div>
         </div>
-
-        <!--MODAL OPCIONES-->
+        
+        <!--MODAL New Opcion-->
         <div id="modalNewOption" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewOption" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
+
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalNewOptionLabel"></h5>
+                        <h5 class="modal-title">Nueva Opcion</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
                     </div>
 
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
+                            <div class="input-group-prepend"><span class="input-group-text">Texto</span></div>
+                            <input id="tituloNuevaOpcion" type="text" class="form-control" placeholder="Su texto aqui">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button id="btn-nuevaOpcion" data-id='0' class="btn btn-primary">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--MODAL Edit OPCION-->
+        <div id="modalEditOption" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEditOption" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar Opcion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text">Texto</span></div>
                             <input id="tituloOpcion" type="text" class="form-control" placeholder="Su título aqui">
                         </div>
                         <div class="input-group mb-3">
@@ -418,7 +443,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                            <button id="btn-saveOpcion" data-id="0" type="button" class="btn btn-primary">Registrar</button>
+                            <button id="btn-saveOpcion" data-id="0" type="button" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </div>
