@@ -299,6 +299,7 @@ $(document).ready(function () {
                 estatus: estatus
             },
             success: function (response) {
+                $("#nombreEstandar").html($("#tituloEstandar").val());
                 swal("Estandar Actualizado", {icon: "success"});
             },
             error: function (xhr) {
@@ -446,9 +447,10 @@ $(document).ready(function () {
                 id: idN,
                 titulo: tituloNodo,
                 texto: textoNodo,
-                referencias: anotacionNodo,
+                referencias: anotacionNodo
             },
             success: function (response) {
+                $("#nombreNodo").html($("#tituloNodo").val());
                 swal("Estandar Actualizado", {icon: "success"});
             },
             error: function (xhr) {
