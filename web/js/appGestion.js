@@ -107,12 +107,20 @@ $(document).ready(function () {
     });
     $("#backEstandares").on("click", function () {
         cambiar("contentEstandares");
+        CargarTablaEstandares();
     });
     $("#backEstandar").on("click", function () {
         cambiar("contentEstandar");
+        var idE = $(this).data("id");
+        CargarTablaNodos(idE);
     });
+    
     $("#misAlgoritmos").on("click", function () {
         cambiar("contentEstandares");
+        CargarTablaEstandares();
+    });
+    
+    function CargarTablaEstandares(){
         tablaEstandares.clear().draw();
         $.ajax({
             url: "VisualizacionController",
@@ -132,7 +140,7 @@ $(document).ready(function () {
 
             }
         });
-    });
+    }
 
     $('#nuevoArbol').on('click', function () {
         $("#tituloArbol").val("");
@@ -187,11 +195,19 @@ $(document).ready(function () {
                 $('#textColorEstandar').html("Color del estándar: Tono " + val);
                 setColors(val, "sampleColorBackground", "sampleColorBorder");
                 $('#estatusEstandar').prop('checked', (response.estatus == 1));
+                $("#GuardarCambiosArbol").data("id", idE);
+                $("#backEstandar").data("id", idE);
             },
             error: function (xhr) {
 
             }
         });
+        CargarTablaNodos(idE);
+        
+        cambiar("contentEstandar");
+    }
+    
+    function CargarTablaNodos(idE){
         tablaNodos.clear().draw();
         $.ajax({
             url: "VisualizacionController",
@@ -203,20 +219,20 @@ $(document).ready(function () {
                 id: idE
             },
             success: function (response) {
-                $("#GuardarCambiosArbol").data("id", idE);
-
                 for (var i = 0; i < response.length; i++) {
                     var tipo;
                     if (response[i].raiz == 1) {
-                        if (response[i].tipo == 1)
+                        if (response[i].tipo == 1){
                             tipo = "fas fa-star nodoEstrella";
-                        else
+                        }else{
                             tipo = "fas fa-star nodoRoto nodoEstrella";
+                        }
                     } else {
-                        if (response[i].tipo == 1)
+                        if (response[i].tipo == 1){
                             tipo = "fas fa-shoe-prints";
-                        else
+                        }else{
                             tipo = "fas fa-unlink nodoRoto";
+                        }
                     }
                     tablaNodos.row.add([
                         "<button class='btn nodoTipo' data-id='" + response[i].idNodo + "'><i class='" + tipo + "'></i></button></td>",
@@ -229,7 +245,6 @@ $(document).ready(function () {
 
             }
         });
-        cambiar("contentEstandar");
     }
 
     $("body").on("click", ".eliminarEstandar", function () {
@@ -335,7 +350,6 @@ $(document).ready(function () {
     function EditarNodo(idN) {
         $("#ImagenNodo").attr("src", "./img/noImage.jpeg");
 
-        tablaOpciones.clear().draw();
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -362,7 +376,13 @@ $(document).ready(function () {
 
             }
         });
-
+        CargarTablaOpciones(idN);
+        
+        cambiar("contentNodo");
+    }
+    
+    function CargarTablaOpciones(idN){
+        tablaOpciones.clear().draw();
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -380,7 +400,7 @@ $(document).ready(function () {
                     }
                     tablaOpciones.row.add([
                         response[i].texto,
-                        nodoSig + "<button class='btn btn-info editarOpcion' data-id='" + response[i].idOpcion + "' data-sig='" + response[i].idNodo_Sig + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-trash-alt'></i></button>"
+                        nodoSig + "<button class='btn btn-info editarOpcion' data-id='" + response[i].idOpcion + "' data-nodo='" + response[i].idNodo_Padre + "' data-sig='" + response[i].idNodo_Sig + "'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response[i].idOpcion + "'><i class='fas fa-trash-alt'></i></button>"
                     ]).draw(false);
                 }
             },
@@ -388,7 +408,6 @@ $(document).ready(function () {
 
             }
         });
-        cambiar("contentNodo");
     }
 
     function GetNodoImage(idIMG) {
@@ -581,7 +600,8 @@ $(document).ready(function () {
         var idO = $(this).data("id");
         var idNS = $(this).data("sig");
         $("#btn-saveOpcion").data("id", idO);
-
+        $("#btn-saveOpcion").data("nodo", $(this).data("nodo"));
+        
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -634,7 +654,7 @@ $(document).ready(function () {
 
                     tablaNodosNuevaOpcion.row.add([
                         "<i class='" + icono2 + "'></i>&nbsp;" + response[i].titulo,
-                        "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
+                        "<button class='btn " + color + "nodosOpcion' data-id='" + response[i].idNodo + "'><i class='" + icono + "'></i></button>"
                     ]).draw(false);
                 }
             },
@@ -650,7 +670,8 @@ $(document).ready(function () {
             cache: false,
             dataType: "JSON",
             data: {
-                key: "GetNodosRaiz"
+                key: "GetNodosRaiz",
+                id: idO
             },
             success: function (response) {
                 for (var i = 0; i < response.length; i++) {
@@ -666,7 +687,7 @@ $(document).ready(function () {
 
                     tablaNodosRaizNuevaOpcion.row.add([
                         "<i class='fas fa-star'></i>&nbsp;" + response[i].estandar,
-                        "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
+                        "<button class='btn " + color + "nodosOpcion' data-id='" + response[i].idNodo + "'><i class='" + icono + "'></i></button>"
                     ]).draw(false);
                 }
             },
@@ -679,8 +700,37 @@ $(document).ready(function () {
     });
 
     $("#btn-saveOpcion").on("click", function () {
+        var idN= $(this).data("nodo");
         var idO = $(this).data("id");
-        alert(idO);
+        var titulo = $("#tituloOpcion").val();
+        var historial = $("#textoHistorial").val();
+        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
+        var nodoSig = 0;
+        for (var i = 0; i < seleccionada.length; i++) {
+            nodoSig = $(seleccionada[0]).parent().data("id");
+        }
+        
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "UpdateOpcion",
+                id: idO,
+                texto: titulo,
+                historial: historial,
+                idNodo: nodoSig
+            },
+            success: function (response) {
+                CargarTablaOpciones(idN);
+                swal("Opcion cambiada Exitosamente", {icon: "success"});
+            },
+            error: function (xhr) {
+
+            }
+        });
+        $('#modalEditOption').modal('toggle');
+        
     });
 
     $('#colorSelector').on('input', function () {

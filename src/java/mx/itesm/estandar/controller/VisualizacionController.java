@@ -158,13 +158,22 @@ public class VisualizacionController extends HttpServlet {
             }
             
             case "GetNodosRaiz":{
+                int id = Integer.parseInt(request.getParameter("id")); //idOpcion
+                OpcionServicio os = new OpcionServicio();
+                NodoServicio ns = new NodoServicio();
                 EstandarServicio es = new EstandarServicio();
+
+                Opcion opcion = os.getOpcion(id);                
+                Nodo nodo = ns.getNodo(opcion.getIdNodo_Padre());   
+                int idE = nodo.getIdEstandar();
+                
                 List<Estandar> estandares = es.getEstandares(0);
                 List<Nodo> nodos = new ArrayList<>();;
-                NodoServicio ns = new NodoServicio();
                 
                 for(int i = 0; i < estandares.size(); i++){
-                    nodos.add(ns.getNodo(estandares.get(i).getIdNodo()));                   
+                    if(estandares.get(i).getIdEstandar()!=idE){
+                        nodos.add(ns.getNodo(estandares.get(i).getIdNodo()));   
+                    }
                 }
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
