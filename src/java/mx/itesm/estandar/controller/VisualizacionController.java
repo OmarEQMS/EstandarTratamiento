@@ -203,11 +203,23 @@ public class VisualizacionController extends HttpServlet {
             case "GetOpcionesPorNodo":{
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 OpcionServicio os = new OpcionServicio();
+                NodoServicio ns = new NodoServicio();
+                Nodo nodo;
                 List<Opcion> opciones = os.getOpciones(id);
                 
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
-                out.print(json.toJson(opciones));
+                String returnJSON = json.toJson(opciones);
+                int index = 0; int idE_Sig = 0;
+                for(int i = 0; i < opciones.size(); i++){
+                    index = returnJSON.indexOf("}", index);
+                    nodo = ns.getNodo(opciones.get(i).getIdNodo_Sig());
+                    idE_Sig = nodo.getIdEstandar();
+                    returnJSON = returnJSON.substring(0,index) + ",\"estandar\":" + idE_Sig + returnJSON.substring(index, returnJSON.length());
+                    index+= 13 + Integer.toString(idE_Sig).length();
+                }                
+                out.print(returnJSON);
+                
                 break;
             }
             

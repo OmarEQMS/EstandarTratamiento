@@ -1,5 +1,6 @@
 $(document).ready(function () {
     //Inicio
+    var idEstandarActual = 0;
     var historial = [];
     var cargando = 0;
     $("#content").hide();
@@ -40,7 +41,7 @@ $(document).ready(function () {
             success: function (response) {
                 $("#estandares").html("");
                 for (var i = 0; i < response.length; i++) {
-                    $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' class='estandar col-10'><span>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
+                    $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' data-estandar='" + response[i].idEstandar + "' class='estandar col-10'><span>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
                 }
                 setColors(270, "algoritmosFondo", "algoritmosBorde");
                 setColors(270, "nodoFondo", "nodoBorde");
@@ -148,8 +149,12 @@ $(document).ready(function () {
     //Clic en un Estandar
     $("body").on("click", ".estandar", function () {
         $("#nombreEstandar").html($(this).html());
+        idEstandarActual = $(this).data("estandar");
         var idN = $(this).data("id");
-
+        BorrarHistorial_CargarNodo(idN);        
+    });
+    
+    function BorrarHistorial_CargarNodo(idN){
         if (historial.length != 0) {
             swal("¿Quieres guardar tu Historial?", {
                 buttons: {
@@ -173,7 +178,7 @@ $(document).ready(function () {
             $("#content").show();
             CargarNodo(idN);
         }
-    });
+    }
 
     //Clic en una Opcion
     $("body").on("click", ".opcion", function () {
@@ -185,7 +190,12 @@ $(document).ready(function () {
         }
         historial.push($(this).data("idopcion").toString());
         var idN = $(this).data("id");
-        CargarNodo(idN);
+        var idE_Sig = $(this).data("estandar");
+        if(idE_Sig!=idEstandarActual){
+            BorrarHistorial_CargarNodo(idN);
+        }else{
+            CargarNodo(idN);
+        }
         SaveHistorial();
     });
 
@@ -205,6 +215,7 @@ $(document).ready(function () {
                 id: idN
             },
             success: function (response) {
+                idEstandarActual = response[0].idEstandar;
                 $("#nombreEstandar").html(response[1].nombreEstandar);                
                 $("#exampleModalLabel").html("Referencias");
                 if(response[0].referencias!=""){
@@ -245,7 +256,9 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; i++) {
-                        $("#opciones").append("<div class='card subtitle mt-3'><div data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde'>" + response[i].texto + "</div></div>")
+                        var raiz = "<i class='fas fa-star'></i>&nbsp;";
+                        if(response[i].estandar==idEstandarActual){raiz="";}
+                        $("#opciones").append("<div class='card subtitle mt-3'><div data-estandar='" + response[i].estandar + "' data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde'>" + raiz + response[i].texto + "</div></div>")
                     }
                     setColors(color, "nodoFondo", "nodoBorde");
                 } else {
