@@ -365,8 +365,8 @@ $(document).ready(function () {
                 $("#btn-nuevaOpcion").data("id", response[0].idNodo);
                 $("#tituloNodo").val(response[0].titulo);
                 $("#nombreNodo").html(response[0].titulo);
-                $("#textoNodo").html(response[0].texto);
-                $("#anotacionNodo").html(response[0].referencias);
+                $("#textoNodo").val(response[0].texto);
+                $("#anotacionNodo").val(response[0].referencias);
                 if (response[0].idImagen > 0) {
                     GetNodoImage(response[0].idImagen);
                 } else {
