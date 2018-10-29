@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.bean.Imagen;
 import mx.itesm.estandar.bean.Nodo;
@@ -23,7 +22,9 @@ import mx.itesm.estandar.service.NodoServicio;
 import mx.itesm.estandar.service.OpcionServicio;
 import mx.itesm.estandar.service.UsuarioServicio;
 import mx.itesm.estandar.service.VisitasServicio;
+import javax.servlet.http.Part;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
 @WebServlet(name = "GestionController", urlPatterns = {"/GestionController"})
@@ -71,11 +72,12 @@ public class GestionController extends HttpServlet {
                 int estatus = Integer.parseInt(request.getParameter("estatus"));
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = new Estandar();
-                estandar.setIdEstandar(id);
+                estandar = es.getEstandar(id);
                 estandar.setNombre(nombre);
                 estandar.setDescripcion(descripcion);
                 estandar.setColor(color);
                 estandar.setEstatus(estatus);
+                
                 es.updateEstandar(estandar);
                 
                 PrintWriter out = response.getWriter();
@@ -88,14 +90,12 @@ public class GestionController extends HttpServlet {
                 String titulo = request.getParameter("titulo");
                 String texto = request.getParameter("texto");
                 String referencias = request.getParameter("referencias");
-                int idEstandar = Integer.parseInt(request.getParameter("idEstandar"));
-                NodoServicio ns = new NodoServicio();
-                Nodo nodo = new Nodo();
-                nodo.setIdNodo(id);
+                NodoServicio ns = new NodoServicio();                
+                Nodo nodo = ns.getNodo(id);
                 nodo.setTitulo(titulo);
                 nodo.setTexto(texto);
                 nodo.setReferencias(referencias);
-                nodo.setIdEstandar(idEstandar);
+                
                 ns.updateNodo(nodo);
                 
                 PrintWriter out = response.getWriter();
@@ -192,16 +192,35 @@ public class GestionController extends HttpServlet {
 
             //Imagen
             case "SubirImagen": {
+                String accion = request.getParameter("accionImagen");
+                if("quitar".equals(accion)){
+                    int id = Integer.parseInt(request.getParameter("id")); //IdNodo
+                    NodoServicio ns = new NodoServicio();
+                    ImagenServicio is = new ImagenServicio();
+                    //Obtener ID Imagen
+                    Nodo nodo = ns.getNodo(id);
+                    int imgNodo = nodo.getIdImagen();                    
+                    //Actualizar nodo
+                    nodo.setIdImagen(0);
+                    ns.updateNodo(nodo); 
+                    //Eliminar la pasada
+                    if(imgNodo!=0){
+                        is.deleteImagen(imgNodo);
+                    }                                       
+                    PrintWriter out = response.getWriter();
+                    out.print("success");
+                    return;
+                }                
                 //Eliminar la Actual y subir la Nueva
                 if (ServletFileUpload.isMultipartContent(request)) { //Para verificar que sea contenido multi parte archivo
                     int id = Integer.parseInt(request.getParameter("id")); //IdNodo
                     NodoServicio ns = new NodoServicio();
-                    Nodo nodo = ns.getNodo(id);
-                    //Eliminar la pasada
                     ImagenServicio is = new ImagenServicio();
-                    is.deleteImagen(nodo.getIdImagen());
+                    //Obtener ID Imagen
+                    Nodo nodo = ns.getNodo(id);
+                    int imgNodo = nodo.getIdImagen();                      
                     //Obtener la nueva
-                    Part part = request.getPart("imaggen");
+                    Part part = request.getPart("imagen");
                     InputStream contenido = part.getInputStream();
                     //Guardarla
                     Imagen imagen = new Imagen();
@@ -210,6 +229,12 @@ public class GestionController extends HttpServlet {
                     //Actualizar nodo
                     nodo.setIdImagen(imgID);
                     ns.updateNodo(nodo);
+                    //Eliminar la pasada
+                    if(imgNodo!=0){
+                        is.deleteImagen(imgNodo);
+                    }
+                    PrintWriter out = response.getWriter();
+                    out.print("success");
                 }
                 break;
             }

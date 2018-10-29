@@ -291,7 +291,6 @@ $(document).ready(function () {
             }
         });
 
-        alert("Guardar Cambios Arbol");
     });
 
     $('#nuevoNodo').on('click', function () {
@@ -334,6 +333,8 @@ $(document).ready(function () {
     });
 
     function EditarNodo(idN) {
+        $("#ImagenNodo").attr("src", "./img/noImage.jpeg");
+
         tablaOpciones.clear().draw();
         $.ajax({
             url: "VisualizacionController",
@@ -351,11 +352,17 @@ $(document).ready(function () {
                 $("#nombreNodo").html(response[0].titulo);
                 $("#textoNodo").html(response[0].texto);
                 $("#anotacionNodo").html(response[0].referencias);
+                if (response[0].idImagen > 0) {
+                    GetNodoImage(response[0].idImagen);
+                } else {
+                    $("#ImagenNodo").attr("src", "./img/noImage.jpeg");
+                }
             },
             error: function (xhr) {
 
             }
         });
+
         $.ajax({
             url: "VisualizacionController",
             method: "POST",
@@ -385,9 +392,76 @@ $(document).ready(function () {
         cambiar("contentNodo");
     }
 
+    function GetNodoImage(idIMG) {
+        $.ajax({
+            url: "VisualizacionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "GetImagen",
+                id: idIMG
+            },
+            success: function (response) {
+                $("#ImagenNodo").attr("src", "data:image/png;base64," + response);
+                if (response == "") {
+                    $("#ImagenNodo").attr("src", "./img/noImage.jpeg");
+                }
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
+
     $("#saveNodo").on("click", function () {
-        alert($(this).data("id"));
-        alert("Guardar Nodo");
+        var idN = $(this).data("id");
+        var tituloNodo = $("#tituloNodo").val();
+        var textoNodo = $("#textoNodo").val();
+        var anotacionNodo = $("#anotacionNodo").val();
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            cache: false,
+            data: {
+                key: "UpdateNodo",
+                id: idN,
+                titulo: tituloNodo,
+                texto: textoNodo,
+                referencias: anotacionNodo,
+            },
+            success: function (response) {
+                swal("Estandar Actualizado", {icon: "success"});
+            },
+            error: function (xhr) {
+
+            }
+        });
+
+        var data = new FormData();
+        if ($("#ImagenNodo").attr("src") == "./img/noImage.jpeg") {
+            data.append("accionImagen", "quitar");
+        } else {
+            data.append("accionImagen", "modificar");
+            data.append("imagen", $("#imgNodo-input")[0].files[0]);
+        }
+        data.append("id", idN);
+        data.append("key", "SubirImagen");
+
+        $.ajax({
+            url: "GestionController",
+            method: "POST",
+            data: data,
+            encType: "multipart/form-data",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                swal("Imagen Actualizada", {icon: "success"});
+            },
+            error: function () {
+            }
+        });
+
     });
 
     $("body").on("click", ".eliminarNodo", function () {
@@ -420,6 +494,20 @@ $(document).ready(function () {
                 });
             }
         });
+    });
+
+    $("#quitarImagenNodo").on('click', function () {
+        $("#ImagenNodo").attr("src", "./img/noImage.jpeg");
+    });
+
+    $("#imgNodo-input").on('change', function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#ImagenNodo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
     });
 
     $("body").on("click", ".eliminarOpcion", function () {
@@ -549,7 +637,7 @@ $(document).ready(function () {
                     }
 
                     tablaNodosRaizNuevaOpcion.row.add([
-                        "<i class='fas fa-star'></i>&nbsp;" + response[i].titulo,
+                        "<i class='fas fa-star'></i>&nbsp;" + response[i].estandar,
                         "<button class='btn " + color + "nodosOpcion'><i class='" + icono + "'></i></button>"
                     ]).draw(false);
                 }
@@ -615,7 +703,7 @@ $(document).ready(function () {
             success: function (response) {
                 for (var i = 0; i < response.length; i++) {
                     tablaNodosRaizNuevaOpcion.row.add([
-                        "<i class='fas fa-star'></i>&nbsp;" + response[i].titulo,
+                        "<i class='fas fa-star'></i>&nbsp;" + response[i].estandar,
                         "<button class='btn nodosOpcion'><i class='far fa-check-circle'></i></button>"
                     ]).draw(false);
                 }
@@ -629,11 +717,9 @@ $(document).ready(function () {
     });
 
     $("#btn-saveOpcion").on("click", function () {
-        alert("Nueva Opcion");
-        alert($(this).data("id"));
+        var idO = $(this).data("id");
+        
     });
-
-    //Raul
 
     $('#colorSelector').on('input', function () {
         var val = $('#colorSelector').val();
@@ -643,15 +729,6 @@ $(document).ready(function () {
 
     //RAUL
 
-    $("#file-input").on('change', function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#ImagenNodo').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
 
     $("body").on('click', ".nodoTipo", function () {
         var idN = $(this).data("id");
