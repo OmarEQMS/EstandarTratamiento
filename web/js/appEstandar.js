@@ -41,7 +41,7 @@ $(document).ready(function () {
             success: function (response) {
                 $("#estandares").html("");
                 for (var i = 0; i < response.length; i++) {
-                    $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' data-estandar='" + response[i].idEstandar + "' class='estandar col-10'><span>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
+                    $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' data-estandar='" + response[i].idEstandar + "' class='estandar col-10'><span class='subtitle'>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
                 }
                 setColors(270, "algoritmosFondo", "algoritmosBorde");
                 setColors(270, "nodoFondo", "nodoBorde");
@@ -65,7 +65,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.historial != "") {
-                    $(".historialDecisiones").html("<div data-id='" + response.idNodo_Padre + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + response.historial + "&nbsp;</div>" + $(".historialDecisiones").html());
+                    $(".historialDecisiones").html("<div data-id='" + response.idNodo_Padre + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;<span class='subtitle'>" + response.historial + "</span>&nbsp;</div>" + $(".historialDecisiones").html());
                 }
                 if (index == historial.length - 1) {                   
                     CargarNodo(response.idNodo_Sig);
@@ -257,13 +257,13 @@ $(document).ready(function () {
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; i++) {
                         var raiz = "<i class='fas fa-star'></i>&nbsp;";
-                        if(response[i].estandar==idEstandarActual){raiz="";}
-                        $("#opciones").append("<div class='card subtitle mt-3'><div data-estandar='" + response[i].estandar + "' data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde'>" + raiz + response[i].texto + "</div></div>")
+                        if((response[i].estandar==idEstandarActual) || (response[i].estandar==0)){raiz="";}
+                        $("#opciones").append("<div class='card mt-2'><div data-estandar='" + response[i].estandar + "' data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde p-2'><span class='subtitle'>" + raiz + response[i].texto + "</span></div></div>")
                     }
                     setColors(color, "nodoFondo", "nodoBorde");
                 } else {
-                    $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #4b32a1;'><div id='verFlujo' class='btn card-body'><i class='fas fa-code-branch'></i>&nbsp; Ver Flujo</div></div>")
-                    $("#opciones").append("<div class='card subtitle mt-3' style='border-width: 3px; border-color: #4b32a1;'><div id='verEstandares' class='btn card-body'><i class='fas fa-home'></i>&nbsp; Regresar a Algoritmos</div></div>")
+                    $("#opciones").append("<div class='card mt-2' style='border-width: 3px; border-color: #4b32a1;'><div id='verFlujo' class='btn card-body p-2'><i class='fas fa-code-branch'></i>&nbsp;<span class='subtitle'>Ver Flujo</span></div></div>")
+                    $("#opciones").append("<div class='card mt-2' style='border-width: 3px; border-color: #4b32a1;'><div id='verEstandares' class='btn card-body p-2'><i class='fas fa-home'></i>&nbsp;<span class='subtitle'>Regresar a Algoritmos</span></div></div>")
                     setColors(color, "nodoFondo", "nodoBorde");
                 }     
                 cargando=0;

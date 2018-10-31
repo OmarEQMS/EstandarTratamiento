@@ -17,6 +17,27 @@ $(document).ready(function () {
         $("#" + nombre).show();
     }
 
+    $("#visualizacion").on("click", function () {
+        $.ajax({
+            url: "Estandar",
+            method: "POST",
+            cache: false,
+            data: {
+                gestion: "visualizacion"
+            },
+            success: function (response) {
+                var w = window.open();
+                w.document.open();
+                w.document.write(response);
+                w.document.close();
+            },
+            error: function (xhr) {
+
+            }
+        });
+
+    });
+
     $("#changePasswordGestion").on("click", function () {
         if ($("#nuevaContrasenaAdmin").val() != $("#verificarContrasenaAdmin").val()) {
             swal("Contraseñas diferentes", {icon: "error"});
@@ -93,7 +114,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#misVisitas").html("Visitas: " + response);
-                $("#misVisitasMenu").html("<i class='far fa-eye'></i>Visitas: " + response);
+                //$("#misVisitasMenu").html("<i class='far fa-eye'></i>Visitas: " + response);
             },
             error: function (xhr) {
 
@@ -377,7 +398,7 @@ $(document).ready(function () {
 
             }
         });
-        
+
         CargarTablaOpciones(idN);
 
         cambiar("contentNodo");
@@ -478,7 +499,7 @@ $(document).ready(function () {
                     error: function () {
                     }
                 });
-                
+
             },
             error: function (xhr) {
 

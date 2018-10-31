@@ -178,11 +178,13 @@ public class VisualizacionController extends HttpServlet {
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
                 int index = 0; String nameEstandar;
-                for(int i = 0; i < nodos.size(); i++){
-                    index = returnJSON.indexOf("}", index);
-                    nameEstandar = estandares.get(i).getNombre();
-                    returnJSON = returnJSON.substring(0,index) + ",\"estandar\":\"" + nameEstandar + "\"" + returnJSON.substring(index, returnJSON.length());
-                    index+= 15 + nameEstandar.length();
+                for(int i = 0; i < estandares.size(); i++){
+                    if(estandares.get(i).getIdEstandar()!=idE){
+                        index = returnJSON.indexOf("}", index);
+                        nameEstandar = estandares.get(i).getNombre();
+                        returnJSON = returnJSON.substring(0,index) + ",\"estandar\":\"" + nameEstandar + "\"" + returnJSON.substring(index, returnJSON.length());
+                        index+= 15 + nameEstandar.length();
+                    }
                 }                
                 PrintWriter out = response.getWriter();
                 out.print(returnJSON);

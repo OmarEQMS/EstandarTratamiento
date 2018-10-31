@@ -23,6 +23,11 @@ public class AutenticacionController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String pass = request.getParameter("pass");
+        String gestion = request.getParameter("gestion");
+        
+        if(gestion!=null && gestion.equals("visualizacion")){
+            request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response); return;
+        }
         if(pass==null){
             request.getRequestDispatcher("acceso.html").forward(request, response); return;
         }

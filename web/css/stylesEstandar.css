@@ -1,9 +1,10 @@
-/*@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700');
 
 body {
     background: #fafafa;
     font-family: 'Nunito Sans';
-}*/
+}
+
 .wrapper {
     display: flex;
     width: 100%;
@@ -55,14 +56,14 @@ body {
 }
 
 .title{    
-    font-size: 20px;
+    font-size: 3vh;
     color:#39407a;
-    text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
+    /*text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);*/
     font-family: 'Poppins', sans-serif;
 }
 .subtitle{
-    font-size: 17px;
-    text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);
+    font-size: 2vh;
+    /*text-shadow: -1px -1px 14px rgba(150, 150, 150, 0.77);*/
     font-family: 'Poppins', sans-serif;  
 }
 
@@ -94,9 +95,11 @@ body {
 /*BTN Morados*/
 
 .btn-morado{
+    width: 100%;
     background: #fff !important;
     color: #4b32a1 !important;
     border: 1px solid #4b32a1 !important;
+    border-radius: 20px;
 }
 
 .btn-morado:hover{
