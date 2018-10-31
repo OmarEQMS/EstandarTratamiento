@@ -170,6 +170,8 @@ $(document).ready(function () {
 
     $("#btn-nuevoArbol").on("click", function () {
         var nombre = $("#tituloArbol").val();
+        if(nombre==""){return;}
+        
         $('#modalNuevoArbol').modal('toggle')
 
         $.ajax({
@@ -338,6 +340,8 @@ $(document).ready(function () {
     $('#btn-nuevoNodo').on('click', function () {
         var idE = $(this).data("id");
         var tituloNodo = $("#tituloNuevoNodo").val();
+        if(tituloNodo==""){return;}
+        
         $('#modalNewNode').modal('toggle');
 
         $.ajax({
@@ -594,6 +598,8 @@ $(document).ready(function () {
     $("#btn-nuevaOpcion").on("click", function () {
         var idN = $(this).data("id");
         var texto = $("#tituloNuevaOpcion").val();
+        if(texto==""){return;}
+        
         $.ajax({
             url: "GestionController",
             method: "POST",
