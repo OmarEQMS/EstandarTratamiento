@@ -33,56 +33,58 @@
             <!-- SIDEBAR -->
             <div id="menu" class="algoritmosFondo">
                 <!-- MENU -->
-                <div class="navbar barrita algoritmosBorde">
-                    <div class="container-fluid">
-                        <button data-id="content" class="btn change"><i class="fas fa-stethoscope"></i></button>
-                        <span class="pull-right d-block title">Algoritmos</span>
+                <div id="stickyTopEstandares">
+                    <div class="navbar barrita algoritmosBorde">
+                        <div class="container-fluid">
+                            <button data-id="content" class="btn change"><i class="fas fa-stethoscope"></i></button>
+                            <span class="pull-right d-block title">Algoritmos</span>
+                        </div>
+                    </div>
+
+                    <div class="row ml-3 mr-3">
+                        <div class="col-4 text-center p-1"><button id="btnVerFlujo" class="btn btn-morado"><i class="fas fa-code-branch"></i></button></div>
+                        <div class="col-4 text-center p-1"><a href="manual.pdf" target="_blank" class="btn btn-morado"><i class="fas fa-book-open"></i></a></div>
+                        <div class="col-4 text-center p-1"><a href="#" id="SignOut" class="btn btn-morado"><i class="fas fa-sign-out-alt"></i></a></div>
                     </div>
                 </div>
-
-                <div class="row ml-3 mr-3">
-                    <div class="col-4 text-center p-1"><button id="btnVerFlujo" class="btn btn-morado"><i class="fas fa-code-branch"></i></button></div>
-                    <div class="col-4 text-center p-1"><a href="manual.pdf" target="_blank" class="btn btn-morado"><i class="fas fa-book-open"></i></a></div>
-                    <div class="col-4 text-center p-1"><a href="./" class="btn btn-morado"><i class="fas fa-sign-out-alt"></i></a></div>
-                </div>
-
-                <div id="estandares" class="title mt-3 mb-5 ml-3 mr-3">
-
+                
+                <div id="scrollPageEstandares">
+                    <div id="estandares" class="title mb-3 ml-3 mr-3"></div>
                 </div>
             </div>
 
             <!-- CONTENIDO PRINCIPAL  -->
             <div id="content" class = "nodoFondo">
                 <!-- MENU -->
-                <div class="navbar barrita nodoBorde">
-                    <div class="container-fluid">
-                        <button data-id="menu" class="btn change"><i class="fas fa-home"></i></button>
-                        <span id="nombreEstandar" class="pull-right d-block title"></span>
+                <div id="stickyTopNodos">                    
+                    <div class="navbar barrita nodoBorde">
+                        <div class="container-fluid">
+                            <button data-id="menu" class="btn change"><i class="fas fa-home"></i></button>
+                            <span id="nombreEstandar" class="pull-right d-block title"></span>
+                        </div>
+                    </div>
+
+                    <!--CARUSEL DE OPCIONES-->
+                    <div class="navbar nodoBorde ml-3 mr-3">
+                        <div class="historialDecisiones"></div>
                     </div>
                 </div>
-
-                <!--CARUSEL DE OPCIONES-->
-                <div class="navbar nodoBorde ml-3 mr-3">
-                    <div class="historialDecisiones">
-
-                    </div>
-                </div>
-
+                
                 <!-- PREGUNTAS -->
-                <div class="card title mt-3 nodoBorde ml-3 mr-3">
-                    <div class="card-body">
-                        <div class="text-center mt-2 mb-3">
-                            <div><img id="imgNodo" src=""></div>                            
-                            <div id="nodo">No hay estandar, ni historial Guardado</div>
-                        </div>
+                <div id="scrollPageNodos">
+                    <div class="card title mt-3 mb-3 nodoBorde ml-3 mr-3">
+                        <div class="card-body">
+                            <div class="text-center mt-2 mb-3">
+                                <div><img id="imgNodo" src=""></div>                            
+                                <div id="nodo">No hay estandar, ni historial Guardado</div>
+                            </div>
 
-                        <div id="opciones">
+                            <div id="opciones"></div>
 
-                        </div>
-
-                        <div class ="row justify-content-end mt-3">
-                            <div class="col-12">
-                                <i id='mostrarReferencias' class='fas fa-info-circle float-right icono-info' style='font-size:27px' data-placement='top'> </i>
+                            <div class ="row justify-content-end mt-3">
+                                <div class="col-12">
+                                    <i id='mostrarReferencias' class='fas fa-info-circle float-right icono-info' style='font-size:27px' data-placement='top'> </i>
+                                </div>
                             </div>
                         </div>
                     </div>

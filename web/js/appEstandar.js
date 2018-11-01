@@ -9,7 +9,7 @@ $(document).ready(function () {
     $("#imgNodo").hide();
     CargarEstandares();
     GetHistorial();
-    if(historial.length!=0){
+    if (historial.length != 0) {
         CargarHistorial(0);
     }
     var tablaHistorial = $('#tablaHistorial').DataTable({
@@ -18,7 +18,7 @@ $(document).ready(function () {
         "paging": false,
         "ordering": false,
         dom: 'lBfrtip',
-        buttons: [{extend: 'pdf',text: 'Exportar a PDF',className: 'btn-outline-info mr-3 btnPDF mt-3'}],
+        buttons: [{extend: 'pdf', text: 'Exportar a PDF', className: 'btn-outline-info mr-3 btnPDF mt-3'}],
         "language": {
             "sEmptyTable": "Ningún dato disponible en esta tabla",
             "sLoadingRecords": "Cargando...",
@@ -45,6 +45,8 @@ $(document).ready(function () {
                 }
                 setColors(270, "algoritmosFondo", "algoritmosBorde");
                 setColors(270, "nodoFondo", "nodoBorde");
+                
+                ResizingScroll();
             },
             error: function (xhr) {
 
@@ -67,10 +69,10 @@ $(document).ready(function () {
                 if (response.historial != "") {
                     $(".historialDecisiones").html("<div data-id='" + response.idNodo_Padre + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;<span class='subtitle'>" + response.historial + "</span>&nbsp;</div>" + $(".historialDecisiones").html());
                 }
-                if (index == historial.length - 1) {                   
+                if (index == historial.length - 1) {
                     CargarNodo(response.idNodo_Sig);
-                }else{
-                    CargarHistorial(index+1);
+                } else {
+                    CargarHistorial(index + 1);
                 }
             },
             error: function (xhr) {
@@ -78,7 +80,7 @@ $(document).ready(function () {
             }
         });
     }
-    
+
     //Cargar Historial
     function CargarHistorialTabla(index) {
         $.ajax({
@@ -92,10 +94,10 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.historial != "") {
-                    tablaHistorial.row.add([response.historial]).draw( false );
+                    tablaHistorial.row.add([response.historial]).draw(false);
                 }
                 if (index != historial.length - 1) {
-                    CargarHistorialTabla(index+1);
+                    CargarHistorialTabla(index + 1);
                 }
             },
             error: function (xhr) {
@@ -109,7 +111,8 @@ $(document).ready(function () {
         $("#menu").hide();
         $("#content").hide();
         $("#divHistorial").hide();
-        $("#" + $(this).data("id")).show();
+        $("#" + $(this).data("id")).show();   
+        ResizingScroll();
     });
 
     //Regresar a Estandares
@@ -151,10 +154,10 @@ $(document).ready(function () {
         $("#nombreEstandar").html($(this).html());
         idEstandarActual = $(this).data("estandar");
         var idN = $(this).data("id");
-        BorrarHistorial_CargarNodo(idN);        
+        BorrarHistorial_CargarNodo(idN);
     });
-    
-    function BorrarHistorial_CargarNodo(idN){
+
+    function BorrarHistorial_CargarNodo(idN) {
         if (historial.length != 0) {
             swal("¿Quieres guardar tu Historial?", {
                 buttons: {
@@ -182,25 +185,26 @@ $(document).ready(function () {
 
     //Clic en una Opcion
     $("body").on("click", ".opcion", function () {
-        if(cargando==1) return;
+        if (cargando == 1)
+            return;
         cargando = 1;
-        
+
         if ($(this).data("log") != "") {
             $(".historialDecisiones").html("<div data-id='" + $(this).data("idpadre") + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + $(this).data("log") + "&nbsp;</div>" + $(".historialDecisiones").html());
         }
         historial.push($(this).data("idopcion").toString());
         var idN = $(this).data("id");
         var idE_Sig = $(this).data("estandar");
-        if(idE_Sig!=idEstandarActual){
+        if (idE_Sig != idEstandarActual) {
             BorrarHistorial_CargarNodo(idN);
-        }else{
+        } else {
             CargarNodo(idN);
         }
         SaveHistorial();
     });
 
     //Cargar Nodo
-    function CargarNodo(idN) {
+    function CargarNodo(idN) {        
         $("#imgNodo").attr("src", "");
         $("#nodo").html("");
         $("#imgNodo").hide();
@@ -216,11 +220,11 @@ $(document).ready(function () {
             },
             success: function (response) {
                 idEstandarActual = response[0].idEstandar;
-                $("#nombreEstandar").html(response[1].nombreEstandar);                
+                $("#nombreEstandar").html(response[1].nombreEstandar);
                 $("#exampleModalLabel").html("Referencias");
-                if(response[0].referencias!=""){
+                if (response[0].referencias != "") {
                     $("#referencias").html(response[0].referencias);
-                }else{
+                } else {
                     $("#referencias").html("Sin Referencias");
                 }
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
@@ -238,7 +242,7 @@ $(document).ready(function () {
             }
         });
     }
-    
+
     //Cargar Opciones del Nodo
     function OpcionesNodo(idN, color) {
         $("#opciones").html("");
@@ -257,7 +261,9 @@ $(document).ready(function () {
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; i++) {
                         var raiz = "<i class='fas fa-star'></i>&nbsp;";
-                        if((response[i].estandar==idEstandarActual) || (response[i].estandar==0)){raiz="";}
+                        if ((response[i].estandar == idEstandarActual) || (response[i].estandar == 0)) {
+                            raiz = "";
+                        }
                         $("#opciones").append("<div class='card mt-2'><div data-estandar='" + response[i].estandar + "' data-idpadre='" + response[i].idNodo_Padre + "' data-log='" + response[i].historial + "' data-id='" + response[i].idNodo_Sig + "' data-idopcion='" + response[i].idOpcion + "' class='btn card-body opcion nodoBorde p-2'><span class='subtitle'>" + raiz + response[i].texto + "</span></div></div>")
                     }
                     setColors(color, "nodoFondo", "nodoBorde");
@@ -265,15 +271,17 @@ $(document).ready(function () {
                     $("#opciones").append("<div class='card mt-2' style='border-width: 3px; border-color: #4b32a1;'><div id='verFlujo' class='btn card-body p-2'><i class='fas fa-code-branch'></i>&nbsp;<span class='subtitle'>Ver Flujo</span></div></div>")
                     $("#opciones").append("<div class='card mt-2' style='border-width: 3px; border-color: #4b32a1;'><div id='verEstandares' class='btn card-body p-2'><i class='fas fa-home'></i>&nbsp;<span class='subtitle'>Regresar a Algoritmos</span></div></div>")
                     setColors(color, "nodoFondo", "nodoBorde");
-                }     
-                cargando=0;
+                }
+                ResizingScroll();
+                
+                cargando = 0;
             },
             error: function (xhr) {
 
             }
         });
     }
-    
+
     //Obtener Imagen
     function GetNodoImage(idIMG) {
         $.ajax({
@@ -312,11 +320,11 @@ $(document).ready(function () {
                 key: "GetEstandar",
                 id: idE
             },
-            success: function (response) {                
+            success: function (response) {
                 $("#exampleModalLabel").html("Descripcion");
-                if(response.descripcion!=""){
+                if (response.descripcion != "") {
                     $("#referencias").html(response.descripcion);
-                }else{
+                } else {
                     $("#referencias").html("Sin Descripcion");
                 }
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
@@ -377,4 +385,16 @@ $(document).ready(function () {
         return "";
     }
 
+
+    $("#SignOut").on("click", function () {
+        $.postGo("Estandar", {
+            salir: "salir"
+        });
+    });
+    
+    function ResizingScroll(){
+        $("#scrollPageEstandares").css('top', $("#stickyTopEstandares").height() + "px");
+        $("#scrollPageNodos").css('top', $("#stickyTopNodos").height() + "px");
+    };
+    
 });

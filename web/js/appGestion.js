@@ -169,8 +169,9 @@ $(document).ready(function () {
     });
 
     $("#btn-nuevoArbol").on("click", function () {
+        if(!ValidarLongitud("#tituloArbol", "#tituloArbolError",1,100)){return;}
+        
         var nombre = $("#tituloArbol").val();
-        if(nombre==""){return;}
         
         $('#modalNuevoArbol').modal('toggle')
 
@@ -303,6 +304,8 @@ $(document).ready(function () {
     });
 
     $("#GuardarCambiosArbol").on("click", function () {
+        if(!ValidarLongitud("#tituloEstandar", "#tituloEstandarError",1,100)){return;}
+        
         var idE = $(this).data("id");
         var nombre = $("#tituloEstandar").val();
         var descripcion = $("#descripcionEstandar").val();
@@ -338,9 +341,10 @@ $(document).ready(function () {
     });
 
     $('#btn-nuevoNodo').on('click', function () {
+        if(!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError",1,100)){return;}
+        
         var idE = $(this).data("id");
         var tituloNodo = $("#tituloNuevoNodo").val();
-        if(tituloNodo==""){return;}
         
         $('#modalNewNode').modal('toggle');
 
@@ -459,6 +463,8 @@ $(document).ready(function () {
     }
 
     $("#saveNodo").on("click", function () {
+        if(!ValidarLongitud("#tituloNodo", "#tituloNodoError",1,100)){return;}
+        
         var idN = $(this).data("id");
         var tituloNodo = $("#tituloNodo").val();
         var textoNodo = $("#textoNodo").val();
@@ -498,7 +504,7 @@ $(document).ready(function () {
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        swal("Estandar Actualizada", {icon: "success"});
+                        swal("Nodo Actualizada", {icon: "success"});
                     },
                     error: function () {
                     }
@@ -596,9 +602,10 @@ $(document).ready(function () {
     });
 
     $("#btn-nuevaOpcion").on("click", function () {
+        if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
+        
         var idN = $(this).data("id");
         var texto = $("#tituloNuevaOpcion").val();
-        if(texto==""){return;}
         
         $.ajax({
             url: "GestionController",
@@ -730,6 +737,9 @@ $(document).ready(function () {
     });
 
     $("#btn-saveOpcion").on("click", function () {
+        if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
+        if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",1,100)){return;}
+        
         var idN = $(this).data("nodo");
         var idO = $(this).data("id");
         var titulo = $("#tituloOpcion").val();
@@ -895,4 +905,45 @@ $(document).ready(function () {
     var tablaOpciones = tablaInit('#tablaOpciones');
     var tablaNodosNuevaOpcion = tablaInit('#tablaNodosNuevaOpcion');
     var tablaNodosRaizNuevaOpcion = tablaInit('#tablaNodosRaizNuevaOpcion');
+    
+    $("#SignOut").on("click", function () {
+        $.postGo("Estandar", {
+            salir: "salir"
+        });
+    });
+    
+    //Validaciones
+    InicializarValidar("#tituloEstandar", "#tituloEstandarError");
+    InicializarValidar("#tituloNodo", "#tituloNodoError");
+    InicializarValidar("#tituloArbol", "#tituloArbolError");
+    InicializarValidar("#tituloNuevoNodo", "#tituloNuevoNodoError");
+    InicializarValidar("#tituloNuevaOpcion", "#tituloNuevaOpcionError");
+    InicializarValidar("#tituloOpcion", "#tituloOpcionError");
+    InicializarValidar("#textoHistorial", "#textoHistorialError");
+    /*
+    if(!ValidarLongitud("#tituloEstandar", "#tituloEstandarError",1,100)){return;}
+    if(!ValidarLongitud("#tituloNodo", "#tituloNodoError",1,100)){return;}
+    if(!ValidarLongitud("#tituloArbol", "#tituloArbolError",1,100)){return;}
+    if(!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError",1,100)){return;}
+    if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
+    if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
+    if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",1,100)){return;}
+    */
+    function ValidarLongitud(src, srcError, min, max){
+        if((min<=$(src).val().length)&&($(src).val().length<=max)){
+            $(srcError).hide();
+            return true;
+        }else{
+            $(srcError).show();
+            return false;
+        }        
+    }
+    
+    function InicializarValidar(src, srcError){
+        $(srcError).hide();        
+        $(src).on("click", function(){
+            $(srcError).hide();
+        });
+    }
+    
 });

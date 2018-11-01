@@ -12,7 +12,7 @@ body {
 
 #menu {
     width: 100%;
-    padding: 20px;
+    /*padding: 20px;*/
     min-height: 100vh;
     position: absolute;
     top: 0;
@@ -23,7 +23,7 @@ body {
 
 #content {
     width: 100%;
-    padding: 20px;
+    /*padding: 20px;*/
     min-height: 100vh;
     position: absolute;
     top: 0;
@@ -39,7 +39,7 @@ body {
     right: 0;
 }
 
-.barrita {
+.barrita {    
     padding: 15px 10px;
     background:#fff !important;
     border: none;
@@ -90,6 +90,49 @@ body {
     word-break: break-all;
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+.opcion{
+    white-space: initial;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#stickyTopEstandares{
+    padding-bottom: 5px;   
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+#scrollPageEstandares{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+    overflow-y: auto;
+}
+
+#stickyTopNodos{
+    padding-bottom: 5px;   
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+#scrollPageNodos{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+    overflow-y: auto;
 }
 
 /*BTN Morados*/

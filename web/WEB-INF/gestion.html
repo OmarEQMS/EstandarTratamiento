@@ -37,12 +37,14 @@
                     <div class="col-12"><img src="./img/icono.png" style="width: 70%; display:block; margin:auto; padding-top: 50px;" alt=""></div>
                 </div>
                 <ul id="components" class="list-unstyled">
-                    <li class="myBorder m-2"><a href="#" id="misAlgoritmos"><i class="fas fa-stethoscope"></i>Mis Algoritmos</a></li>
-                    <li class="myBorder m-2"><a href="#" id="visualizacion"><i class="fas fa-stethoscope"></i>Visualizacion</a></li>
+                    <li class="myBorder m-2">
+                        <a href="#" id="misAlgoritmos"><i class="fas fa-stethoscope"></i>Mis Algoritmos</a>
+                        <a href="#" id="visualizacion"><i class="far fa-eye"></i>Visualizacion</a>
+                    </li>
                     <li class="myBorder m-2"><a href="#" id="Gestion"><i class="fab fa-black-tie"></i>Gestión</a></li>
                     <!--a id="misVisitasMenu"><i class="far fa-eye"></i>Visitas: </a-->
                     <li class="myBorder m-2"><a href="manual.pdf" target="_blank"><i class="fas fa-book-open"></i>Manual</a></li>
-                    <li class="myBorder m-2"><a href="./" id="Salir"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+                    <li class="myBorder m-2"><a href="#" id="SignOut"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
                 </ul>
             </div>
 
@@ -120,6 +122,7 @@
                                                         <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
                                                         <input type="text" id="tituloEstandar" class="form-control" placeholder="Su titulo aqui" value="">
                                                     </div>
+                                                    <span class="text-danger" id="tituloEstandarError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
 
                                                     <div class="input-group mt-3">
                                                         <div class="input-group-prepend"><span class="input-group-text">Descripción</span></div>
@@ -195,6 +198,7 @@
                                 <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
                                 <input id="tituloNodo" type="text" class="form-control" placeholder="Su título aqui">
                             </div>
+                            <span class="text-danger" id="tituloNodoError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
 
                             <div class="card">
                                 <div class="card-body text-center p-2">                                    
@@ -335,6 +339,7 @@
                             <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
                             <input id="tituloArbol" type="text" class="form-control" placeholder="Su Nombre de arbol">
                         </div>
+                        <span class="text-danger" id="tituloArbolError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
                     </div>
 
                     <div class="modal-footer">
@@ -360,7 +365,9 @@
                             <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
                             <input id="tituloNuevoNodo" type="text" class="form-control" placeholder="Su texto aqui">
                         </div>
+                        <span class="text-danger" id="tituloNuevoNodoError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
                     </div>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button id="btn-nuevoNodo" data-id='0' class="btn btn-primary">Registrar</button>
@@ -384,7 +391,9 @@
                             <div class="input-group-prepend"><span class="input-group-text">Texto</span></div>
                             <input id="tituloNuevaOpcion" type="text" class="form-control" placeholder="Su texto aqui">
                         </div>
+                        <span class="text-danger" id="tituloNuevaOpcionError">Formato Incorrecto: Logitud minima 1 y máxima de 50 caracteres.</span>
                     </div>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button id="btn-nuevaOpcion" data-id='0' class="btn btn-primary">Registrar</button>
@@ -407,10 +416,13 @@
                             <div class="input-group-prepend"><span class="input-group-text">Texto</span></div>
                             <input id="tituloOpcion" type="text" class="form-control" placeholder="Su título aqui">
                         </div>
+                        <span class="text-danger" id="tituloOpcionError">Formato Incorrecto: Logitud minima 1 y máxima de 50 caracteres.</span>
+                        
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text">Historial</span></div>
                             <input id="textoHistorial" type="text" class="form-control" placeholder="Su historial aqui">
                         </div>
+                        <span class="text-danger" id="textoHistorialError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
 
                         <div class="row justify-content-center mt-2 mb-2">
                             <div class="col-12 text-center"><div style="font-size: large;">Nodo Siguiente</div></div>

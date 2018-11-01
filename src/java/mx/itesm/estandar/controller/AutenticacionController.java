@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.bean.Usuario;
 import mx.itesm.estandar.service.EstandarServicio;
@@ -22,28 +23,56 @@ public class AutenticacionController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        HttpSession sesion = request.getSession(true);
         String pass = request.getParameter("pass");
         String gestion = request.getParameter("gestion");
+        String salir = request.getParameter("salir");
         
-        if(gestion!=null && gestion.equals("visualizacion")){
-            request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response); return;
+        //Si el de Gestion lo quiere abrir
+        if (gestion != null && gestion.equals("visualizacion")) {
+            VisitasServicio vs = new VisitasServicio(); vs.nuevaVisita();
+            request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response);
+            return; 
+        }    
+        //Si ya te quieres salir
+        if (salir != null && salir.equals("salir")) {
+            sesion.invalidate();
+            request.getRequestDispatcher("acceso.html").forward(request, response);
+            return; 
+        } 
+        //Si actualizas la pagina
+        if (sesion.getAttribute("perfil")!=null) {
+            if (sesion.getAttribute("perfil").equals("visualizacion")) {
+                request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response);
+                return;
+            }else if (sesion.getAttribute("perfil").equals("gestion")) {
+                request.getRequestDispatcher("WEB-INF/gestion.html").forward(request, response);
+                return;
+            }
         }
-        if(pass==null){
-            request.getRequestDispatcher("acceso.html").forward(request, response); return;
+        //Si no hay password
+        if (pass == null) {
+            request.getRequestDispatcher("acceso.html").forward(request, response);
+            return;
         }
-        
+
         UsuarioServicio us = new UsuarioServicio();
         Usuario usuario = new Usuario();
         usuario.setPassword(pass);
         usuario = us.autenticar(usuario);
-        
-        if(usuario.getPerfil().equals("visualizacion")){
+
+        if (usuario.getPerfil().equals("visualizacion")) {
             VisitasServicio vs = new VisitasServicio(); vs.nuevaVisita();
-            request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response); return;
-        }else if(usuario.getPerfil().equals("gestion")){
-            request.getRequestDispatcher("WEB-INF/gestion.html").forward(request, response); return;
-        }else{
-            request.getRequestDispatcher("acceso.html").forward(request, response); return;
+            sesion.setAttribute("perfil", "visualizacion");
+            request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response);
+            return;
+        } else if (usuario.getPerfil().equals("gestion")) {
+            sesion.setAttribute("perfil", "gestion");
+            request.getRequestDispatcher("WEB-INF/gestion.html").forward(request, response);
+            return;
+        } else {
+            request.getRequestDispatcher("acceso.html").forward(request, response);
+            return;
         }
 
     }
