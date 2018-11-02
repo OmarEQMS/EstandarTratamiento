@@ -393,8 +393,8 @@ $(document).ready(function () {
     });
     
     function ResizingScroll(){
-        $("#scrollPageEstandares").css('top', $("#stickyTopEstandares").height() + "px");
-        $("#scrollPageNodos").css('top', $("#stickyTopNodos").height() + "px");
+        $("#scrollPageEstandares").css('top', $("#stickyTopEstandares").outerHeight(true) + "px");
+        $("#scrollPageNodos").css('top', $("#stickyTopNodos").outerHeight(true) + "px");
     };
     
 });
