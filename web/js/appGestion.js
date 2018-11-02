@@ -744,7 +744,7 @@ $(document).ready(function () {
 
     $("#btn-saveOpcion").on("click", function () {
         if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
-        if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",1,100)){return;}
+        if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",0,100)){return;}
         
         var idN = $(this).data("nodo");
         var idO = $(this).data("id");
@@ -933,7 +933,7 @@ $(document).ready(function () {
     if(!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError",1,100)){return;}
     if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
     if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
-    if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",1,100)){return;}
+    if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",0,100)){return;}
     */
     function ValidarLongitud(src, srcError, min, max){
         if((min<=$(src).val().length)&&($(src).val().length<=max)){
