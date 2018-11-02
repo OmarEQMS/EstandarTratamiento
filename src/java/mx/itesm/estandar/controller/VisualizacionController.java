@@ -29,213 +29,240 @@ import org.apache.commons.io.IOUtils;
 public class VisualizacionController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {       
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String key = request.getParameter("key");
-        
-        switch (key){
-            case "GetEstandares":{
-                int estatus = Integer.parseInt(request.getParameter("estatus"));                
+
+        switch (key) {
+            case "GetEstandares": {
+                int estatus = Integer.parseInt(request.getParameter("estatus"));
                 EstandarServicio es = new EstandarServicio();
                 List<Estandar> estandares = es.getEstandares(estatus);
-                
+
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
                 out.print(json.toJson(estandares));
                 break;
             }
-            
-            case "GetEstandar":{
+
+            case "GetEstandar": {
                 int id = Integer.parseInt(request.getParameter("id")); //idEstandar
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(id);
-                
+
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
                 out.print(json.toJson(estandar));
                 break;
             }
-            
-            case "GetColor":{
+
+            case "GetColor": {
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 NodoServicio ns = new NodoServicio();
                 Nodo nodo = ns.getNodo(id);
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(nodo.getIdEstandar());
-                
+
                 PrintWriter out = response.getWriter();
                 out.println(estandar.getColor());
                 break;
             }
-            
-            case "GetNodo":{
+
+            case "GetNodo": {
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 NodoServicio ns = new NodoServicio();
                 Nodo nodo = ns.getNodo(id);
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(nodo.getIdEstandar());
-                
+
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
-                out.print("[" + json.toJson(nodo) + ", {\"color\":" + estandar.getColor() + ", \"nombreEstandar\":\"" + estandar.getNombre()+ "\"}]");
+                out.print("[" + json.toJson(nodo) + ", {\"color\":" + estandar.getColor() + ", \"nombreEstandar\":\"" + estandar.getNombre() + "\"}]");
                 break;
             }
-            
-            case "GetNodosPorEstandar":{
+
+            case "GetNodosPorEstandar": {
                 int id = Integer.parseInt(request.getParameter("id")); //idEstandar
                 NodoServicio ns = new NodoServicio();
                 List<Nodo> nodos = ns.getNodos(id);
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(id);
                 OpcionServicio os = new OpcionServicio();
-                    
+
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
                 PrintWriter out = response.getWriter();
-                int index = 0; int tipo; int raiz;
-                for(int i = 0; i < nodos.size(); i++){
-                    index = returnJSON.indexOf("}", index); tipo=0; raiz=0;
-                    if(nodos.get(i).getIdNodo()==estandar.getIdNodo()) raiz=1;
-                    if(os.getNodoEnOpciones(nodos.get(i).getIdNodo())) tipo=1;
-                    returnJSON = returnJSON.substring(0,index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
-                    index+=19;
+                int index = 0;
+                int tipo;
+                int raiz;
+                for (int i = 0; i < nodos.size(); i++) {
+                    index = returnJSON.indexOf("}", index);
+                    tipo = 0;
+                    raiz = 0;
+                    if (nodos.get(i).getIdNodo() == estandar.getIdNodo()) {
+                        raiz = 1;
+                    }
+                    if (os.getNodoEnOpciones(nodos.get(i).getIdNodo())) {
+                        tipo = 1;
+                    }
+                    returnJSON = returnJSON.substring(0, index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
+                    index += 19;
                 }
                 out.print(returnJSON);
                 break;
             }
-            
-            case "GetNodosPorOpcion":{
+
+            case "GetNodosPorOpcion": {
                 int id = Integer.parseInt(request.getParameter("id")); //idOpcion
                 OpcionServicio os = new OpcionServicio();
-                Opcion opcion = os.getOpcion(id);                
+                Opcion opcion = os.getOpcion(id);
                 NodoServicio ns = new NodoServicio();
-                Nodo nodo = ns.getNodo(opcion.getIdNodo_Padre());   
+                Nodo nodo = ns.getNodo(opcion.getIdNodo_Padre());
                 int idE = nodo.getIdEstandar();
-                
+
                 List<Nodo> nodos = ns.getNodos(idE);
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(idE);
-                
+
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
                 PrintWriter out = response.getWriter();
-                int index = 0; int tipo; int raiz;
-                for(int i = 0; i < nodos.size(); i++){
-                    index = returnJSON.indexOf("}", index); tipo=0; raiz=0;
-                    if(nodos.get(i).getIdNodo()==estandar.getIdNodo()) raiz=1;
-                    if(os.getNodoEnOpciones(nodos.get(i).getIdNodo())) tipo=1;
-                    returnJSON = returnJSON.substring(0,index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
-                    index+=19;
+                int index = 0;
+                int tipo;
+                int raiz;
+                for (int i = 0; i < nodos.size(); i++) {
+                    index = returnJSON.indexOf("}", index);
+                    tipo = 0;
+                    raiz = 0;
+                    if (nodos.get(i).getIdNodo() == estandar.getIdNodo()) {
+                        raiz = 1;
+                    }
+                    if (os.getNodoEnOpciones(nodos.get(i).getIdNodo())) {
+                        tipo = 1;
+                    }
+                    returnJSON = returnJSON.substring(0, index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
+                    index += 19;
                 }
                 out.print(returnJSON);
                 break;
             }
-            
-            case "GetNodosPorNodo":{
+
+            case "GetNodosPorNodo": {
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 NodoServicio ns = new NodoServicio();
-                Nodo nodo = ns.getNodo(id);   
+                Nodo nodo = ns.getNodo(id);
                 int idE = nodo.getIdEstandar();
-                
+
                 List<Nodo> nodos = ns.getNodos(idE);
                 EstandarServicio es = new EstandarServicio();
                 Estandar estandar = es.getEstandar(idE);
                 OpcionServicio os = new OpcionServicio();
-                
+
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
                 PrintWriter out = response.getWriter();
-                int index = 0; int tipo; int raiz;
-                for(int i = 0; i < nodos.size(); i++){
-                    index = returnJSON.indexOf("}", index); tipo=0; raiz=0;
-                    if(nodos.get(i).getIdNodo()==estandar.getIdNodo()) raiz=1;
-                    if(os.getNodoEnOpciones(nodos.get(i).getIdNodo())) tipo=1;
-                    returnJSON = returnJSON.substring(0,index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
-                    index+=19;
+                int index = 0;
+                int tipo;
+                int raiz;
+                for (int i = 0; i < nodos.size(); i++) {
+                    index = returnJSON.indexOf("}", index);
+                    tipo = 0;
+                    raiz = 0;
+                    if (nodos.get(i).getIdNodo() == estandar.getIdNodo()) {
+                        raiz = 1;
+                    }
+                    if (os.getNodoEnOpciones(nodos.get(i).getIdNodo())) {
+                        tipo = 1;
+                    }
+                    returnJSON = returnJSON.substring(0, index) + ",\"tipo\":" + tipo + ",\"raiz\":" + raiz + returnJSON.substring(index, returnJSON.length());
+                    index += 19;
                 }
                 out.print(returnJSON);
                 break;
             }
-            
-            case "GetNodosRaiz":{
+
+            case "GetNodosRaiz": {
                 int id = Integer.parseInt(request.getParameter("id")); //idOpcion
                 OpcionServicio os = new OpcionServicio();
                 NodoServicio ns = new NodoServicio();
                 EstandarServicio es = new EstandarServicio();
 
-                Opcion opcion = os.getOpcion(id);                
-                Nodo nodo = ns.getNodo(opcion.getIdNodo_Padre());   
+                Opcion opcion = os.getOpcion(id);
+                Nodo nodo = ns.getNodo(opcion.getIdNodo_Padre());
                 int idE = nodo.getIdEstandar();
-                
+
                 List<Estandar> estandares = es.getEstandares(0);
                 List<Nodo> nodos = new ArrayList<>();;
-                
-                for(int i = 0; i < estandares.size(); i++){
-                    if(estandares.get(i).getIdEstandar()!=idE){
-                        nodos.add(ns.getNodo(estandares.get(i).getIdNodo()));   
+
+                for (int i = 0; i < estandares.size(); i++) {
+                    if ((estandares.get(i).getIdEstandar() == idE) || (estandares.get(i).getIdNodo() == 0)) {
+                        estandares.remove(i);
                     }
+                }
+                for (int i = 0; i < estandares.size(); i++) {
+                    nodos.add(ns.getNodo(estandares.get(i).getIdNodo()));
                 }
                 Gson json = new Gson();
                 String returnJSON = json.toJson(nodos);
-                int index = 0; String nameEstandar;
-                for(int i = 0; i < estandares.size(); i++){
-                    if(estandares.get(i).getIdEstandar()!=idE){
-                        index = returnJSON.indexOf("}", index);
-                        nameEstandar = estandares.get(i).getNombre();
-                        returnJSON = returnJSON.substring(0,index) + ",\"estandar\":\"" + nameEstandar + "\"" + returnJSON.substring(index, returnJSON.length());
-                        index+= 15 + nameEstandar.length();
-                    }
-                }                
+                int index = 0;
+                String nameEstandar;
+                for (int i = 0; i < estandares.size(); i++) {
+                    index = returnJSON.indexOf("}", index);
+                    nameEstandar = estandares.get(i).getNombre();
+                    returnJSON = returnJSON.substring(0, index) + ",\"estandar\":\"" + nameEstandar + "\"" + returnJSON.substring(index, returnJSON.length());
+                    index += 15 + nameEstandar.length();
+                }
                 PrintWriter out = response.getWriter();
                 out.print(returnJSON);
                 break;
             }
-            
-            case "GetImagen":{
+
+            case "GetImagen": {
                 int id = Integer.parseInt(request.getParameter("id")); //idImagen    
                 ImagenServicio is = new ImagenServicio();
                 Imagen imagen = is.getImagen(id);
                 byte[] bytes = IOUtils.toByteArray(imagen.getImagen());
                 String base64String = Base64.getEncoder().encodeToString(bytes);
-                PrintWriter out = response.getWriter();                
-                out.print(base64String); 
+                PrintWriter out = response.getWriter();
+                out.print(base64String);
                 break;
             }
-            
-            case "GetOpcionesPorNodo":{
+
+            case "GetOpcionesPorNodo": {
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 OpcionServicio os = new OpcionServicio();
                 NodoServicio ns = new NodoServicio();
                 Nodo nodo;
                 List<Opcion> opciones = os.getOpciones(id);
-                
+
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
                 String returnJSON = json.toJson(opciones);
-                int index = 0; int idE_Sig = 0;
-                for(int i = 0; i < opciones.size(); i++){
+                int index = 0;
+                int idE_Sig = 0;
+                for (int i = 0; i < opciones.size(); i++) {
                     index = returnJSON.indexOf("}", index);
                     nodo = ns.getNodo(opciones.get(i).getIdNodo_Sig());
                     idE_Sig = nodo.getIdEstandar();
-                    returnJSON = returnJSON.substring(0,index) + ",\"estandar\":" + idE_Sig + returnJSON.substring(index, returnJSON.length());
-                    index+= 13 + Integer.toString(idE_Sig).length();
-                }                
+                    returnJSON = returnJSON.substring(0, index) + ",\"estandar\":" + idE_Sig + returnJSON.substring(index, returnJSON.length());
+                    index += 13 + Integer.toString(idE_Sig).length();
+                }
                 out.print(returnJSON);
-                
+
                 break;
             }
-            
-            case "GetOpcion":{
+
+            case "GetOpcion": {
                 int id = Integer.parseInt(request.getParameter("id")); //idNodo
                 OpcionServicio os = new OpcionServicio();
                 Opcion opcion = os.getOpcion(id);
-                
+
                 PrintWriter out = response.getWriter();
                 Gson json = new Gson();
                 out.print(json.toJson(opcion));
                 break;
             }
-        
+
         }
     }
 
