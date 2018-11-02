@@ -4,12 +4,18 @@ $(document).ready(function () {
     $("#contentEstandar").hide();
     $("#contentNodo").hide();
     $("#contentGestion").show();
+    $("#textoBarrita").html("Gestion");
     setColors(280, "myBackground", "myBorder");
     setColors(180, "sampleColorBackground", "sampleColorBorder");
     $('#change').on('click', () => {
         $('#menu, #content').toggleClass('active');
     });
-    function cambiar(nombre) {
+    function cambiar(nombre) {        
+        if((nombre=="contentEstandares")||(nombre=="contentEstandar")||(nombre=="contentNodo")){
+            $("#textoBarrita").html("Mis Algoritmos");
+        }else if((nombre=="contentGestion")){
+            $("#textoBarrita").html("Gestion");
+        }        
         $("#contentEstandares").hide();
         $("#contentEstandar").hide();
         $("#contentNodo").hide();
@@ -393,7 +399,7 @@ $(document).ready(function () {
                 $("#saveNodo").data("id", response[0].idNodo);
                 $("#btn-nuevaOpcion").data("id", response[0].idNodo);
                 $("#tituloNodo").val(response[0].titulo);
-                $("#nombreNodo").html(response[0].titulo);
+                $("#nombreNodo").html($("#nombreEstandar").html() + ": " + response[0].titulo);
                 $("#textoNodo").val(response[0].texto);
                 $("#anotacionNodo").val(response[0].referencias);
                 if (response[0].idImagen > 0) {
@@ -482,7 +488,7 @@ $(document).ready(function () {
                 referencias: anotacionNodo
             },
             success: function (response) {
-                $("#nombreNodo").html($("#tituloNodo").val());
+                $("#nombreNodo").html($("#nombreEstandar").html() + ": " + $("#tituloNodo").val());
 
                 var data = new FormData();
                 if ($("#ImagenNodo").attr("src") == "./img/noImage.jpeg") {
