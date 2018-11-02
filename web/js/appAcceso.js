@@ -1,19 +1,23 @@
 $(document).ready(function () {
-
+    $("#msj-error").hide();
     var AceptarCookies = getCookie("AceptarCookies");
 
+    $("#password").on("click", function () {
+        $("#msj-error").hide();
+    });
+    
     $("#btn-login").on("click", function () {
-        LogIn();
+        AceptoCookies();
     });
 
     $('#password').on('keydown', function (e) {
         if (e.which == 13) {
-            LogIn();
+            AceptoCookies();
             e.preventDefault();
         }
     });
 
-    function LogIn() {
+    function AceptoCookies() {
         if (AceptarCookies == "") {
             swal({
                 title: "Cookies",
@@ -22,18 +26,36 @@ $(document).ready(function () {
             }).then((value) => {
                 if (value == "aceptar") {
                     createCookie("AceptarCookies", 1);
-                    var pass = $("#password").val();
-                    $.postGo("Estandar", {
-                        pass: pass
-                    });
+                    LogIn();
                 }
             });
         } else {
-            var pass = $("#password").val();
-            $.postGo("Estandar", {
-                pass: pass
-            });
+            LogIn();
         }
+    }
+
+    function LogIn() {
+        var pass = $("#password").val();
+        $.ajax({
+            url: "Estandar",
+            method: "POST",
+            cache: false,
+            data: {
+                pass: pass
+            },
+            success: function (response) {
+                if (response == "error") {
+                    $("#msj-error").show();
+                } else {
+                    document.open("text/html", "replace");
+                    document.write(response);
+                    document.close();
+                }
+            },
+            error: function (xhr) {
+                
+            }
+        });
     }
 
     var createCookie = function (name, value, days) {

@@ -179,7 +179,7 @@ public class GestionController extends HttpServlet {
                 Estandar estandar = es.getEstandar(idEstandar);
                 //Busco opciones que referencien al idNodo Anterior y lo cambio
                 OpcionServicio os = new OpcionServicio();
-                os.updateOpcionesPorSig(estandar.getIdNodo(), id);
+                os.updateOpcionesPorSig(estandar.getIdNodo(), 0);
                 //
                 estandar.setIdNodo(id);
                 es.updateEstandar(estandar);
@@ -332,7 +332,7 @@ public class GestionController extends HttpServlet {
         is.deleteImagen(nodo.getIdImagen());
         //Busco opciones o estandares con ese Nodo_Sig y lo pongo en 0
         os.updateOpcionesPorSig(id, 0);
-        es.updateEstandaresPorRaiz(id, 0);
+        es.updateEstandaresPorRaiz(id, -1);
         //
         List<Opcion> opciones = os.getOpciones(id);
         for (int i = 0; i < opciones.size(); i++) {

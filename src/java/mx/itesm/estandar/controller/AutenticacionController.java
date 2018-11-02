@@ -27,25 +27,26 @@ public class AutenticacionController extends HttpServlet {
         String pass = request.getParameter("pass");
         String gestion = request.getParameter("gestion");
         String salir = request.getParameter("salir");
-        
+
         //Si el de Gestion lo quiere abrir
         if (gestion != null && gestion.equals("visualizacion")) {
-            VisitasServicio vs = new VisitasServicio(); vs.nuevaVisita();
+            VisitasServicio vs = new VisitasServicio();
+            vs.nuevaVisita();
             request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response);
-            return; 
-        }    
+            return;
+        }
         //Si ya te quieres salir
         if (salir != null && salir.equals("salir")) {
             sesion.invalidate();
             request.getRequestDispatcher("acceso.html").forward(request, response);
-            return; 
-        } 
+            return;
+        }
         //Si actualizas la pagina
-        if (sesion.getAttribute("perfil")!=null) {
+        if (sesion.getAttribute("perfil") != null) {
             if (sesion.getAttribute("perfil").equals("visualizacion")) {
                 request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response);
                 return;
-            }else if (sesion.getAttribute("perfil").equals("gestion")) {
+            } else if (sesion.getAttribute("perfil").equals("gestion")) {
                 request.getRequestDispatcher("WEB-INF/gestion.html").forward(request, response);
                 return;
             }
@@ -62,7 +63,8 @@ public class AutenticacionController extends HttpServlet {
         usuario = us.autenticar(usuario);
 
         if (usuario.getPerfil().equals("visualizacion")) {
-            VisitasServicio vs = new VisitasServicio(); vs.nuevaVisita();
+            VisitasServicio vs = new VisitasServicio();
+            vs.nuevaVisita();
             sesion.setAttribute("perfil", "visualizacion");
             request.getRequestDispatcher("WEB-INF/estandar.html").forward(request, response);
             return;
@@ -71,7 +73,8 @@ public class AutenticacionController extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/gestion.html").forward(request, response);
             return;
         } else {
-            request.getRequestDispatcher("acceso.html").forward(request, response);
+            PrintWriter out = response.getWriter();
+            out.print("error");
             return;
         }
 

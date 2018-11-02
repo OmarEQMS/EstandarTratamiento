@@ -56,12 +56,12 @@ $(document).ready(function () {
             cache: false,
             data: {
                 key: "CambiarPassword",
-                perfil: "visualizacion",
+                perfil: "gestion",
                 pastPass: $("#contrasenaPreviaAdmin").val(),
                 pass: $("#nuevaContrasenaAdmin").val()
             },
             success: function (response) {
-                if (response = "success") {
+                if (response=="success") {
                     swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
                     swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
@@ -94,7 +94,7 @@ $(document).ready(function () {
                 pass: $("#nuevaContrasena").val()
             },
             success: function (response) {
-                if (response = "success") {
+                if (response=="success"){
                     swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
                     swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
