@@ -129,6 +129,7 @@ public class GestionController extends HttpServlet {
                 estandar.setNombre(nombre);
                 estandar.setDescripcion("");
                 estandar.setColor(330);
+                estandar.setIdNodo(-1);
                 estandar.setEstatus(0);
                 int id = es.createEstandar(estandar);
                 PrintWriter out = response.getWriter();

@@ -46,7 +46,7 @@ $(document).ready(function () {
 
     $("#changePasswordGestion").on("click", function () {
         if ($("#nuevaContrasenaAdmin").val() != $("#verificarContrasenaAdmin").val()) {
-            swal("Contraseñas diferentes", {icon: "error"});
+            swal("Contraseñas diferentes", {icon: "error", buttons: [, 'Aceptar']});
             return;
         }
 
@@ -62,9 +62,9 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response = "success") {
-                    swal("Contraseña Cambiada Exitosamente", {icon: "success"});
+                    swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
-                    swal("Hubo un error", {icon: "error"});
+                    swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
                 }
             },
             error: function (xhr) {
@@ -79,7 +79,7 @@ $(document).ready(function () {
 
     $("#changePasswordVisualizacion").on("click", function () {
         if ($("#nuevaContrasena").val() != $("#verificarContrasena").val()) {
-            swal("Contraseñas diferentes", {icon: "error"});
+            swal("Contraseñas diferentes", {icon: "error", buttons: [, 'Aceptar']});
             return;
         }
 
@@ -95,9 +95,9 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response = "success") {
-                    swal("Contraseña Cambiada Exitosamente", {icon: "success"});
+                    swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
-                    swal("Hubo un error", {icon: "error"});
+                    swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
                 }
             },
             error: function (xhr) {
@@ -190,7 +190,7 @@ $(document).ready(function () {
                 nombre: nombre
             },
             success: function (response) {
-                swal("Estandar Agregado", {icon: "success"});
+                swal("Estandar Agregado", {icon: "success", buttons: [, 'Aceptar']});
                 tablaEstandares.row.add([nombre, "<button data-id='" + response + "' class='btn btn-info editarEstandar'><i class='fas fa-edit'></i></button><button data-id='" + response + "' class='btn btn-danger eliminarEstandar'><i class='fas fa-trash-alt'></i></button></td>"]).draw(false);
                 EditarEstandar(response);
             },
@@ -285,10 +285,10 @@ $(document).ready(function () {
             title: "¿Estas Seguro?",
             text: "Se eliminaran todos los nodo",
             icon: "warning",
-            buttons: true,
+            buttons: {cancel:'Cancelar', aceptar:true},
             dangerMode: true
-        }).then((willDelete) => {
-            if (willDelete) {
+        }).then((value) => {
+            if (value=="aceptar") {
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -299,7 +299,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaEstandares.row(fila).remove().draw();
-                        swal("Estandar Eliminado", {icon: "success"});
+                        swal("Estandar Eliminado", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -332,7 +332,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#nombreEstandar").html($("#tituloEstandar").val());
-                swal("Estandar Actualizado", {icon: "success"});
+                swal("Estandar Actualizado", {icon: "success", buttons: [, 'Aceptar']});
             },
             error: function (xhr) {
 
@@ -364,7 +364,7 @@ $(document).ready(function () {
                 idEstandar: idE
             },
             success: function (response) {
-                swal("Nodo Agregado", {icon: "success"});
+                swal("Nodo Agregado", {icon: "success", buttons: [, 'Aceptar']});
                 tablaNodos.row.add([
                     "<button class='btn nodoTipo' data-id='" + response + "'><i class='fas fa-unlink nodoRoto'></i></button></td>",
                     tituloNodo,
@@ -510,7 +510,7 @@ $(document).ready(function () {
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        swal("Nodo Actualizada", {icon: "success"});
+                        swal("Nodo Actualizada", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function () {
                     }
@@ -532,10 +532,10 @@ $(document).ready(function () {
             title: "¿Estas Seguro?",
             text: "Se eliminaran el Nodo y sus opciones",
             icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
+            buttons: {cancel:'Cancelar', aceptar:true},
+            dangerMode: true
+        }).then((value) => {
+            if (value=="aceptar") {
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -546,7 +546,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaNodos.row(fila).remove().draw();
-                        swal("Nodo Eliminado", {icon: "success"});
+                        swal("Nodo Eliminado", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -578,10 +578,10 @@ $(document).ready(function () {
             title: "¿Estas Seguro?",
             text: "Se eliminaran la Opcion",
             icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
+            buttons: {cancel:'Cancelar', aceptar:true},
+            dangerMode: true
+        }).then((value) => {
+            if (value=="aceptar") {
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -592,7 +592,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaOpciones.row(fila).remove().draw();
-                        swal("Opcion Eliminado", {icon: "success"});
+                        swal("Opcion Eliminado", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -627,7 +627,7 @@ $(document).ready(function () {
                     texto,
                     "<button class='btn btn-info editarOpcion' data-id='" + response + "' data-nodo='" + idN + "' data-sig='0'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response + "'><i class='fas fa-trash-alt'></i></button>"
                 ]).draw(false);
-                swal("Opcion Agregada", {icon: "success"});
+                swal("Opcion Agregada", {icon: "success", buttons: [, 'Aceptar']});
             },
             error: function (xhr) {
 
@@ -769,7 +769,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 CargarTablaOpciones(idN);
-                swal("Opcion cambiada Exitosamente", {icon: "success"});
+                swal("Opcion cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
             },
             error: function (xhr) {
 
@@ -794,10 +794,10 @@ $(document).ready(function () {
             title: "Estás a punto de cambiar el nodo raiz:",
             text: "El nodo raiz previo será desvinculado",
             icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((cambiar) => {
-            if (cambiar) {
+            buttons: {cancel:'Cancelar', aceptar:true},
+            dangerMode: true
+        }).then((value) => {
+            if (value=="aceptar") {
 
                 $.ajax({
                     url: "GestionController",
@@ -809,7 +809,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         if (response = "success") {
-                            swal("Nodo Raiz cambiado Exitosamente", {icon: "success"});
+                            swal("Nodo Raiz cambiado Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
 
                             var estrellas = document.getElementsByClassName('nodoEstrella');
                             for (var i = 0; i < estrellas.length; i++) {
@@ -831,7 +831,7 @@ $(document).ready(function () {
                             $(este).children().addClass('fa-star');
 
                         } else {
-                            swal("Hubo un error", {icon: "error"});
+                            swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
                             return;
                         }
                     },
