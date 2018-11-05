@@ -6,9 +6,8 @@ $(document).ready(function () {
     $("#content").hide();
     $("#divHistorial").hide();
     $("#menu").show();
-    $("#imgNodo").hide();
-    CargarEstandares();
-    GetHistorial();
+    $("#imgNodo").hide();    
+    GetHistorial();    
     if (historial.length != 0) {
         CargarHistorial(0);
     }
@@ -26,6 +25,8 @@ $(document).ready(function () {
             "sInfoEmpty": ""
         }
     });
+    
+    CargarEstandares();
 
     //Cargar Estandares    
     function CargarEstandares() {
