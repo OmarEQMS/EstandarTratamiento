@@ -756,6 +756,23 @@ $(document).ready(function () {
             nodoSig = $(seleccionada[0]).parent().data("id");
         }
 
+        if(historial==""){
+            swal({
+                title: "¿Estas Seguro?",
+                text: "No se generara historial en esta opcion",
+                buttons: {cancel:'Regresar', aceptar:true},
+            }).then((value) => {
+                if(value=="aceptar"){
+                    SaveOpcion(idN,idO,titulo,historial,nodoSig);
+                }
+            });
+        }else{
+            SaveOpcion(idN,idO,titulo,historial,nodoSig)
+        }
+        
+    });
+    
+    function SaveOpcion(idN,idO,titulo,historial,nodoSig){
         $.ajax({
             url: "GestionController",
             method: "POST",
@@ -775,8 +792,20 @@ $(document).ready(function () {
 
             }
         });
+        
         $('#modalEditOption').modal('toggle');
-
+    }
+    
+    $("#DesreferenciarOpcion").on("click", function(){
+        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
+        for (var i = 0; i < seleccionada.length; i++) {
+            $(seleccionada[i]).removeClass('fas');
+            $(seleccionada[i]).addClass('far');
+            if ($(seleccionada[i]).parent().hasClass('btn-success')) {
+                $(seleccionada[i]).parent().removeClass('btn-success');
+            }
+            $(seleccionada[i]).removeClass('opcionSeleccionada');
+        }
     });
 
     $('#colorSelector').on('input', function () {
