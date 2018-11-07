@@ -121,6 +121,7 @@ $(document).ready(function () {
         $("#menu").show();
         $("#content").hide();
         $("#divHistorial").hide();
+        ResizingScroll();
     });
 
     //Imprimir el Flujo

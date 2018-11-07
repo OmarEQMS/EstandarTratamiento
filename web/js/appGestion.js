@@ -49,6 +49,7 @@ $(document).ready(function () {
             swal("Contraseñas diferentes", {icon: "error", buttons: [, 'Aceptar']});
             return;
         }
+        if(!ValidarLongitud("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError",5,50)){return;}
 
         $.ajax({
             url: "GestionController",
@@ -82,6 +83,7 @@ $(document).ready(function () {
             swal("Contraseñas diferentes", {icon: "error", buttons: [, 'Aceptar']});
             return;
         }
+        if(!ValidarLongitud("#nuevaContrasena", "#nuevaContrasenaError",5,50)){return;}
 
         $.ajax({
             url: "GestionController",
@@ -955,6 +957,8 @@ $(document).ready(function () {
     InicializarValidar("#tituloNuevaOpcion", "#tituloNuevaOpcionError");
     InicializarValidar("#tituloOpcion", "#tituloOpcionError");
     InicializarValidar("#textoHistorial", "#textoHistorialError");
+    InicializarValidar("#nuevaContrasena", "#nuevaContrasenaError");
+    InicializarValidar("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError");
     /*
     if(!ValidarLongitud("#tituloEstandar", "#tituloEstandarError",1,100)){return;}
     if(!ValidarLongitud("#tituloNodo", "#tituloNodoError",1,100)){return;}
@@ -963,6 +967,8 @@ $(document).ready(function () {
     if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
     if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
     if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",0,100)){return;}
+    if(!ValidarLongitud("#nuevaContrasena", "#nuevaContrasenaError",5,50)){return;}
+    if(!ValidarLongitud("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError",5,50)){return;}
     */
     function ValidarLongitud(src, srcError, min, max){
         if((min<=$(src).val().length)&&($(src).val().length<=max)){
