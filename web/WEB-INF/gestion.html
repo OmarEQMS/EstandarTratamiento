@@ -3,16 +3,16 @@
 
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="shortcut icon" href="favicon.ico"/>
         <title>SAVA</title>
 
-        <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-        <link href="lib/fontawesome/css/all.css" rel="stylesheet" />
-        <link href="lib/tooltipster/dist/css/tooltipster.bundle.min.css" rel="stylesheet" />
-        <link href="lib/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="lib/fontawesome/css/all.css" rel="stylesheet">
+        <link href="lib/tooltipster/dist/css/tooltipster.bundle.min.css" rel="stylesheet">
+        <link href="lib/datatables/datatables.min.css" rel="stylesheet" type="text/css">
         <script src="lib/jquery/jquery-3.3.1.js" type="application/javascript"></script>
         <script src="lib/jquery/jqueryPostGo.js" type="application/javascript"></script>
         <script src="lib/popper/popper.min.js" type="application/javascript"></script>
@@ -82,6 +82,12 @@
                                 <tbody>                                    
                                 </tbody>
                             </table>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <i data-id="contentEstandares" class='fas fa-info-circle float-right icono-info acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                </div>
+                            </div>
 
                         </div>            
                     </div>
@@ -175,6 +181,13 @@
                                 <tbody>
                                 </tbody>
                             </table>
+                            
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <i data-id="contentEstandar" class='fas fa-info-circle float-right icono-info acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>  
@@ -242,6 +255,12 @@
                                     <button class="btn btn-primary" id="saveNodo"><i class="fas fa-save"></i>&nbsp; Guardar Todo</button>
                                 </div>
                             </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <i data-id="contentNodo" class='fas fa-info-circle float-right icono-info acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -254,7 +273,7 @@
                     </div-->
 
                     <div class="card myBorder">
-                        <div class="card-body p-5">
+                        <div class="card-body pl-5 pr-5 pt-5">
 
                             <div class="card">
                                 <div class="card-header"><h5 class="mb-0">Visitas</h5></div>
@@ -324,6 +343,12 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <i data-id="contentGestion" class='fas fa-info-circle float-right icono-info acercaDe acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                </div>
+                            </div>
 
                         </div>            
                     </div>
@@ -375,7 +400,7 @@
                         </div>
                         <span class="text-danger" id="tituloNuevoNodoError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button id="btn-nuevoNodo" data-id='0' class="btn btn-primary">Registrar</button>
@@ -383,7 +408,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!--MODAL New Opcion-->
         <div id="modalNewOption" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalNewOption" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -401,7 +426,7 @@
                         </div>
                         <span class="text-danger" id="tituloNuevaOpcionError">Formato Incorrecto: Logitud minima 1 y máxima de 50 caracteres.</span>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button id="btn-nuevaOpcion" data-id='0' class="btn btn-primary">Registrar</button>
@@ -425,7 +450,7 @@
                             <input id="tituloOpcion" type="text" class="form-control" placeholder="Su título aqui">
                         </div>
                         <span class="text-danger" id="tituloOpcionError">Formato Incorrecto: Logitud minima 1 y máxima de 50 caracteres.</span>
-                        
+
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text">Historial</span></div>
                             <input id="textoHistorial" type="text" class="form-control" placeholder="Su historial aqui">
@@ -437,7 +462,7 @@
                         </div>
 
                         <table class="display responsive no-wrap table table-striped text-center mt-3" id="tablaNodosNuevaOpcion" width="100%">
-                            <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
+                            <thead><tr><th scope="col">Nombres</th><th scope="col">Vincular</th></tr></thead>
                             <tbody>
                             </tbody>
                         </table>
@@ -452,7 +477,7 @@
                                 <div id="raicesOpciones" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <table class="display responsive no-wrap table table-striped text-center" id="tablaNodosRaizNuevaOpcion" width="100%">
-                                            <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
+                                            <thead><tr><th scope="col">Nombres</th><th scope="col">Vincular</th></tr></thead>
                                             <tbody>                                                
                                             </tbody>
                                         </table>
@@ -465,6 +490,34 @@
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                             <button id="btn-saveOpcion" data-id="0" type="button" class="btn btn-primary">Guardar</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--MODAL INFO-->
+        <div id="modalAcercaDe" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAcercaDe" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Acerca De</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #000;"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <img id="MainImgAcercaDe" src="./img/ManualGestion/ManualGestion1.png" style="max-height: 50vh; max-width: 90%;">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div id="fotosAcercaDe" style="overflow-x: scroll; display: inline-block; white-space: nowrap;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>

@@ -195,7 +195,7 @@ public class VisualizacionController extends HttpServlet {
                 List<Nodo> nodos = new ArrayList<>();;
 
                 for (int i = 0; i < estandares.size(); i++) {
-                    if ((estandares.get(i).getIdEstandar() == idE) || (estandares.get(i).getIdNodo() == 0)) {
+                    if ((estandares.get(i).getIdEstandar() == idE) || (estandares.get(i).getIdNodo() == -1)) {
                         estandares.remove(i);
                     }
                 }

@@ -693,7 +693,7 @@ $(document).ready(function () {
                         icono = "fas fa-check-circle opcionSeleccionada";
                         color = "btn-success "
                     } else {
-                        icono = "far fa-check-circle";
+                        icono = "far fa-times-circle";
                         color = "";
                     }
 
@@ -726,7 +726,7 @@ $(document).ready(function () {
                         icono = "fas fa-check-circle opcionSeleccionada";
                         color = "btn-success "
                     } else {
-                        icono = "far fa-check-circle";
+                        icono = "far fa-times-circle";
                         color = "";
                     }
 
@@ -842,15 +842,15 @@ $(document).ready(function () {
                         if (response = "success") {
                             swal("Nodo Raiz cambiado Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
 
-                            var estrellas = document.getElementsByClassName('nodoEstrella');
+                            var estrellas = document.querySelectorAll('.nodoEstrella');
                             for (var i = 0; i < estrellas.length; i++) {
-                                $(estrellas[i]).removeClass('fa-star');
-                                if ($(estrellas[i]).hasClass('nodoRoto')) {
-                                    $(estrellas[i]).addClass('fa-unlink');
+                                estrellas[i].removeClass('fa-star');
+                                if (estrellas[i].hasClass('nodoRoto')) {
+                                    estrellas[i].addClass('fa-unlink');
                                 } else {
-                                    $(estrellas[i]).addClass('fa-shoe-prints');
+                                    estrellas[i].addClass('fa-shoe-prints');
                                 }
-                                $(estrellas[i]).removeClass('nodoEstrella');
+                                estrellas[i].removeClass('nodoEstrella');
                             }
                             if ($(este).children().hasClass('fa-unlink')) {
                                 $(este).children().removeClass('fa-unlink');
@@ -875,14 +875,14 @@ $(document).ready(function () {
     });
 
     $("body").on('click', ".nodosOpcion", function () {
-        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
+        var seleccionada = document.querySelectorAll('.opcionSeleccionada');
         for (var i = 0; i < seleccionada.length; i++) {
-            $(seleccionada[i]).removeClass('fas');
-            $(seleccionada[i]).addClass('far');
-            if ($(seleccionada[i]).parent().hasClass('btn-success')) {
-                $(seleccionada[i]).parent().removeClass('btn-success');
+            seleccionada[i].removeClass('fas');
+            seleccionada[i].addClass('far');
+            if (seleccionada[i].parent().hasClass('btn-success')) {
+                seleccionada[i].parent().removeClass('btn-success');
             }
-            $(seleccionada[i]).removeClass('opcionSeleccionada');
+            seleccionada[i].removeClass('opcionSeleccionada');
         }
         if ($(this).children().hasClass('far')) {
             $(this).children().removeClass('far');
@@ -986,5 +986,36 @@ $(document).ready(function () {
             $(srcError).hide();
         });
     }
+    
+    //Acerca DE
+    $(".acercaDe").on("click", function(){
+        var id = $(this).data("id");
+        var contentEstandares = [6,7];
+        var contentEstandar = [8,9,10];
+        var contentNodo = [11,12,13,14,15];
+        var contentGestion = [5,16];
+        var arraySeleccionado = [1];
+        if(id=="contentEstandares"){
+            arraySeleccionado = contentEstandares;
+        }else if(id=="contentEstandar"){
+            arraySeleccionado = contentEstandar;
+        }else if(id=="contentNodo"){
+            arraySeleccionado = contentNodo;
+        }else if(id=="contentGestion"){
+            arraySeleccionado = contentGestion;
+        }
+        
+        $("#fotosAcercaDe").html("");
+        arraySeleccionado.forEach(function(i) {
+            $("#fotosAcercaDe").append("<img src='./img/ManualGestion/ManualGestion" + i + ".png' data-id='ManualGestion" + i + "' class='btn-ImgAcercaDe' style='max-height: 10vh; max-width: 90%; border: 2px solid #4b32a1 !important'>&nbsp;");
+        });
+        
+        $("#MainImgAcercaDe").attr("src", "./img/ManualGestion/ManualGestion" + arraySeleccionado[0] + ".png");
+
+    });
+    
+    $("body").on("click", ".btn-ImgAcercaDe", function(){
+        $("#MainImgAcercaDe").attr("src", "./img/ManualGestion/" + $(this).data("id") + ".png");
+    });
     
 });

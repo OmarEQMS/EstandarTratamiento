@@ -2,12 +2,11 @@ $(document).ready(function () {
     //Inicio
     var idEstandarActual = 0;
     var historial = [];
-    var cargando = 0;
     $("#content").hide();
     $("#divHistorial").hide();
     $("#menu").show();
-    $("#imgNodo").hide();    
-    GetHistorial();    
+    $("#imgNodo").hide();
+    GetHistorial();
     if (historial.length != 0) {
         CargarHistorial(0);
     }
@@ -25,7 +24,7 @@ $(document).ready(function () {
             "sInfoEmpty": ""
         }
     });
-    
+
     CargarEstandares();
 
     //Cargar Estandares    
@@ -46,7 +45,7 @@ $(document).ready(function () {
                 }
                 setColors(270, "algoritmosFondo", "algoritmosBorde");
                 setColors(270, "nodoFondo", "nodoBorde");
-                
+
                 ResizingScroll();
             },
             error: function (xhr) {
@@ -98,6 +97,7 @@ $(document).ready(function () {
                     tablaHistorial.row.add([response.historial]).draw(false);
                 }
                 if (index != historial.length - 1) {
+                    $(".historialDecisiones").html("");
                     CargarHistorialTabla(index + 1);
                 }
             },
@@ -112,7 +112,7 @@ $(document).ready(function () {
         $("#menu").hide();
         $("#content").hide();
         $("#divHistorial").hide();
-        $("#" + $(this).data("id")).show();   
+        $("#" + $(this).data("id")).show();
         ResizingScroll();
     });
 
@@ -132,6 +132,14 @@ $(document).ready(function () {
         tablaHistorial.clear().draw();
         CargarHistorialTabla(0);
     });
+
+    $("body").on("click", "#btnVerFlujo", function () {
+        $("#regresarArbol").data("id", "menu");
+    });
+    $("body").on("click", "#verFlujo", function () {
+        $("#regresarArbol").data("id", "content");
+    });
+
 
     //Click en Boton Historial
     $("body").on("click", ".historialDecisionesBoton", function () {
@@ -156,10 +164,10 @@ $(document).ready(function () {
         $("#nombreEstandar").html($(this).html());
         idEstandarActual = $(this).data("estandar");
         var idN = $(this).data("id");
-        BorrarHistorial_CargarNodo(idN);
+        BorrarHistorial_CargarNodo_Estandar(idN);
     });
 
-    function BorrarHistorial_CargarNodo(idN) {
+    function BorrarHistorial_CargarNodo_Estandar(idN) {
         if (historial.length != 0) {
             swal("¿Quieres guardar tu Historial?", {
                 buttons: {
@@ -184,13 +192,38 @@ $(document).ready(function () {
             CargarNodo(idN);
         }
     }
+    
+    function BorrarHistorial_CargarNodo_Opcion(idN) {
+        if (historial.length != 0) {
+            swal("Estas a punto de ingresar a un nuevo Algoritmo ¿Quieres guardar tu Historial?", {
+                buttons: {
+                    cancelar: "Cancelar",
+                    decline: "No",
+                    accept: "Si"
+                },
+            }).then(function (value) {
+                if (value == "decline") {
+                    DeleteHistorial();
+                    $(".historialDecisiones").html("");
+                }
+                if(value != "cancelar"){
+                    $("#menu").hide();
+                    $("#divHistorial").hide();
+                    $("#content").show();
+                    CargarNodo(idN);
+                    SaveHistorial();
+                }
+            });
+        } else {
+            $("#menu").hide();
+            $("#divHistorial").hide();
+            $("#content").show();
+            CargarNodo(idN);
+        }
+    }
 
     //Clic en una Opcion
     $("body").on("click", ".opcion", function () {
-        if (cargando == 1)
-            return;
-        cargando = 1;
-
         if ($(this).data("log") != "") {
             $(".historialDecisiones").html("<div data-id='" + $(this).data("idpadre") + "' class='card btn historialDecisionesBoton'><button class='btn'><i class='fas fa-chevron-left'></i></button>&nbsp;" + $(this).data("log") + "&nbsp;</div>" + $(".historialDecisiones").html());
         }
@@ -198,7 +231,7 @@ $(document).ready(function () {
         var idN = $(this).data("id");
         var idE_Sig = $(this).data("estandar");
         if (idE_Sig != idEstandarActual) {
-            BorrarHistorial_CargarNodo(idN);
+            BorrarHistorial_CargarNodo_Opcion(idN);
         } else {
             CargarNodo(idN);
         }
@@ -206,7 +239,8 @@ $(document).ready(function () {
     });
 
     //Cargar Nodo
-    function CargarNodo(idN) {        
+    function CargarNodo(idN) {
+        $("#opciones").html("");
         $("#imgNodo").attr("src", "");
         $("#nodo").html("");
         $("#imgNodo").hide();
@@ -247,7 +281,6 @@ $(document).ready(function () {
 
     //Cargar Opciones del Nodo
     function OpcionesNodo(idN, color) {
-        $("#opciones").html("");
         $(".nodoFondo").css("background-color", "#fff");
         $(".nodoBorde").css("border-width", "0px");
         $.ajax({
@@ -260,6 +293,7 @@ $(document).ready(function () {
                 id: idN
             },
             success: function (response) {
+                $("#opciones").html("");
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; i++) {
                         var raiz = "<i class='fas fa-star'></i>&nbsp;";
@@ -275,8 +309,6 @@ $(document).ready(function () {
                     setColors(color, "nodoFondo", "nodoBorde");
                 }
                 ResizingScroll();
-                
-                cargando = 0;
             },
             error: function (xhr) {
 
@@ -393,10 +425,11 @@ $(document).ready(function () {
             salir: "salir"
         });
     });
-    
-    function ResizingScroll(){
+
+    function ResizingScroll() {
         $("#scrollPageEstandares").css('top', $("#stickyTopEstandares").outerHeight(true) + "px");
         $("#scrollPageNodos").css('top', $("#stickyTopNodos").outerHeight(true) + "px");
-    };
-    
+    }
+    ;
+
 });
