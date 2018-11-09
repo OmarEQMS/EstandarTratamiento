@@ -194,11 +194,15 @@ public class VisualizacionController extends HttpServlet {
                 List<Estandar> estandares = es.getEstandares(0);
                 List<Nodo> nodos = new ArrayList<>();;
 
-                for (int i = 0; i < estandares.size(); i++) {
-                    if ((estandares.get(i).getIdEstandar() == idE) || (estandares.get(i).getIdNodo() == -1)) {
-                        estandares.remove(i);
+                int j = 0;
+                while(j<estandares.size()){
+                    if ((estandares.get(j).getIdEstandar() == idE) || (estandares.get(j).getIdNodo() == -1)) {
+                        estandares.remove(j);
+                    }else{
+                        j++;
                     }
                 }
+                
                 for (int i = 0; i < estandares.size(); i++) {
                     nodos.add(ns.getNodo(estandares.get(i).getIdNodo()));
                 }
