@@ -10,12 +10,12 @@ $(document).ready(function () {
     $('#change').on('click', () => {
         $('#menu, #content').toggleClass('active');
     });
-    function cambiar(nombre) {        
-        if((nombre=="contentEstandares")||(nombre=="contentEstandar")||(nombre=="contentNodo")){
+    function cambiar(nombre) {
+        if ((nombre == "contentEstandares") || (nombre == "contentEstandar") || (nombre == "contentNodo")) {
             $("#textoBarrita").html("Mis Algoritmos");
-        }else if((nombre=="contentGestion")){
+        } else if ((nombre == "contentGestion")) {
             $("#textoBarrita").html("Gestion");
-        }        
+        }
         $("#contentEstandares").hide();
         $("#contentEstandar").hide();
         $("#contentNodo").hide();
@@ -49,7 +49,9 @@ $(document).ready(function () {
             swal("Contraseñas diferentes", {icon: "error", buttons: [, 'Aceptar']});
             return;
         }
-        if(!ValidarLongitud("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError",5,50)){return;}
+        if (!ValidarLongitud("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError", 5, 50)) {
+            return;
+        }
 
         $.ajax({
             url: "GestionController",
@@ -62,7 +64,7 @@ $(document).ready(function () {
                 pass: $("#nuevaContrasenaAdmin").val()
             },
             success: function (response) {
-                if (response=="success") {
+                if (response == "success") {
                     swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
                     swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
@@ -83,7 +85,9 @@ $(document).ready(function () {
             swal("Contraseñas diferentes", {icon: "error", buttons: [, 'Aceptar']});
             return;
         }
-        if(!ValidarLongitud("#nuevaContrasena", "#nuevaContrasenaError",5,50)){return;}
+        if (!ValidarLongitud("#nuevaContrasena", "#nuevaContrasenaError", 5, 50)) {
+            return;
+        }
 
         $.ajax({
             url: "GestionController",
@@ -96,7 +100,7 @@ $(document).ready(function () {
                 pass: $("#nuevaContrasena").val()
             },
             success: function (response) {
-                if (response=="success"){
+                if (response == "success") {
                     swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
                     swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
@@ -177,10 +181,12 @@ $(document).ready(function () {
     });
 
     $("#btn-nuevoArbol").on("click", function () {
-        if(!ValidarLongitud("#tituloArbol", "#tituloArbolError",1,100)){return;}
-        
+        if (!ValidarLongitud("#tituloArbol", "#tituloArbolError", 1, 100)) {
+            return;
+        }
+
         var nombre = $("#tituloArbol").val();
-        
+
         $('#modalNuevoArbol').modal('toggle')
 
         $.ajax({
@@ -287,10 +293,10 @@ $(document).ready(function () {
             title: "¿Estas Seguro?",
             text: "Se eliminaran todos los nodo",
             icon: "warning",
-            buttons: {cancel:'Cancelar', aceptar:true},
+            buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
         }).then((value) => {
-            if (value=="aceptar") {
+            if (value == "aceptar") {
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -312,8 +318,10 @@ $(document).ready(function () {
     });
 
     $("#GuardarCambiosArbol").on("click", function () {
-        if(!ValidarLongitud("#tituloEstandar", "#tituloEstandarError",1,100)){return;}
-        
+        if (!ValidarLongitud("#tituloEstandar", "#tituloEstandarError", 1, 100)) {
+            return;
+        }
+
         var idE = $(this).data("id");
         var nombre = $("#tituloEstandar").val();
         var descripcion = $("#descripcionEstandar").val();
@@ -334,7 +342,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#nombreEstandar").html($("#tituloEstandar").val());
-                swal("Estandar Actualizado", {icon: "success", buttons: [, 'Aceptar']});
+                swal("Algoritmo Actualizado", {icon: "success", buttons: [, 'Aceptar']});
             },
             error: function (xhr) {
 
@@ -349,11 +357,13 @@ $(document).ready(function () {
     });
 
     $('#btn-nuevoNodo').on('click', function () {
-        if(!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError",1,100)){return;}
-        
+        if (!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError", 1, 100)) {
+            return;
+        }
+
         var idE = $(this).data("id");
         var tituloNodo = $("#tituloNuevoNodo").val();
-        
+
         $('#modalNewNode').modal('toggle');
 
         $.ajax({
@@ -471,8 +481,10 @@ $(document).ready(function () {
     }
 
     $("#saveNodo").on("click", function () {
-        if(!ValidarLongitud("#tituloNodo", "#tituloNodoError",1,100)){return;}
-        
+        if (!ValidarLongitud("#tituloNodo", "#tituloNodoError", 1, 100)) {
+            return;
+        }
+
         var idN = $(this).data("id");
         var tituloNodo = $("#tituloNodo").val();
         var textoNodo = $("#textoNodo").val();
@@ -534,10 +546,10 @@ $(document).ready(function () {
             title: "¿Estas Seguro?",
             text: "Se eliminaran el Nodo y sus opciones",
             icon: "warning",
-            buttons: {cancel:'Cancelar', aceptar:true},
+            buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
         }).then((value) => {
-            if (value=="aceptar") {
+            if (value == "aceptar") {
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -580,10 +592,10 @@ $(document).ready(function () {
             title: "¿Estas Seguro?",
             text: "Se eliminaran la Opcion",
             icon: "warning",
-            buttons: {cancel:'Cancelar', aceptar:true},
+            buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
         }).then((value) => {
-            if (value=="aceptar") {
+            if (value == "aceptar") {
                 $.ajax({
                     url: "GestionController",
                     method: "POST",
@@ -610,11 +622,13 @@ $(document).ready(function () {
     });
 
     $("#btn-nuevaOpcion").on("click", function () {
-        if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
-        
+        if (!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError", 1, 50)) {
+            return;
+        }
+
         var idN = $(this).data("id");
         var texto = $("#tituloNuevaOpcion").val();
-        
+
         $.ajax({
             url: "GestionController",
             method: "POST",
@@ -745,9 +759,13 @@ $(document).ready(function () {
     });
 
     $("#btn-saveOpcion").on("click", function () {
-        if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
-        if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",0,100)){return;}
-        
+        if (!ValidarLongitud("#tituloOpcion", "#tituloOpcionError", 1, 50)) {
+            return;
+        }
+        if (!ValidarLongitud("#textoHistorial", "#textoHistorialError", 0, 100)) {
+            return;
+        }
+
         var idN = $(this).data("nodo");
         var idO = $(this).data("id");
         var titulo = $("#tituloOpcion").val();
@@ -758,23 +776,23 @@ $(document).ready(function () {
             nodoSig = $(seleccionada[0]).parent().data("id");
         }
 
-        if(historial==""){
+        if (historial == "") {
             swal({
                 title: "¿Estas Seguro?",
                 text: "No se generara historial en esta opcion",
-                buttons: {cancel:'Regresar', aceptar:true},
+                buttons: {cancel: 'Regresar', aceptar: true},
             }).then((value) => {
-                if(value=="aceptar"){
-                    SaveOpcion(idN,idO,titulo,historial,nodoSig);
+                if (value == "aceptar") {
+                    SaveOpcion(idN, idO, titulo, historial, nodoSig);
                 }
             });
-        }else{
-            SaveOpcion(idN,idO,titulo,historial,nodoSig)
+        } else {
+            SaveOpcion(idN, idO, titulo, historial, nodoSig)
         }
-        
+
     });
-    
-    function SaveOpcion(idN,idO,titulo,historial,nodoSig){
+
+    function SaveOpcion(idN, idO, titulo, historial, nodoSig) {
         $.ajax({
             url: "GestionController",
             method: "POST",
@@ -794,11 +812,11 @@ $(document).ready(function () {
 
             }
         });
-        
+
         $('#modalEditOption').modal('toggle');
     }
-    
-    $("#DesreferenciarOpcion").on("click", function(){
+
+    $("#DesreferenciarOpcion").on("click", function () {
         var seleccionada = document.getElementsByClassName('opcionSeleccionada');
         for (var i = 0; i < seleccionada.length; i++) {
             $(seleccionada[i]).removeClass('fas');
@@ -806,6 +824,10 @@ $(document).ready(function () {
             if ($(seleccionada[i]).parent().hasClass('btn-success')) {
                 $(seleccionada[i]).parent().removeClass('btn-success');
             }
+            if ($(seleccionada[i]).hasClass('fa-check-circle')) {
+                $(seleccionada[i]).removeClass('fa-check-circle');
+            }
+            $(seleccionada[i]).addClass('fa-times-circle');
             $(seleccionada[i]).removeClass('opcionSeleccionada');
         }
     });
@@ -825,10 +847,10 @@ $(document).ready(function () {
             title: "Estás a punto de cambiar el nodo raiz:",
             text: "El nodo raiz previo será desvinculado",
             icon: "warning",
-            buttons: {cancel:'Cancelar', aceptar:true},
+            buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
         }).then((value) => {
-            if (value=="aceptar") {
+            if (value == "aceptar") {
 
                 $.ajax({
                     url: "GestionController",
@@ -842,15 +864,15 @@ $(document).ready(function () {
                         if (response = "success") {
                             swal("Nodo Raiz cambiado Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
 
-                            var estrellas = document.querySelectorAll('.nodoEstrella');
+                            var estrellas = document.getElementsByClassName('.nodoEstrella');
                             for (var i = 0; i < estrellas.length; i++) {
-                                estrellas[i].removeClass('fa-star');
-                                if (estrellas[i].hasClass('nodoRoto')) {
-                                    estrellas[i].addClass('fa-unlink');
+                                $(estrellas[i]).removeClass('fa-star');
+                                if ($(estrellas[i]).hasClass('nodoRoto')) {
+                                    $(estrellas[i]).addClass('fa-unlink');
                                 } else {
-                                    estrellas[i].addClass('fa-shoe-prints');
+                                    $(estrellas[i]).addClass('fa-shoe-prints');
                                 }
-                                estrellas[i].removeClass('nodoEstrella');
+                                $(estrellas[i]).removeClass('nodoEstrella');
                             }
                             if ($(este).children().hasClass('fa-unlink')) {
                                 $(este).children().removeClass('fa-unlink');
@@ -875,18 +897,26 @@ $(document).ready(function () {
     });
 
     $("body").on('click', ".nodosOpcion", function () {
-        var seleccionada = document.querySelectorAll('.opcionSeleccionada');
+        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
         for (var i = 0; i < seleccionada.length; i++) {
-            seleccionada[i].removeClass('fas');
-            seleccionada[i].addClass('far');
-            if (seleccionada[i].parent().hasClass('btn-success')) {
-                seleccionada[i].parent().removeClass('btn-success');
+            $(seleccionada[i]).removeClass('fas');
+            $(seleccionada[i]).addClass('far');
+            if ($(seleccionada[i]).parent().hasClass('btn-success')) {
+                $(seleccionada[i]).parent().removeClass('btn-success');
             }
-            seleccionada[i].removeClass('opcionSeleccionada');
+            if ($(seleccionada[i]).hasClass('fa-check-circle')) {
+                $(seleccionada[i]).removeClass('fa-check-circle');
+            }
+            $(seleccionada[i]).addClass('fa-times-circle');
+            $(seleccionada[i]).removeClass('opcionSeleccionada');
         }
         if ($(this).children().hasClass('far')) {
             $(this).children().removeClass('far');
         }
+        if ($(this).children().hasClass('fa-times-circle')) {
+            $(this).children().removeClass('fa-times-circle');
+        }
+        $(this).children().addClass('fa-check-circle');
         $(this).children().addClass('opcionSeleccionada');
         $(this).children().addClass('fas');
         $(this).addClass('btn-success');
@@ -942,13 +972,13 @@ $(document).ready(function () {
     var tablaOpciones = tablaInit('#tablaOpciones');
     var tablaNodosNuevaOpcion = tablaInit('#tablaNodosNuevaOpcion');
     var tablaNodosRaizNuevaOpcion = tablaInit('#tablaNodosRaizNuevaOpcion');
-    
+
     $("#SignOut").on("click", function () {
         $.postGo("Estandar", {
             salir: "salir"
         });
     });
-    
+
     //Validaciones
     InicializarValidar("#tituloEstandar", "#tituloEstandarError");
     InicializarValidar("#tituloNodo", "#tituloNodoError");
@@ -960,62 +990,62 @@ $(document).ready(function () {
     InicializarValidar("#nuevaContrasena", "#nuevaContrasenaError");
     InicializarValidar("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError");
     /*
-    if(!ValidarLongitud("#tituloEstandar", "#tituloEstandarError",1,100)){return;}
-    if(!ValidarLongitud("#tituloNodo", "#tituloNodoError",1,100)){return;}
-    if(!ValidarLongitud("#tituloArbol", "#tituloArbolError",1,100)){return;}
-    if(!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError",1,100)){return;}
-    if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
-    if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
-    if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",0,100)){return;}
-    if(!ValidarLongitud("#nuevaContrasena", "#nuevaContrasenaError",5,50)){return;}
-    if(!ValidarLongitud("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError",5,50)){return;}
-    */
-    function ValidarLongitud(src, srcError, min, max){
-        if((min<=$(src).val().length)&&($(src).val().length<=max)){
+     if(!ValidarLongitud("#tituloEstandar", "#tituloEstandarError",1,100)){return;}
+     if(!ValidarLongitud("#tituloNodo", "#tituloNodoError",1,100)){return;}
+     if(!ValidarLongitud("#tituloArbol", "#tituloArbolError",1,100)){return;}
+     if(!ValidarLongitud("#tituloNuevoNodo", "#tituloNuevoNodoError",1,100)){return;}
+     if(!ValidarLongitud("#tituloNuevaOpcion", "#tituloNuevaOpcionError",1,50)){return;}
+     if(!ValidarLongitud("#tituloOpcion", "#tituloOpcionError",1,50)){return;}
+     if(!ValidarLongitud("#textoHistorial", "#textoHistorialError",0,100)){return;}
+     if(!ValidarLongitud("#nuevaContrasena", "#nuevaContrasenaError",5,50)){return;}
+     if(!ValidarLongitud("#nuevaContrasenaAdmin", "#nuevaContrasenaAdminError",5,50)){return;}
+     */
+    function ValidarLongitud(src, srcError, min, max) {
+        if ((min <= $(src).val().length) && ($(src).val().length <= max)) {
             $(srcError).hide();
             return true;
-        }else{
+        } else {
             $(srcError).show();
             return false;
-        }        
+        }
     }
-    
-    function InicializarValidar(src, srcError){
-        $(srcError).hide();        
-        $(src).on("click", function(){
+
+    function InicializarValidar(src, srcError) {
+        $(srcError).hide();
+        $(src).on("click", function () {
             $(srcError).hide();
         });
     }
-    
+
     //Acerca DE
-    $(".acercaDe").on("click", function(){
+    $(".acercaDe").on("click", function () {
         var id = $(this).data("id");
-        var contentEstandares = [6,7];
-        var contentEstandar = [8,9,10];
-        var contentNodo = [11,12,13,14,15];
-        var contentGestion = [5,16];
+        var contentEstandares = [6, 7];
+        var contentEstandar = [8, 9, 10];
+        var contentNodo = [11, 12, 13, 14, 15];
+        var contentGestion = [5, 16];
         var arraySeleccionado = [1];
-        if(id=="contentEstandares"){
+        if (id == "contentEstandares") {
             arraySeleccionado = contentEstandares;
-        }else if(id=="contentEstandar"){
+        } else if (id == "contentEstandar") {
             arraySeleccionado = contentEstandar;
-        }else if(id=="contentNodo"){
+        } else if (id == "contentNodo") {
             arraySeleccionado = contentNodo;
-        }else if(id=="contentGestion"){
+        } else if (id == "contentGestion") {
             arraySeleccionado = contentGestion;
         }
-        
+
         $("#fotosAcercaDe").html("");
-        arraySeleccionado.forEach(function(i) {
+        arraySeleccionado.forEach(function (i) {
             $("#fotosAcercaDe").append("<img src='./img/ManualGestion/ManualGestion" + i + ".png' data-id='ManualGestion" + i + "' class='btn-ImgAcercaDe' style='max-height: 10vh; max-width: 90%; border: 2px solid #4b32a1 !important'>&nbsp;");
         });
-        
+
         $("#MainImgAcercaDe").attr("src", "./img/ManualGestion/ManualGestion" + arraySeleccionado[0] + ".png");
 
     });
-    
-    $("body").on("click", ".btn-ImgAcercaDe", function(){
+
+    $("body").on("click", ".btn-ImgAcercaDe", function () {
         $("#MainImgAcercaDe").attr("src", "./img/ManualGestion/" + $(this).data("id") + ".png");
     });
-    
+
 });
