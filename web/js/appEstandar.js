@@ -230,7 +230,9 @@ $(document).ready(function () {
         historial.push($(this).data("idopcion").toString());
         var idN = $(this).data("id");
         var idE_Sig = $(this).data("estandar");
-        if (idE_Sig != idEstandarActual) {
+        $("#opciones").html("");
+        
+        if ((idE_Sig != idEstandarActual) && (idE_Sig != 0)) {
             BorrarHistorial_CargarNodo_Opcion(idN);
         } else {
             CargarNodo(idN);
