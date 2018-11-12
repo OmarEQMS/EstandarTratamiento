@@ -114,58 +114,40 @@
                         <div class="card-body">
 
                             <!-- INFORMACION NUEVO -->
-                            <div class="card p-0  mt-1">
-                                <div class="card-body p-0">
+                            <!--button class="btn btn-link" style="width: 100%;"><i class="fas fa-wrench"></i>&nbsp; Información del algoritmo</button-->
+  
+                            <div class="input-group mt-1">
+                                <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
+                                <input type="text" id="tituloEstandar" class="form-control" placeholder="Su titulo aqui" value="">
+                            </div>
+                            <span class="text-danger" id="tituloEstandarError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
 
-                                    <div class="accordion" id="accordionAlgoritmo">
-                                        <div class="card">
-                                            <div class="card-header" id="headingAlgoritmo">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link" style="width: 100%;" data-toggle="collapse" data-target="#settingsAlgoritmo" aria-expanded="false" aria-controls="settingsAlgoritmo"><i class="fas fa-wrench"></i>&nbsp; Información del algoritmo</button>
-                                                </h5>
-                                            </div>
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend"><span class="input-group-text">Descripción</span></div>
+                                <textarea id="descripcionEstandar" class="form-control" placeholder="Su descripcion aqui"></textarea>
+                            </div>
 
-                                            <div id="settingsAlgoritmo" class="collapse noBorder" aria-labelledby="headingAlgoritmo" data-parent="#accordionAlgoritmo">
-                                                <div class="card-body">
-                                                    <div class="input-group mt-1">
-                                                        <div class="input-group-prepend"><span class="input-group-text">Título</span></div>
-                                                        <input type="text" id="tituloEstandar" class="form-control" placeholder="Su titulo aqui" value="">
-                                                    </div>
-                                                    <span class="text-danger" id="tituloEstandarError">Formato Incorrecto: Logitud minima 1 y máxima de 100 caracteres.</span>
-
-                                                    <div class="input-group mt-3">
-                                                        <div class="input-group-prepend"><span class="input-group-text">Descripción</span></div>
-                                                        <textarea id="descripcionEstandar" class="form-control" placeholder="Su descripcion aqui"></textarea>
-                                                    </div>
-
-                                                    <div class="card mt-3">
-                                                        <div class="card-body p-2">
-                                                            <div class="row">
-                                                                <div id="textColorEstandar" class="col-12">Color del estándar Tono: 0</div>
-                                                            </div>
-                                                            <div class="row justify-content-center mt-2">
-                                                                <div class="col-8 text-center">
-                                                                    <input type="range"  id="colorSelector"  style="width: 100%;" min="0" max="360" aria-label="colorAlgoritmo">
-                                                                </div>
-                                                                <div class="col-2 text-center"><div class = "card sampleColorBackground">Color Fondo</div></div>
-                                                                <div class="col-2 text-center"><div class = "card sampleColorBorder">Color Borde</div></div>
-                                                            </div>                                                    
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="input-group mt-3">
-                                                        <div class="input-group-prepend"><span class="input-group-text">Publicado</span></div>
-                                                        <input id="estatusEstandar" type="checkbox" class="form-control">
-                                                    </div>
-
-                                                </div>                                        
-                                            </div>
-
-                                        </div>                                
+                            <div class="card mt-3">
+                                <div class="card-body p-2">
+                                    <div class="row">
+                                        <div id="textColorEstandar" class="col-12">Color del estándar Tono: 0</div>
                                     </div>
-
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="col-8 text-center">
+                                            <input type="range"  id="colorSelector"  style="width: 100%;" min="0" max="360" aria-label="colorAlgoritmo">
+                                        </div>
+                                        <div class="col-2 text-center"><div class = "card sampleColorBackground">Color Fondo</div></div>
+                                        <div class="col-2 text-center"><div class = "card sampleColorBorder">Color Borde</div></div>
+                                    </div>                                                    
                                 </div>
                             </div>
+
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend"><span class="input-group-text">Publicado</span></div>
+                                <input id="estatusEstandar" type="checkbox" class="form-control">
+                            </div>
+
+                            <hr style="background-color: black;" width="80%">
 
                             <div class="row justify-content-center mt-2 mb-2">
                                 <div class="col-12 text-center"><span style="font-size: 30px;">Nodos</span></div>
@@ -181,7 +163,7 @@
                             <!-- Nuevo Nodo -->
                             <div class="row justify-content-center mb-3">
                                 <div class="col-6 text-center">
-                                    <button class="btn btn-primary" id="nuevoNodo" style="width: 100%;"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo Nodo</button>
+                                    <button class="btn btn-primary" id="nuevoNodo"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo Nodo</button>
                                 </div>
                             </div>
 
@@ -189,7 +171,7 @@
 
                             <div class="row justify-content-center mt-4 mb-1">
                                 <div class="col-6">
-                                    <button class="btn btn-secondary" id="GuardarCambiosArbol" data-id="0" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar y Salir</button>
+                                    <button class="btn btn-primary" id="GuardarCambiosArbol" data-id="0" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar y Salir</button>
                                 </div>
                             </div>
 
@@ -267,7 +249,7 @@
 
                             <div class="row justify-content-center">
                                 <div class="col-6 text-center">
-                                    <button class="btn btn-primary" id="saveNodo"><i class="fas fa-save"></i>&nbsp; Guardar y Salir</button>
+                                    <button class="btn btn-primary" id="saveNodo" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar y Salir</button>
                                 </div>
                             </div>
 
