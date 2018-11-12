@@ -1,8 +1,14 @@
 package mx.itesm.estandar.util;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/*
+Clase Conexion
+Esta clase es para establecer una conexion con la Base de Datos
+Metodos:
+    + getConnection(): PAra Obtener la conexion (metodo de tipo estatico)
+    + main(): Para correr el programa, sin la necesidad de correr todo el sitio
+*/
 public class Conexion {
     
     public static Connection getConnection(){

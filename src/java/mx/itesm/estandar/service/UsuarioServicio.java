@@ -1,5 +1,4 @@
 package mx.itesm.estandar.service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,8 +6,16 @@ import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.bean.Usuario;
 import mx.itesm.estandar.util.Conexion;
 
+/*
+Servicio de la Tabla Usuario
+*/
 public class UsuarioServicio implements IUsuarioServicio{
 
+    /*
+    autenticar()
+    regresa un objeto de tipo usuario
+    recibe un objeto de tipo Usuario con la contraseña
+    */
     @Override
     public Usuario autenticar(Usuario usuario) {
         Connection conn = Conexion.getConnection();
@@ -29,6 +36,12 @@ public class UsuarioServicio implements IUsuarioServicio{
         return usuario;
     }
     
+    /*
+    updateContrasena()
+    regresa un booleano si la actualizacion de la contraseña fue exitosa
+    recibe un objeto de tipo Usuario
+    */
+    @Override
     public boolean updateContrasena(Usuario usuario) {
         Connection conn = Conexion.getConnection();
         String sql = "UPDATE Usuario SET password=SHA2(?,224) WHERE (perfil=?)";

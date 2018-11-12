@@ -1,5 +1,4 @@
 package mx.itesm.estandar.service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +8,16 @@ import mx.itesm.estandar.bean.Imagen;
 import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.util.Conexion;
 
+/*
+Servicio de la Tabla Imagen   
+*/
 public class ImagenServicio implements IImagenServicio{
 
+    /*
+    getImagen()
+    regresa un objeto de tipo Imagen
+    recibe el idImagen como referencia
+    */
     @Override
     public Imagen getImagen(int idImagen) {
         Connection conn = Conexion.getConnection();
@@ -32,6 +39,11 @@ public class ImagenServicio implements IImagenServicio{
         return imagen;
     }
 
+    /*
+    createImagen()
+    regresa un numero entero correspondiente al ID de insercion del objeto en la tabla
+    recibe un objeto de tipo Imagen 
+    */
     @Override
     public int createImagen(Imagen imagen) {
         Connection conn = Conexion.getConnection();
@@ -54,6 +66,11 @@ public class ImagenServicio implements IImagenServicio{
         return id;
     }
 
+    /*
+    deleteImagen()
+    regresa un bolleano si la eliminacion fue exitosa
+    recibe un idImagen como referencia
+    */
     @Override
     public boolean deleteImagen(int idImagen) {
         Connection conn = Conexion.getConnection();
@@ -71,6 +88,11 @@ public class ImagenServicio implements IImagenServicio{
         return bool;
     }
 
+    /*
+    updateImagen()
+    regresa un booleano si la actualizacion fue exitosa
+    recibe un objeto de tipo Imagen
+    */
     @Override
     public boolean updateImagen(Imagen imagen) {
         Connection conn = Conexion.getConnection();

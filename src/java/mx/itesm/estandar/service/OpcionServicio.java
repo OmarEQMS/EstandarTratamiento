@@ -1,5 +1,4 @@
 package mx.itesm.estandar.service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +8,16 @@ import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.bean.Opcion;
 import mx.itesm.estandar.util.Conexion;
 
+/*
+Servicio de la Tabla Opcion
+*/
 public class OpcionServicio implements IOpcionServicio{
 
+    /*
+    getOpcion()
+    regresa un objeto de tipo opcion
+    recibe un idOpcion como referencias
+    */
     @Override
     public Opcion getOpcion(int idOpcion) {
         Connection conn = Conexion.getConnection();
@@ -35,6 +42,11 @@ public class OpcionServicio implements IOpcionServicio{
         return opcion;
     }
 
+    /*
+    getOpciones()
+    regresa una lista de objetos de tipo opcion
+    recibe un idNodo como referencia
+    */
     @Override
     public List<Opcion> getOpciones(int idNodo) {
         Connection conn = Conexion.getConnection();
@@ -63,6 +75,11 @@ public class OpcionServicio implements IOpcionServicio{
         return opciones;
     }
     
+    /*
+    getNodoEnOpciones()
+    regresa un booleano si un Nodo puede ser accedido al darle click a una opcion (esta dentro del flujo)
+    recibe un idNodo como referencia
+    */
     @Override
     public boolean getNodoEnOpciones(int idNodo) {
         Connection conn = Conexion.getConnection();
@@ -85,6 +102,12 @@ public class OpcionServicio implements IOpcionServicio{
         return bool;
     }
     
+    /*
+    updateOpcionesPorSig()
+    regresa un booleano si la actualizacion fue exitosa
+    recibe como referencia el viejo idNodo y el nuevo(0) idNodo
+    Cuando es elimina un nodo que era siguiente de una opcion, el campo idNodo deberia de tener 0 para denotar que la opcion no tiene vinculo
+    */
     @Override
     public boolean updateOpcionesPorSig(int idNodoSigPast, int idNodoSig) {
         Connection conn = Conexion.getConnection();
@@ -103,6 +126,11 @@ public class OpcionServicio implements IOpcionServicio{
         return bool;
     }
 
+    /*
+    createOpcion()
+    regresa un numero entera representando el ID con el cual fue insertado en la base de datos
+    recibe un objeto de tipo opcion
+    */
     @Override
     public int createOpcion(Opcion opcion) {
         Connection conn = Conexion.getConnection();
@@ -128,6 +156,11 @@ public class OpcionServicio implements IOpcionServicio{
         return id;
     }
 
+    /*
+    deleteOpcion()
+    regresa un booleano si la eliminacion fue exitosa
+    recibe
+    */
     @Override
     public boolean deleteOpcion(int idOpcion) {
         Connection conn = Conexion.getConnection();
@@ -146,6 +179,11 @@ public class OpcionServicio implements IOpcionServicio{
         return bool;
     }
 
+    /*
+    updateOpcion()
+    regresa un booleano si la actualizacion fue exitosa
+    recibe un objeto de tipo Opcion
+    */
     @Override
     public boolean updateOpcion(Opcion opcion) {
         Connection conn = Conexion.getConnection();

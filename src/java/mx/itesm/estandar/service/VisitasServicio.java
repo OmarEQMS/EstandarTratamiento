@@ -1,5 +1,4 @@
 package mx.itesm.estandar.service;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +6,16 @@ import java.sql.ResultSet;
 import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.util.Conexion;
 
+/*
+Servicio de la Tabla Visitas
+*/
 public class VisitasServicio implements IVisitasServicio{
 
+    /*
+    nuevaVisita()
+    no regresa nada
+    no recibe nada
+    */
     @Override
     public void nuevaVisita() {
         Connection conn = Conexion.getConnection();    
@@ -23,6 +30,11 @@ public class VisitasServicio implements IVisitasServicio{
         }
     }    
     
+    /*
+    getVisitas()
+    regresa el numero de visitas en el modulo de visualizacion
+    no recibe nada
+    */
     @Override
     public int getVisitas() {
         Connection conn = Conexion.getConnection();    

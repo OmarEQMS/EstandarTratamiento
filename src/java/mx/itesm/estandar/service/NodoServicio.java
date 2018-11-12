@@ -1,5 +1,4 @@
 package mx.itesm.estandar.service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +9,16 @@ import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.bean.Nodo;
 import mx.itesm.estandar.util.Conexion;
 
+/*
+Servicio de la Tabla Nodo
+*/
 public class NodoServicio implements INodoServicio{
 
+    /*
+    getNodo()
+    regresa un objeto de tipo Nodo
+    recibe in idNodo como referencia
+    */
     @Override
     public Nodo getNodo(int idNodo) {
         Connection conn = Conexion.getConnection();
@@ -37,6 +44,11 @@ public class NodoServicio implements INodoServicio{
         return nodo;
     }
 
+    /*
+    getNodos()
+    regresa una lista de objetos de tipo Nodo
+    recibe un idEstandar como referencia
+    */
     @Override
     public List<Nodo> getNodos(int idEstandar) {
         Connection conn = Conexion.getConnection();
@@ -66,6 +78,11 @@ public class NodoServicio implements INodoServicio{
         return nodos;
     }
 
+    /*
+    createNodo()
+    regresa un numero entero correspondiente al ID de insercion del objeto en la tabla
+    recibe un objeto de Tipo Nodo
+    */
     @Override
     public int createNodo(Nodo nodo) {
         Connection conn = Conexion.getConnection();
@@ -92,6 +109,11 @@ public class NodoServicio implements INodoServicio{
         return id;
     }
 
+    /*
+    deleteNodo()
+    regresa un booleano si la eliminacion fue exitosa
+    recibe un idNodo como referencia
+    */
     @Override
     public boolean deleteNodo(int idNodo) {
         Connection conn = Conexion.getConnection();
@@ -110,6 +132,11 @@ public class NodoServicio implements INodoServicio{
         return bool;
     }
 
+    /*
+    updateNodo()
+    regresa un booleano si la actualizacion fue exitosa
+    recibe un objeto de tipo Nodo
+    */
     @Override
     public boolean updateNodo(Nodo nodo) {
         Connection conn = Conexion.getConnection();

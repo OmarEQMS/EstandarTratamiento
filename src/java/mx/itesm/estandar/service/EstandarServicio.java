@@ -10,8 +10,16 @@ import mx.itesm.estandar.bean.Estandar;
 import mx.itesm.estandar.util.Conexion;
 import static mx.itesm.estandar.util.Conexion.getConnection;
 
+/*
+Servicio de la Tabla Estandar
+*/
 public class EstandarServicio implements IEstandarServicio{
 
+     /*
+    getEstandar() 
+    regresa un objeto de tipo Estandar
+    recibe como referencia el idEstandar
+    */
     @Override
     public Estandar getEstandar(int idEstandar) {
         Connection conn = Conexion.getConnection();
@@ -36,7 +44,13 @@ public class EstandarServicio implements IEstandarServicio{
         }
         return estandar;
     }
-
+    
+    /*
+    getEstandares() 
+    regresa una Lista de tipo Estandar 
+    recibe como argumento el estatus (publicado o no)
+    Si el estatus es igual a 0, me regresa los estandares publicados y no publicados, Si es igual a 1 solamente me regresa los publicados
+    */
     @Override
     public List<Estandar> getEstandares(int estatus) {
         Connection conn = Conexion.getConnection();    
@@ -66,6 +80,12 @@ public class EstandarServicio implements IEstandarServicio{
         return estandares;
     }
     
+    /*
+    updateEstandaresPorRaiz()
+    regresa un booleano si la actualizacion del Estandar fue exitosa
+    recibe como referencia el viejo idNodo(Raiz) y el nuevo(-1) idNodo(Raiz)
+    Cuando es elimina un nodo que era raiz de un estandar, el campo idNodo deberia de tener -1 para denotar que no tiene vinculo
+    */
     @Override
     public boolean updateEstandaresPorRaiz(int idNodo_Raiz_Past, int idNodo_Raiz) {
         Connection conn = Conexion.getConnection();
@@ -85,6 +105,11 @@ public class EstandarServicio implements IEstandarServicio{
         return bool;  
     }
 
+    /*
+    createEstandar()
+    regresa un numero entero que representa el ID con el cual se inserto en la Base de Datos
+    recibe como referencia un objeto tipo Estadar
+    */
     @Override
     public int createEstandar(Estandar estandar) {
         Connection conn = Conexion.getConnection();
@@ -111,6 +136,11 @@ public class EstandarServicio implements IEstandarServicio{
         return id;    
     }
 
+    /*
+    deleteEstandar() 
+    regresa un booleano si la eliminacion fue exitosa
+    recibe como referencia el idEstandar
+    */
     @Override
     public boolean deleteEstandar(int idEstandar) {
         Connection conn = Conexion.getConnection();
@@ -129,6 +159,11 @@ public class EstandarServicio implements IEstandarServicio{
         return bool; 
     }
 
+    /*
+    updateEstandar() 
+    regresa un booleano si la actualizacion del Estandar fue exitosa
+    recibe como referencia un objeto tipo Estadar
+    */
     @Override
     public boolean updateEstandar(Estandar estandar) {
         Connection conn = Conexion.getConnection();

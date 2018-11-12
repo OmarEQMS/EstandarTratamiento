@@ -431,7 +431,8 @@ $(document).ready(function () {
                 id: idN
             },
             success: function (response) {
-                $("#saveNodo").data("id", response[0].idNodo);
+                $("#saveNodo").data("id", response[0].idNodo); 
+                $("#saveNodo").data("idEstandar", response[0].idEstandar);
                 $("#btn-nuevaOpcion").data("id", response[0].idNodo);
                 $("#tituloNodo").val(response[0].titulo);
                 $("#nombreNodo").html($("#nombreEstandar").html() + ": " + response[0].titulo);
@@ -509,6 +510,7 @@ $(document).ready(function () {
         }
 
         var idN = $(this).data("id");
+        var idE = $(this).data("idEstandar");
         var tituloNodo = $("#tituloNodo").val();
         var textoNodo = $("#textoNodo").val();
         var anotacionNodo = $("#anotacionNodo").val();
@@ -549,7 +551,6 @@ $(document).ready(function () {
                     success: function (response) {
                         swal("Nodo Actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
                             cambiar("contentEstandar");
-                            var idE = $(this).data("id");
                             CargarTablaNodos(idE);
                         });
                     },
