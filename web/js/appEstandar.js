@@ -41,7 +41,7 @@ $(document).ready(function () {
             success: function (response) {
                 $("#estandares").html("");
                 for (var i = 0; i < response.length; i++) {
-                    $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' data-estandar='" + response[i].idEstandar + "' class='estandar col-10'><span class='subtitle'>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
+                    $("#estandares").append("<div class='card mt-3'><div class='btn card-body algoritmosBorde'><div class='row'><div data-id='" + response[i].idNodo + "' data-estandar='" + response[i].idEstandar + "' class='estandar col-10'><span class='subtitle'>" + response[i].nombre + "</span></div><div class='col-2 col-sm-1 d-flex'><i data-id='" + response[i].idEstandar + "' class='ml-auto infoEstandar fas fa-info-circle icono-info' title='Descripcion' style='font-size:27px' data-placement='top'> </i></div></div></div></div>")
                 }
                 setColors(270, "algoritmosFondo", "algoritmosBorde");
                 setColors(270, "nodoFondo", "nodoBorde");

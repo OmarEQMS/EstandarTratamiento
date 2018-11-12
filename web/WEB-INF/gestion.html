@@ -69,18 +69,18 @@
 
                     <div class="card myBorder">
                         <div class="card-body">
-                            
+
                             <div class="row justify-content-center mt-2 mb-2">
                                 <div class="col-12 text-center"><span style="font-size: 30px;">Algoritmos</span></div>
                             </div>
-                            
+
                             <!--TABLA DE ESTANDARES-->
                             <table class="display responsive no-wrap table table-striped text-center" id="tablaEstandares" width="100%">
                                 <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
                                 <tbody>                                    
                                 </tbody>
                             </table>
-                            
+
                             <!--BOTON DE AGREGAR NUEVO ESTANDAR-->
                             <div class="row justify-content-center mb-3">
                                 <div class="col-12 text-center">
@@ -90,7 +90,7 @@
 
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <i data-id="contentEstandares" class='fas fa-info-circle float-right icono-info acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                    <i data-id="contentEstandares" class='fas fa-info-circle float-right icono-info acercaDe' title='Ayuda' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
                                 </div>
                             </div>
 
@@ -158,12 +158,6 @@
                                                         <input id="estatusEstandar" type="checkbox" class="form-control">
                                                     </div>
 
-                                                    <div class="row justify-content-end mt-4 mb-1">
-                                                        <div class="col-6">
-                                                            <button class="btn btn-secondary" id="GuardarCambiosArbol" data-id="0" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar Cambios</button>
-                                                        </div>
-                                                    </div>
-
                                                 </div>                                        
                                             </div>
 
@@ -172,31 +166,39 @@
 
                                 </div>
                             </div>
-                            
+
                             <div class="row justify-content-center mt-2 mb-2">
                                 <div class="col-12 text-center"><span style="font-size: 30px;">Nodos</span></div>
                             </div>
-                            
+
                             <!--TABLA DE NODOS-->
                             <table class="display responsive no-wrap table table-striped text-center" id="tablaNodos" width="100%">
                                 <thead><tr><th scope="col">Tipo</th><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
                                 <tbody>
                                 </tbody>
                             </table>
-                            
+
                             <!-- Nuevo Nodo -->
                             <div class="row justify-content-center mb-3">
                                 <div class="col-6 text-center">
                                     <button class="btn btn-primary" id="nuevoNodo" style="width: 100%;"><i class="fas fa-plus-circle"></i>&nbsp; Nuevo Nodo</button>
                                 </div>
                             </div>
-                            
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <i data-id="contentEstandar" class='fas fa-info-circle float-right icono-info acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+
+                            <hr style="background-color: black;" width="80%">
+
+                            <div class="row justify-content-center mt-4 mb-1">
+                                <div class="col-6">
+                                    <button class="btn btn-secondary" id="GuardarCambiosArbol" data-id="0" style="width: 100%;"><i class="fas fa-save"></i>&nbsp; Guardar y Salir</button>
                                 </div>
                             </div>
-                            
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <i data-id="contentEstandar" class='fas fa-info-circle float-right icono-info acercaDe' title='Ayuda' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>  
@@ -245,7 +247,7 @@
                             <div class="row justify-content-center mt-2 mb-2">
                                 <div class="col-12 text-center"><span style="font-size: 30px;">Opciones</span></div>
                             </div>
-                            
+
                             <table class="display responsive no-wrap table table-striped text-center" id="tablaOpciones" width="100%">
                                 <thead><tr><th scope="col">Nombres</th><th scope="col">Accion</th></tr></thead>
                                 <tbody>
@@ -265,13 +267,13 @@
 
                             <div class="row justify-content-center">
                                 <div class="col-6 text-center">
-                                    <button class="btn btn-primary" id="saveNodo"><i class="fas fa-save"></i>&nbsp; Guardar Todo</button>
+                                    <button class="btn btn-primary" id="saveNodo"><i class="fas fa-save"></i>&nbsp; Guardar y Salir</button>
                                 </div>
                             </div>
-                            
+
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <i data-id="contentNodo" class='fas fa-info-circle float-right icono-info acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                    <i data-id="contentNodo" class='fas fa-info-circle float-right icono-info acercaDe' title='Ayuda' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
                                 </div>
                             </div>
 
@@ -356,10 +358,10 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <i data-id="contentGestion" class='fas fa-info-circle float-right icono-info acercaDe acercaDe' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
+                                    <i data-id="contentGestion" class='fas fa-info-circle float-right icono-info acercaDe acercaDe' title='Ayuda' data-toggle="modal" data-target="#modalAcercaDe" style="font-size:27px;" data-placement='top'> </i>
                                 </div>
                             </div>
 
@@ -484,7 +486,7 @@
                         <div class="accordion mt-3" id="accordionExample">
                             <div class="card">
                                 <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#raicesOpciones" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-link"></i>Vincular con otro estandar</button></h5>
+                                    <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#raicesOpciones" aria-expanded="true" aria-controls="collapseOne"><i class="fas fa-link"></i>Vincular con otro Algoritmo</button></h5>
                                 </div>
 
                                 <div id="raicesOpciones" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">

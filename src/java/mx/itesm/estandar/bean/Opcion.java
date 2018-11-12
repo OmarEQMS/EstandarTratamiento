@@ -1,5 +1,15 @@
 package mx.itesm.estandar.bean;
 
+/*
+Bean de Tabla Opcion
++ Atributos:
+    int idOpcion;
+    String texto;
+    String historial;
+    int idNodo_Padre;
+    int idNodo_Sig;
++ Acceso Atravez de Getters y Seters
+*/
 public class Opcion {
     private int idOpcion;
     private String texto;

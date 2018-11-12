@@ -139,13 +139,33 @@ $(document).ready(function () {
         cambiar("contentGestion");
     });
     $("#backEstandares").on("click", function () {
-        cambiar("contentEstandares");
-        CargarTablaEstandares();
+        swal({
+            title: "¿Estas Seguro?",
+            text: "Los cambios realizados no seran guardados",
+            icon: "warning",
+            buttons: {cancel: 'Cancelar', aceptar: true},
+            dangerMode: true
+        }).then((value) => {
+            if (value == "aceptar") {
+                cambiar("contentEstandares");
+                CargarTablaEstandares();
+            }
+        });        
     });
     $("#backEstandar").on("click", function () {
-        cambiar("contentEstandar");
-        var idE = $(this).data("id");
-        CargarTablaNodos(idE);
+        swal({
+            title: "¿Estas Seguro?",
+            text: "Los cambios realizados no seran guardados",
+            icon: "warning",
+            buttons: {cancel: 'Cancelar', aceptar: true},
+            dangerMode: true
+        }).then((value) => {
+            if (value == "aceptar") {
+                cambiar("contentEstandar");
+                var idE = $(this).data("id");
+                CargarTablaNodos(idE);
+            }
+        });
     });
 
     $("#misAlgoritmos").on("click", function () {
@@ -291,7 +311,7 @@ $(document).ready(function () {
 
         swal({
             title: "¿Estas Seguro?",
-            text: "Se eliminaran todos los nodo",
+            text: "Se eliminaran todos los nodos",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -307,7 +327,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaEstandares.row(fila).remove().draw();
-                        swal("Estandar Eliminado", {icon: "success", buttons: [, 'Aceptar']});
+                        swal("Algoritmo Eliminado", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -342,7 +362,10 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#nombreEstandar").html($("#tituloEstandar").val());
-                swal("Algoritmo Actualizado", {icon: "success", buttons: [, 'Aceptar']});
+                swal("Algoritmo Actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
+                    cambiar("contentEstandares");
+                    CargarTablaEstandares();
+                });                
             },
             error: function (xhr) {
 
@@ -524,7 +547,11 @@ $(document).ready(function () {
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        swal("Nodo Actualizada", {icon: "success", buttons: [, 'Aceptar']});
+                        swal("Nodo Actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
+                            cambiar("contentEstandar");
+                            var idE = $(this).data("id");
+                            CargarTablaNodos(idE);
+                        });
                     },
                     error: function () {
                     }
@@ -590,7 +617,7 @@ $(document).ready(function () {
 
         swal({
             title: "¿Estas Seguro?",
-            text: "Se eliminaran la Opcion",
+            text: "Se eliminara la Opcion",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -606,7 +633,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaOpciones.row(fila).remove().draw();
-                        swal("Opcion Eliminado", {icon: "success", buttons: [, 'Aceptar']});
+                        swal("Opcion Eliminada", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 

@@ -1,5 +1,16 @@
 package mx.itesm.estandar.bean;
 
+/*
+Bean de Tabla Estandar
++ Atributos:
+    int idEstandar;
+    String nombre;
+    String descripcion;
+    int color;
+    int idNodo;
+    int estatus;
++ Acceso Atravez de Getters y Seters
+*/
 public class Estandar {
     private int idEstandar;
     private String nombre;

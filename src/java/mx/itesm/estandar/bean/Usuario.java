@@ -1,5 +1,12 @@
 package mx.itesm.estandar.bean;
 
+/*
+Bean de Tabla Usuario
++ Atributos:
+    String perfil;
+    String password;
++ Acceso Atravez de Getters y Seters
+*/
 public class Usuario {
     private String perfil;
     private String password;

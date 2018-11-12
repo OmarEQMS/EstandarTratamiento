@@ -1,6 +1,13 @@
 package mx.itesm.estandar.bean;
 import java.io.InputStream;
 
+/*
+Bean de Tabla Imagen
++ Atributos:
+    int idImagen;
+    InputStream imagen;
++ Acceso Atravez de Getters y Seters
+*/
 public class Imagen {
     private int idImagen;
     private InputStream imagen;

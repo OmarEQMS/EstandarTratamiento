@@ -1,6 +1,17 @@
 package mx.itesm.estandar.bean;
 import java.io.InputStream;
 
+/*
+Bean de Tabla Nodo
++ Atributos:
+    int idNodo;
+    String titulo; 
+    String texto;
+    int idImagen;
+    String referencias;
+    int idEstandar;
++ Acceso Atravez de Getters y Seters
+*/
 public class Nodo {
     private int idNodo;
     private String titulo; 
