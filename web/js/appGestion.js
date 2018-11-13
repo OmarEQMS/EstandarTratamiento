@@ -844,7 +844,42 @@ $(document).ready(function () {
         $('#modalEditOption').modal('toggle');
     }
 
-    $("#DesreferenciarOpcion").on("click", function () {
+    $("#DesreferenciarOpcion").on("click", function () {   
+        //$("#tablaEstandares").DataTable().rows().data()[0][1]
+        //$("#tablaEstandares").DataTable().clear().draw();
+        //$("#tablaEstandares").DataTable().rows().invalidate('data').draw(false);
+        //var str = "Hello world!";
+        //var res = str.substring(1, 4);
+        //var str = "Hello world, welcome to the universe.";
+        //var n = str.indexOf("e", 5);
+        //"fas fa-check-circle opcionSeleccionada" "btn btn-success nodosOpcion"
+        //"far fa-times-circle" "btn nodosOpcion"
+        //<button class='btn btn-success nodosOpcion' data-id='104'><i class='fas fa-check-circle opcionSeleccionada'></i></button>
+            
+        var tablaNodosData = tablaNodosNuevaOpcion.rows().data();
+        var tablaNodosRaizData = tablaNodosRaizNuevaOpcion.rows().data();
+        for (var i = 0; i < tablaNodosData.length; i++) {
+            var Boton = tablaNodosData[i][1];
+            var b1 = Boton.indexOf("button class='", 0); 
+            var b2 = Boton.indexOf("'", b1 + 14);
+            var i1 = Boton.indexOf("i class='", 0);
+            var i2 = Boton.indexOf("'", i1 + 9);
+            Boton = Boton.substring(0 , b1 + 14) + "btn nodosOpcion" + Boton.substring(b2, i1 + 9) + "far fa-times-circle" + Boton.substring(i2, Boton.length);
+            tablaNodosData[i][1] = Boton;            
+        }
+        for (var i = 0; i < tablaNodosRaizData.length; i++) {
+            var Boton = tablaNodosRaizData[i][1];
+            var b1 = Boton.indexOf("button class='", 0); 
+            var b2 = Boton.indexOf("'", b1 + 14);
+            var i1 = Boton.indexOf("i class='", 0);
+            var i2 = Boton.indexOf("'", i1 + 9);
+            Boton = Boton.substring(0 , b1 + 14) + "btn nodosOpcion" + Boton.substring(b2, i1 + 9) + "far fa-times-circle" + Boton.substring(i2, Boton.length);
+            tablaNodosRaizData[i][1] = Boton;   
+        }
+        
+        tablaNodosNuevaOpcion.rows().invalidate('data').draw(false);
+        tablaNodosRaizNuevaOpcion.rows().invalidate('data').draw(false);
+        /*
         var seleccionada = document.getElementsByClassName('opcionSeleccionada');
         for (var i = 0; i < seleccionada.length; i++) {
             $(seleccionada[i]).removeClass('fas');
@@ -858,6 +893,7 @@ $(document).ready(function () {
             $(seleccionada[i]).addClass('fa-times-circle');
             $(seleccionada[i]).removeClass('opcionSeleccionada');
         }
+        */
     });
 
     $('#colorSelector').on('input', function () {
