@@ -811,7 +811,7 @@ $(document).ready(function () {
             }
         }
         for (var i = 0; i < tablaNodosRaizData.length; i++) {
-            var Boton = tablaNodosData[i][1];
+            var Boton = tablaNodosRaizData[i][1];
             var di1 = Boton.indexOf("data-id='", 0); 
             var di2 = Boton.indexOf("'", di1 + 9);
             if(Boton.includes("opcionSeleccionada")){
