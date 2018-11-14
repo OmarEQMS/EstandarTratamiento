@@ -798,10 +798,25 @@ $(document).ready(function () {
         var idO = $(this).data("id");
         var titulo = $("#tituloOpcion").val();
         var historial = $("#textoHistorial").val();
-        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
+        
         var nodoSig = 0;
-        for (var i = 0; i < seleccionada.length; i++) {
-            nodoSig = $(seleccionada[0]).parent().data("id");
+        var tablaNodosData = tablaNodosNuevaOpcion.rows().data();
+        var tablaNodosRaizData = tablaNodosRaizNuevaOpcion.rows().data();
+        for (var i = 0; i < tablaNodosData.length; i++) {
+            var Boton = tablaNodosData[i][1];
+            var di1 = Boton.indexOf("data-id='", 0); 
+            var di2 = Boton.indexOf("'", di1 + 9);
+            if(Boton.includes("opcionSeleccionada")){
+                nodoSig = parseInt(Boton.substring(di1 + 9, di2));
+            }
+        }
+        for (var i = 0; i < tablaNodosRaizData.length; i++) {
+            var Boton = tablaNodosData[i][1];
+            var di1 = Boton.indexOf("data-id='", 0); 
+            var di2 = Boton.indexOf("'", di1 + 9);
+            if(Boton.includes("opcionSeleccionada")){
+                nodoSig = parseInt(Boton.substring(di1 + 9, di2));
+            }  
         }
 
         if (historial == "") {
@@ -845,17 +860,12 @@ $(document).ready(function () {
     }
 
     $("#DesreferenciarOpcion").on("click", function () {   
-        //$("#tablaEstandares").DataTable().rows().data()[0][1]
-        //$("#tablaEstandares").DataTable().clear().draw();
-        //$("#tablaEstandares").DataTable().rows().invalidate('data').draw(false);
-        //var str = "Hello world!";
-        //var res = str.substring(1, 4);
-        //var str = "Hello world, welcome to the universe.";
-        //var n = str.indexOf("e", 5);
+        DesvincularOpcion();
+    });
+    
+    function DesvincularOpcion(){
         //"fas fa-check-circle opcionSeleccionada" "btn btn-success nodosOpcion"
         //"far fa-times-circle" "btn nodosOpcion"
-        //<button class='btn btn-success nodosOpcion' data-id='104'><i class='fas fa-check-circle opcionSeleccionada'></i></button>
-            
         var tablaNodosData = tablaNodosNuevaOpcion.rows().data();
         var tablaNodosRaizData = tablaNodosRaizNuevaOpcion.rows().data();
         for (var i = 0; i < tablaNodosData.length; i++) {
@@ -879,22 +889,7 @@ $(document).ready(function () {
         
         tablaNodosNuevaOpcion.rows().invalidate('data').draw(false);
         tablaNodosRaizNuevaOpcion.rows().invalidate('data').draw(false);
-        /*
-        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
-        for (var i = 0; i < seleccionada.length; i++) {
-            $(seleccionada[i]).removeClass('fas');
-            $(seleccionada[i]).addClass('far');
-            if ($(seleccionada[i]).parent().hasClass('btn-success')) {
-                $(seleccionada[i]).parent().removeClass('btn-success');
-            }
-            if ($(seleccionada[i]).hasClass('fa-check-circle')) {
-                $(seleccionada[i]).removeClass('fa-check-circle');
-            }
-            $(seleccionada[i]).addClass('fa-times-circle');
-            $(seleccionada[i]).removeClass('opcionSeleccionada');
-        }
-        */
-    });
+    }
 
     $('#colorSelector').on('input', function () {
         var val = $('#colorSelector').val();
@@ -961,29 +956,42 @@ $(document).ready(function () {
     });
 
     $("body").on('click', ".nodosOpcion", function () {
-        var seleccionada = document.getElementsByClassName('opcionSeleccionada');
-        for (var i = 0; i < seleccionada.length; i++) {
-            $(seleccionada[i]).removeClass('fas');
-            $(seleccionada[i]).addClass('far');
-            if ($(seleccionada[i]).parent().hasClass('btn-success')) {
-                $(seleccionada[i]).parent().removeClass('btn-success');
-            }
-            if ($(seleccionada[i]).hasClass('fa-check-circle')) {
-                $(seleccionada[i]).removeClass('fa-check-circle');
-            }
-            $(seleccionada[i]).addClass('fa-times-circle');
-            $(seleccionada[i]).removeClass('opcionSeleccionada');
+        DesvincularOpcion();
+        var dataID = $(this).data("id");
+                
+        //"fas fa-check-circle opcionSeleccionada" "btn btn-success nodosOpcion"
+        //"far fa-times-circle" "btn nodosOpcion"
+        var tablaNodosData = tablaNodosNuevaOpcion.rows().data();
+        var tablaNodosRaizData = tablaNodosRaizNuevaOpcion.rows().data();
+        for (var i = 0; i < tablaNodosData.length; i++) {
+            var Boton = tablaNodosData[i][1];
+            var di1 = Boton.indexOf("data-id='", 0); 
+            var di2 = Boton.indexOf("'", di1 + 9);
+            var b1 = Boton.indexOf("button class='", 0); 
+            var b2 = Boton.indexOf("'", b1 + 14);
+            var i1 = Boton.indexOf("i class='", 0);
+            var i2 = Boton.indexOf("'", i1 + 9);
+            if(dataID == parseInt(Boton.substring(di1 + 9, di2))){
+                Boton = Boton.substring(0 , b1 + 14) + "btn btn-success nodosOpcion" + Boton.substring(b2, i1 + 9) + "fas fa-check-circle opcionSeleccionada" + Boton.substring(i2, Boton.length);
+                tablaNodosData[i][1] = Boton;  
+            }            
         }
-        if ($(this).children().hasClass('far')) {
-            $(this).children().removeClass('far');
+        for (var i = 0; i < tablaNodosRaizData.length; i++) {
+            var Boton = tablaNodosRaizData[i][1];
+            var di1 = Boton.indexOf("data-id='", 0); 
+            var di2 = Boton.indexOf("'", di1 + 9);
+            var b1 = Boton.indexOf("button class='", 0); 
+            var b2 = Boton.indexOf("'", b1 + 14);
+            var i1 = Boton.indexOf("i class='", 0);
+            var i2 = Boton.indexOf("'", i1 + 9);
+            if(dataID == parseInt(Boton.substring(di1 + 9, di2))){
+                Boton = Boton.substring(0 , b1 + 14) + "btn btn-success nodosOpcion" + Boton.substring(b2, i1 + 9) + "fas fa-check-circle opcionSeleccionada" + Boton.substring(i2, Boton.length);
+                tablaNodosRaizData[i][1] = Boton;  
+            }   
         }
-        if ($(this).children().hasClass('fa-times-circle')) {
-            $(this).children().removeClass('fa-times-circle');
-        }
-        $(this).children().addClass('fa-check-circle');
-        $(this).children().addClass('opcionSeleccionada');
-        $(this).children().addClass('fas');
-        $(this).addClass('btn-success');
+
+        tablaNodosNuevaOpcion.rows().invalidate('data').draw(false);
+        tablaNodosRaizNuevaOpcion.rows().invalidate('data').draw(false);
     });
 
 
