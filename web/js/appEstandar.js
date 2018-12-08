@@ -169,10 +169,10 @@ $(document).ready(function () {
 
     function BorrarHistorial_CargarNodo_Estandar(idN) {
         if (historial.length != 0) {
-            swal("¿Quieres guardar tu Historial?", {
+            swal("¿Quieres guardar tu historial?", {
                 buttons: {
                     decline: "No",
-                    accept: "Si"
+                    accept: "Sí"
                 },
             }).then(function (value) {
                 if (value == "decline") {
@@ -195,11 +195,11 @@ $(document).ready(function () {
     
     function BorrarHistorial_CargarNodo_Opcion(idN) {
         if (historial.length != 0) {
-            swal("Estas a punto de ingresar a un nuevo Algoritmo ¿Quieres guardar tu Historial?", {
+            swal("Estas a punto de ingresar a un nuevo algoritmo ¿Quieres guardar tu historial?", {
                 buttons: {
                     cancelar: "Cancelar",
                     decline: "No",
-                    accept: "Si"
+                    accept: "Sí"
                 },
             }).then(function (value) {
                 if (value == "decline") {
@@ -263,7 +263,7 @@ $(document).ready(function () {
                 if (response[0].referencias != "") {
                     $("#referencias").html(response[0].referencias);
                 } else {
-                    $("#referencias").html("Sin Referencias");
+                    $("#referencias").html("Sin referencias");
                 }
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#nodo").html(response[0].texto);
@@ -357,11 +357,11 @@ $(document).ready(function () {
                 id: idE
             },
             success: function (response) {
-                $("#exampleModalLabel").html("Descripcion");
+                $("#exampleModalLabel").html("Descripción");
                 if (response.descripcion != "") {
                     $("#referencias").html(response.descripcion);
                 } else {
-                    $("#referencias").html("Sin Descripcion");
+                    $("#referencias").html("Sin Descripción");
                 }
                 $("#referencias").html($("#referencias").html().replace(/[\012]/g, "<br>"));
                 $("#modalReferencias").modal('toggle');

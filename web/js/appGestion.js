@@ -4,7 +4,7 @@ $(document).ready(function () {
     $("#contentEstandar").hide();
     $("#contentNodo").hide();
     $("#contentGestion").show();
-    $("#textoBarrita").html("Gestion");
+    $("#textoBarrita").html("Gestión");
     setColors(280, "myBackground", "myBorder");
     setColors(180, "sampleColorBackground", "sampleColorBorder");
     $('#change').on('click', () => {
@@ -14,7 +14,7 @@ $(document).ready(function () {
         if ((nombre == "contentEstandares") || (nombre == "contentEstandar") || (nombre == "contentNodo")) {
             $("#textoBarrita").html("Mis Algoritmos");
         } else if ((nombre == "contentGestion")) {
-            $("#textoBarrita").html("Gestion");
+            $("#textoBarrita").html("Gestión");
         }
         $("#contentEstandares").hide();
         $("#contentEstandar").hide();
@@ -65,7 +65,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response == "success") {
-                    swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
+                    swal("Contraseña cambiada exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
                     swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
                 }
@@ -101,7 +101,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response == "success") {
-                    swal("Contraseña Cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
+                    swal("Contraseña cambiada exitosamente", {icon: "success", buttons: [, 'Aceptar']});
                 } else {
                     swal("Hubo un error", {icon: "error", buttons: [, 'Aceptar']});
                 }
@@ -140,8 +140,8 @@ $(document).ready(function () {
     });
     $("#backEstandares").on("click", function () {
         swal({
-            title: "¿Estas Seguro?",
-            text: "Los cambios realizados no seran guardados",
+            title: "¿Estás seguro?",
+            text: "Los cambios realizados no serán guardados",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -154,8 +154,8 @@ $(document).ready(function () {
     });
     $("#backEstandar").on("click", function () {
         swal({
-            title: "¿Estas Seguro?",
-            text: "Los cambios realizados no seran guardados",
+            title: "¿Estás seguro?",
+            text: "Los cambios realizados no serán guardados",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -218,7 +218,7 @@ $(document).ready(function () {
                 nombre: nombre
             },
             success: function (response) {
-                swal("Estandar Agregado", {icon: "success", buttons: [, 'Aceptar']});
+                swal("Algoritmo agregado", {icon: "success", buttons: [, 'Aceptar']});
                 tablaEstandares.row.add([nombre, "<button data-id='" + response + "' class='btn btn-info editarEstandar'><i class='fas fa-edit'></i></button><button data-id='" + response + "' class='btn btn-danger eliminarEstandar'><i class='fas fa-trash-alt'></i></button></td>"]).draw(false);
                 EditarEstandar(response);
             },
@@ -250,7 +250,7 @@ $(document).ready(function () {
                 $("#colorSelector").val(response.color);
                 $("#btn-nuevoNodo").data("id", response.idEstandar);
                 var val = $('#colorSelector').val();
-                $('#textColorEstandar').html("Color del estándar: Tono " + val);
+                $('#textColorEstandar').html("Color del algoritmo: Tono " + val);
                 setColors(val, "sampleColorBackground", "sampleColorBorder");
                 $('#estatusEstandar').prop('checked', (response.estatus == 1));
                 $("#GuardarCambiosArbol").data("id", idE);
@@ -310,8 +310,8 @@ $(document).ready(function () {
         var fila = $(this).parents('tr');
 
         swal({
-            title: "¿Estas Seguro?",
-            text: "Se eliminaran todos los nodos",
+            title: "¿Estás seguro?",
+            text: "Se eliminarán todos los nodos",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -327,7 +327,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaEstandares.row(fila).remove().draw();
-                        swal("Algoritmo Eliminado", {icon: "success", buttons: [, 'Aceptar']});
+                        swal("Algoritmo eliminado", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -362,7 +362,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#nombreEstandar").html($("#tituloEstandar").val());
-                swal("Algoritmo Actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
+                swal("Algoritmo actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
                     cambiar("contentEstandares");
                     CargarTablaEstandares();
                 });                
@@ -399,7 +399,7 @@ $(document).ready(function () {
                 idEstandar: idE
             },
             success: function (response) {
-                swal("Nodo Agregado", {icon: "success", buttons: [, 'Aceptar']});
+                swal("Nodo agregado", {icon: "success", buttons: [, 'Aceptar']});
                 tablaNodos.row.add([
                     "<button class='btn nodoTipo' data-id='" + response + "'><i class='fas fa-unlink nodoRoto'></i></button></td>",
                     tituloNodo,
@@ -549,7 +549,7 @@ $(document).ready(function () {
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        swal("Nodo Actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
+                        swal("Nodo actualizado", {icon: "success", buttons: [, 'Aceptar']}).then((value) => {
                             cambiar("contentEstandar");
                             CargarTablaNodos(idE);
                         });
@@ -571,8 +571,8 @@ $(document).ready(function () {
         var fila = $(this).parents('tr');
 
         swal({
-            title: "¿Estas Seguro?",
-            text: "Se eliminaran el Nodo y sus opciones",
+            title: "¿Estás seguro?",
+            text: "Se eliminarán el nodo y sus opciones",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -588,7 +588,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaNodos.row(fila).remove().draw();
-                        swal("Nodo Eliminado", {icon: "success", buttons: [, 'Aceptar']});
+                        swal("Nodo eliminado", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -617,8 +617,8 @@ $(document).ready(function () {
         var fila = $(this).parents('tr');
 
         swal({
-            title: "¿Estas Seguro?",
-            text: "Se eliminara la Opcion",
+            title: "¿Estás seguro?",
+            text: "Se eliminará la opción",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -634,7 +634,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         tablaOpciones.row(fila).remove().draw();
-                        swal("Opcion Eliminada", {icon: "success", buttons: [, 'Aceptar']});
+                        swal("Opción eliminada", {icon: "success", buttons: [, 'Aceptar']});
                     },
                     error: function (xhr) {
 
@@ -671,7 +671,7 @@ $(document).ready(function () {
                     texto,
                     "<button class='btn btn-info editarOpcion' data-id='" + response + "' data-nodo='" + idN + "' data-sig='0'><i class='fas fa-edit'></i></button><button class='btn btn-danger eliminarOpcion' data-id='" + response + "'><i class='fas fa-trash-alt'></i></button>"
                 ]).draw(false);
-                swal("Opcion Agregada", {icon: "success", buttons: [, 'Aceptar']});
+                swal("Opción agregada", {icon: "success", buttons: [, 'Aceptar']});
             },
             error: function (xhr) {
 
@@ -821,8 +821,8 @@ $(document).ready(function () {
 
         if (historial == "") {
             swal({
-                title: "¿Estas Seguro?",
-                text: "No se generara historial en esta opcion",
+                title: "¿Estás seguro?",
+                text: "No se generará historial en esta opción",
                 buttons: {cancel: 'Regresar', aceptar: true},
             }).then((value) => {
                 if (value == "aceptar") {
@@ -849,7 +849,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 CargarTablaOpciones(idN);
-                swal("Opcion cambiada Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
+                swal("Opción cambiada exitosamente", {icon: "success", buttons: [, 'Aceptar']});
             },
             error: function (xhr) {
 
@@ -893,7 +893,7 @@ $(document).ready(function () {
 
     $('#colorSelector').on('input', function () {
         var val = $('#colorSelector').val();
-        $('#textColorEstandar').html("Color del estándar: Tono " + val);
+        $('#textColorEstandar').html("Color del algoritmo: Tono " + val);
         setColors(val, "sampleColorBackground", "sampleColorBorder");
     });
 
@@ -903,8 +903,8 @@ $(document).ready(function () {
         var este = this;
 
         swal({
-            title: "Estás a punto de cambiar el nodo raiz:",
-            text: "El nodo raiz previo será desvinculado",
+            title: "Estás a punto de cambiar el nodo raíz:",
+            text: "El nodo raíz previo será desvinculado",
             icon: "warning",
             buttons: {cancel: 'Cancelar', aceptar: true},
             dangerMode: true
@@ -921,7 +921,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         if (response = "success") {
-                            swal("Nodo Raiz cambiado Exitosamente", {icon: "success", buttons: [, 'Aceptar']});
+                            swal("Nodo raíz cambiado exitosamente", {icon: "success", buttons: [, 'Aceptar']});
 
                             var estrellas = document.getElementsByClassName('.nodoEstrella');
                             for (var i = 0; i < estrellas.length; i++) {
