@@ -381,7 +381,7 @@ $(document).ready(function () {
     //COOKIES
     function SaveHistorial() {
         var json_str = JSON.stringify(historial);
-        createCookie('EstandarTratamiento', json_str);
+        createCookie('EstandarTratamiento', json_str, 365);
     }
     function GetHistorial() {
         var json_str = getCookie('EstandarTratamiento');

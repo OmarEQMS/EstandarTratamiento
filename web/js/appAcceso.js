@@ -25,7 +25,7 @@ $(document).ready(function () {
                 buttons: {aceptar: {text: "Aceptar", value: "aceptar"}},
             }).then((value) => {
                 if (value == "aceptar") {
-                    createCookie("AceptarCookies", 1);
+                    createCookie("AceptarCookies", 1, 365);
                     LogIn();
                 }
             });
